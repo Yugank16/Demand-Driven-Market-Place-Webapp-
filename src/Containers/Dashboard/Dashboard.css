@@ -1,0 +1,46 @@
+.main-container{
+	height: 100%;
+	width: 100%
+}
+.sidebar{
+  	width: 240px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding-top: 20px;
+	background-color: #242F33;
+	height: 100%;
+}
+.content{
+	margin-left: 200px; 
+	font-size: 20px; 
+	padding: 0px 80px;
+}
+.clearfix::after {
+	content: "";
+	clear: both;
+	display: table;
+}
+.demand{
+	color: white;
+	padding: 2px 14px 12px 12px;
+	letter-spacing: 3px;
+}
+.sideanchor{
+	padding: 5px 37px;
+	color: white;
+	float: left;
+	width: auto;
+	display: block;
+	text-decoration: none;
+	margin-top: 50px;
+}
+.log{
+	background-color: #242F33; 
+	color: white;
+	border: none;
+}
+.user{
+	color: white;
+	padding: 122px 29px 0px 29px;
+}

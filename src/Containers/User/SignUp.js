@@ -79,12 +79,13 @@ class SignUp extends Component {
                 user_type: this.state.user_type };
 
             this.props.signupAction(data);
-        } else {
-            alert("form has errors");
-        }
+        } 
     }
 
     render() {
+        if (localStorage.getItem('user')) {
+            this.props.history.push('/dashboard');
+        } 
         const { firstName, lastName, email, password, confirmPassword, userType, submitted } = this.state;
         
         return (
@@ -146,6 +147,6 @@ class SignUp extends Component {
         );
     }
 }
-const mapStateToProps = state => ({ userInfo: state.UserReducers.user });
+const mapStateToProps = state => ({ userInfo: state.auth.user });
 
 export default connect(mapStateToProps, { signupAction })(SignUp);

@@ -18,6 +18,10 @@ export default function (state = initialState, action) {
             ...state,
             user: action.payload,
         };
+    case UserActionConstants.AUTH_LOGOUT:
+        return {
+            token: null,
+        };
     default:
         return state;
     }

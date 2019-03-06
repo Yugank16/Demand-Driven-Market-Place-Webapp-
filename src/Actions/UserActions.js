@@ -15,7 +15,7 @@ export const loginAction = (data) => dispatch => {
         console.log(res);
         if (res.status === 400) {
             throw Error("User Credentials not Valid");
-        }   
+        }
         return res.json();
     })
         .then(data => {
@@ -49,10 +49,9 @@ export const signupAction = (data) => dispatch => {
         },
         body: JSON.stringify(data),
     }).then(res => {
-        console.log("dsds", res);
         if (!res.ok && res.status === 400) {
             throw Error("User Already Exist");
-        }   
+        }
         return res.json();
     })
         .then(data => {
@@ -62,4 +61,12 @@ export const signupAction = (data) => dispatch => {
             });
         })
         .catch((err) => alert(err));
+};
+
+export const logout = () => {
+    console.log('hi');
+    localStorage.removeItem("user");
+    return {
+        type: UserActionConstants.AUTH_LOGOUT,
+    };
 };
