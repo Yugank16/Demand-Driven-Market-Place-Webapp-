@@ -1,7 +1,10 @@
 import { combineReducers } from 'redux';
 
-import UserReducers from './UserReducers';
+import requestItem from './RequestItem';
+import auth from './UserReducers';
 
 export default combineReducers({
-    UserReducers,
+    auth,
+    requestItem,
 }); 
+

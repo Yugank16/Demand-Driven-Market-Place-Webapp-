@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Router, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import "../../App.css";
@@ -10,7 +10,7 @@ import { loginAction } from '../../Actions/UserActions';
 class Login extends Component {
     constructor() {
         super();
-
+         
         this.state = {
             email: '',
             password: '',
@@ -39,10 +39,14 @@ class Login extends Component {
 
         if (email && password) {
             this.props.loginAction(data);
-            this.props.history.push('/dashboard');
+            this.props.history.push('/home');
         }
     }
+
     render() {
+        if (localStorage.getItem('user')) {
+            this.props.history.push('/home');
+        }  
         const { submitted, email, password } = this.state;
         return (
             <div>
@@ -75,6 +79,6 @@ class Login extends Component {
     }
 }
 
-const mapStateToProps = state => ({ userToken: state.UserReducers.token });
+const mapStateToProps = state => ({ userToken: state.auth.token });
 
 export default connect(mapStateToProps, { loginAction })(Login);
