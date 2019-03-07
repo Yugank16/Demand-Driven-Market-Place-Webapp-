@@ -102,31 +102,28 @@ class RequestItem extends Component {
                             </div>
                             <div className="FormField">
                                 <label className="FormField__Label" htmlFor="monthsOld">Months Old</label>
-                                <input type="text" id="monthsOld" className="FormField__Input" placeholder="Enter how many months old" name="monthsOld" onChange={this.handleChange} />
+                                <input type="number" id="monthsOld" className="FormField__Input" placeholder="Enter how many months old" name="monthsOld" onChange={this.handleChange} />
                                 {submitted && !monthsOld &&
-                                    <div className="FormField__Label error-block">Description is required</div>
+                                    <div className="FormField__Label error-block">Field is required</div>
                                 }
                             </div>
                             <div className="FormField">
                                 <label className="FormField__Label" htmlFor="quantityRequired">Quantity Required</label>
-                                <input type="text" id="quantityRequired" className="FormField__Input" placeholder="Enter quantity required" name="quantityRequired" onChange={this.handleChange} />
+                                <input type="number" id="quantityRequired" className="FormField__Input" placeholder="Enter quantity required" name="quantityRequired" onChange={this.handleChange} />
                                 {submitted && !quantityRequired &&
-                                    <div className="FormField__Label error-block">Description is required</div>
+                                    <div className="FormField__Label error-block">Quantity is required</div>
                                 }
                             </div>
                             <div className="FormField">
                                 <label className="FormField__Label" htmlFor="maxPrice">Max Price</label>
-                                <input type="text" id="maxPrice" className="FormField__Input" placeholder="Enter max price" name="maxPrice" onChange={this.handleChange} />
+                                <input type="number" id="maxPrice" className="FormField__Input" placeholder="Enter max price" name="maxPrice" onChange={this.handleChange} />
                                 {submitted && !maxPrice &&
-                                    <div className="FormField__Label error-block">Description is required</div>
+                                    <div className="FormField__Label error-block">Max Price is required</div>
                                 }
                             </div>
                             <div className="FormField">
                                 <label className="FormField__Label" htmlFor="moreInfo">More Information</label>
                                 <input type="text" id="moreInfo" className="FormField__Input" placeholder="Enter more specification for the item" name="moreInfo" onChange={this.handleChange} />
-                                {submitted && !moreInfo &&
-                                    <div className="FormField__Label error-block">Description is required</div>
-                                }
                             </div>
                             <div className="FormField">
                                 <button className="FormField__Button mr-20">Post</button>

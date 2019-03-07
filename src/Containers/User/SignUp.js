@@ -79,6 +79,7 @@ class SignUp extends Component {
                 user_type: this.state.user_type };
 
             this.props.signupAction(data);
+            this.props.history.push('/login');
         } 
     }
 
