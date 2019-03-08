@@ -1,6 +1,5 @@
-import { UserActionConstants, UserConstants } from '../Constants/index';
+import { UserActionConstants, UserConstants, FlashMessageConstants } from '../Constants/index';
 
-let token;
 let user;
 
 export const loginAction = (data) => dispatch => {
@@ -12,32 +11,24 @@ export const loginAction = (data) => dispatch => {
         },
         body: JSON.stringify(data),
     }).then(res => {
-        console.log(res);
         if (res.status === 400) {
             throw Error("User Credentials not Valid");
         }
         return res.json();
-    })
-        .then(data => {
-            token = `${data.token}`;
-            fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
-                method: 'GET',
-                headers: {
-                    Authorization: `Token ${data.token}`,
-                    'Content-Type': 'application/json',
-                },
-            }).then(res => res.json())
-                .then(data => {
-                    user = data;
-                    user.token = token;
-                    localStorage.setItem(UserConstants.USER, JSON.stringify(user));
-                    dispatch({
-                        type: UserActionConstants.FETCH_LOGIN,
-                        payload: user,
-                    });
-                });
-        })
-        .catch((err) => alert(err));
+    }).then(data => {
+        user = data;
+        localStorage.setItem(UserConstants.USER, JSON.stringify(user));
+        dispatch({
+            type: FlashMessageConstants.SUCCESS,
+            message: 'Logged In                 Successfully',
+        });
+    }).catch((err) => {
+        console.log(err);
+        dispatch({
+            type: FlashMessageConstants.FAILURE,
+            message: err.message,
+        });
+    });
 };
 
 export const signupAction = (data) => dispatch => {
@@ -53,18 +44,25 @@ export const signupAction = (data) => dispatch => {
             throw Error("User Already Exist");
         }
         return res.json();
-    })
-        .then(data => {
-            dispatch({
-                type: UserActionConstants.FETCH_SIGNUP,
-                payload: data,
-            });
-        })
-        .catch((err) => alert(err));
+    }).then(data => {
+        user = {};
+        user.token = data.token;
+        console.log(user);
+        localStorage.setItem(UserConstants.USER, JSON.stringify(user));  
+        dispatch({
+            type: FlashMessageConstants.SUCCESS,
+            message: 'You have successfully signed up',
+        });
+    }).catch((err) => {
+        console.log(err);
+        dispatch({
+            type: FlashMessageConstants.FAILURE,
+            message: err.message,
+        });
+    });
 };
 
 export const logout = () => {
-    console.log('hi');
     localStorage.removeItem("user");
     return {
         type: UserActionConstants.AUTH_LOGOUT,

@@ -8,6 +8,12 @@ export const UserActionConstants = {
 export const RequestItemConstants = {
     POST_ITEM_REQUEST: 'POST_ITEM_REQUEST',
     FETCH_ALL_REQUEST: 'FETCH_ALL_REQUEST',
+    FETCH_PARTICULAR_REQUEST: 'FETCH_PARTICULAR_REQUEST',
+};
+
+export const FlashMessageConstants = {
+    SUCCESS: 'SUCCESS',
+    FAILURE: 'FAILURE',
 };
 
 export const UserConstants = {

@@ -1,9 +1,9 @@
 import React from 'react';
 import Dashboard from '../../Containers/Dashboard';
+import FlashMessage from '../../Containers/FlashMessage';
 
 const RequestItem = (props) => (
-    <div className="main-container ">
-        <Dashboard />
+    <div>
         <div className="content">
             <div>
                 <h2>Item List</h2>

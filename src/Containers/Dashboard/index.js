@@ -11,8 +11,9 @@ class Dashboard extends Component {
         this.logoutuser = this.logoutuser.bind(this);
     }
     logoutuser() {
-        this.props.logout();
-        this.props.history.push('/login');
+        const { logout, history } = this.props;
+        logout();
+        history.push('/');
     }
     render() {
         return (
@@ -27,7 +28,6 @@ class Dashboard extends Component {
         );
     }
 }
-const mapStateToProps = state => {
-};
 
-export default withRouter(connect(mapStateToProps, { logout })(Dashboard));
+
+export default withRouter(connect(null, { logout })(Dashboard));

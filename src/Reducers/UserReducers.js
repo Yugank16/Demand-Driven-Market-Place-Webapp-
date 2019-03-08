@@ -11,7 +11,7 @@ export default function (state = initialState, action) {
     case UserActionConstants.FETCH_LOGIN:
         return {
             ...state,
-            token: action.payload,
+            user: action.payload,
         };
     case UserActionConstants.FETCH_SIGNUP:
         return {

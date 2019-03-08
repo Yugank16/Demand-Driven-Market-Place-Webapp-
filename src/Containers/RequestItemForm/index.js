@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { postRequestAction } from '../../Actions/RequestItemActions';
 import Dashboard from '../Dashboard';
 import '../../App.css';
+import FlashMessage from '../FlashMessage';
 
 class RequestItem extends Component {
     constructor() {
@@ -56,8 +57,9 @@ class RequestItem extends Component {
                 more_info: this.state.moreInfo,
                 item_status: 1,
             };
-            this.props.postRequestAction(data);
-            this.props.history.push('/home');
+            const { postRequestAction, history } = this.props;
+            postRequestAction(data);
+            history.push('/home');
         }
     }
 
@@ -65,8 +67,7 @@ class RequestItem extends Component {
         const { name, description, datetime, itemState, monthsOld, quantityRequired, maxPrice, moreInfo, submitted } = this.state;
 
         return (
-            <div className="main-container ">
-                <Dashboard />
+            <div>
                 <div className="content">
                     <h1>Request Item</h1>
                     <div className="FormCenter">
