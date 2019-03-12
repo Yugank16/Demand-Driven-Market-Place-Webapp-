@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import "../../App.css";
 import AuthPage from '../../Components/User/AuthPage';
 import { loginAction } from '../../Actions/UserActions';
-import FlashMessage from '../FlashMessage';
 
 
 class Login extends Component {
@@ -54,7 +52,7 @@ class Login extends Component {
         return formIsValid;
     }
 
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
         const { email, password } = this.state;
         this.setState({ submitted: true });
@@ -62,9 +60,11 @@ class Login extends Component {
             const data = {
                 username: this.state.email,
                 password: this.state.password };
-            const { loginAction, history } = this.props;        
-            loginAction(data);
-            setTimeout(() => history.push('/home'), 1000);
+            const { loginAction, history } = this.props;
+            const response = await loginAction(data);     
+            if (response) { 
+                history.push('/home');
+            }
         }
     }
 

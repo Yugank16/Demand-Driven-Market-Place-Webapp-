@@ -2,64 +2,58 @@ import { UserActionConstants, UserConstants, FlashMessageConstants } from '../Co
 
 let user;
 
-export const loginAction = (data) => dispatch => {
-    fetch(`${UserActionConstants.API_BASE_URL}api/login/`, {
+export const loginAction = data => async (dispatch) => {
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/login/`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-    }).then(res => {
-        if (res.status === 400) {
-            throw Error("User Credentials not Valid");
-        }
-        return res.json();
-    }).then(data => {
-        user = data;
-        localStorage.setItem(UserConstants.USER, JSON.stringify(user));
-        dispatch({
-            type: FlashMessageConstants.SUCCESS,
-            message: 'Logged In                 Successfully',
-        });
-    }).catch((err) => {
-        console.log(err);
+    });
+    if (response.status === 400) {
         dispatch({
             type: FlashMessageConstants.FAILURE,
-            message: err.message,
+            message: 'User Credentials not Valid',
         });
+        return false;
+    }
+    response = await response.json();
+    user = response;
+    localStorage.setItem(UserConstants.USER, JSON.stringify(user));
+    dispatch({
+        type: FlashMessageConstants.SUCCESS,
+        message: 'Logged In Successfully',
     });
+    return true;
 };
 
-export const signupAction = (data) => dispatch => {
-    fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
+export const signupAction = data => async (dispatch) => {
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-    }).then(res => {
-        if (!res.ok && res.status === 400) {
-            throw Error("User Already Exist");
-        }
-        return res.json();
-    }).then(data => {
-        user = {};
-        user.token = data.token;
-        console.log(user);
-        localStorage.setItem(UserConstants.USER, JSON.stringify(user));  
-        dispatch({
-            type: FlashMessageConstants.SUCCESS,
-            message: 'You have successfully signed up',
-        });
-    }).catch((err) => {
-        console.log(err);
+    });
+    if (!response.ok && response.status === 400) {
         dispatch({
             type: FlashMessageConstants.FAILURE,
-            message: err.message,
+            message: 'User With Email-Id Already Exist',
         });
+        return false;
+    }
+    response = await response.json();
+    user = {};
+    user.token = response.token;
+    console.log('hello', response.token);
+    localStorage.setItem(UserConstants.USER, JSON.stringify(user));
+    dispatch({
+        type: FlashMessageConstants.SUCCESS,
+        message: 'You have successfully signed up',
     });
+    return true;
 };
 
 export const logout = () => {

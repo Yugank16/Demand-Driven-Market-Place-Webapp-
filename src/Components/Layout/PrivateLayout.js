@@ -6,13 +6,11 @@ import RequestItem from '../../Containers/RequestItemForm';
 import RequestItemList from '../../Containers/RequestItemList';
 import RequestDetails from '../../Containers/RequestDetails';
 import NotFound from '../../Components/NotFound';
-import FlashMessage from '../../Containers/FlashMessage';
 
 
 const PrivateLayout = (props) => (
     <div>
         <Dashboard />
-        <FlashMessage />
         <Switch>
             <ProtectedRoute exact path="/home" component={RequestItemList} />
             <ProtectedRoute exact path="/home/request" component={RequestItem} />

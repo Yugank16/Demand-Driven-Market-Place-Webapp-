@@ -20,6 +20,7 @@ class SignUp extends Component {
             userType: 3,
             submitted: false,
             errors: {},
+            isButtonDisabled: false,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -74,9 +75,9 @@ class SignUp extends Component {
     }
 
 
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
-        this.setState({ submitted: true });
+        this.setState({ submitted: true, isButtonDisabled: true });
 
 
         if (this.handleValidation()) {
@@ -88,8 +89,11 @@ class SignUp extends Component {
                 user_type: this.state.user_type };
 
             const { signupAction, history } = this.props;
-            signupAction(data);
-            setTimeout(() => { history.push('/home'); }, 1500);
+            const response = await signupAction(data);
+            if (response) {
+                history.push('/home'); 
+            }
+            this.setState({ isButtonDisabled: false });
         } 
     }
 
@@ -142,7 +146,7 @@ class SignUp extends Component {
                             </select>
                         </div>
                         <div className="FormField">
-                            <button className="FormField__Button mr-20">Sign Up</button> <Link to="/" className="FormField__Link">I&#39;m already member</Link>
+                            <button className="FormField__Button mr-20" disabled={this.state.isButtonDisabled}>Sign Up</button> <Link to="/" className="FormField__Link">I&#39;m already member</Link>
                         </div>
                     </form>
                 </div>
