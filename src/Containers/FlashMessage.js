@@ -17,9 +17,10 @@ class FlashMessage extends Component {
     }
     render() {
         if (this.props.flashMessage.message) {
-            console.log('hi', this.props.flashMessage);
             const { message, className } = this.props.flashMessage;
-            console.log(message, className);
+            this.state = {
+                isActive: true,
+            };
             return (
                 <div >
                     {
@@ -33,7 +34,7 @@ class FlashMessage extends Component {
                 </div>
             );
         }
-        return <div>hi</div>;
+        return null;
     }
 }
 
