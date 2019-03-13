@@ -1,6 +1,4 @@
 import React from 'react';
-import Dashboard from '../../Containers/Dashboard';
-import FlashMessage from '../../Containers/FlashMessage';
 
 const RequestItem = (props) => (
     <div>

@@ -2,8 +2,6 @@ import { RequestItemConstants } from '../Constants/index';
 
 const initialState = {
     data: {},
-    message: null,
-    className: null,
 };
 
 export default function (state = initialState, action) {

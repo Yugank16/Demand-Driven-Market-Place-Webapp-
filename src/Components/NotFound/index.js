@@ -8,4 +8,3 @@ const RequestItem = (props) => (
 );
 
 export default RequestItem;
-

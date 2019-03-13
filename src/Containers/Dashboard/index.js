@@ -22,7 +22,7 @@ class Dashboard extends Component {
                 <h3 className="user">Hello user</h3>
                 <Link className="sideanchor log" to="/home" >All Requests</Link>
                 <Link className="sideanchor log" to="/home/request" >New Request</Link>
-                <button className="sideanchor log" >Past Selling</button>
+                <Link className="sideanchor log" to="/home/user-profile" >Account</Link>
                 <button className="sideanchor log" onClick={() => this.logoutuser()} >Logout</button>
             </div>
         );
