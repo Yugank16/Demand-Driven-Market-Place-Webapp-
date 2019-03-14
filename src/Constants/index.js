@@ -4,6 +4,7 @@ export const UserActionConstants = {
     FETCH_SIGNUP: 'FETCH_SIGNUP',
     AUTH_LOGOUT: 'AUTH_LOGOUT',
     FETCH_PROFILE: 'FETCH_PROFILE',
+    RESPONSE: 'RESPONSE',
 };
 
 export const RequestItemConstants = {

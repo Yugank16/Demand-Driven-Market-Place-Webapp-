@@ -30,7 +30,6 @@ export const fetchRequestsAction = () => dispatch => {
         method: 'GET',
         headers: {
             Authorization: `Token ${userdata.token}`,
-            'Content-Type': 'application/json',
         },
     }).then(res => res.json())
         .then(data => {

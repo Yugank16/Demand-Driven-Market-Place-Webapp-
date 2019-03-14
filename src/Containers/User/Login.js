@@ -13,7 +13,6 @@ class Login extends Component {
         this.state = {
             email: '',
             password: '',
-            submitted: false,
             errors: {},
         };
 
@@ -55,14 +54,13 @@ class Login extends Component {
     async handleSubmit(e) {
         e.preventDefault();
         const { email, password } = this.state;
-        this.setState({ submitted: true });
         if (this.handleValidation()) {
             const data = {
                 username: this.state.email,
                 password: this.state.password };
             const { loginAction, history } = this.props;
-            const response = await loginAction(data);     
-            if (response) { 
+            const response = await loginAction(data);
+            if (response) {
                 history.push('/home');
             }
         }
@@ -72,7 +70,6 @@ class Login extends Component {
         if (localStorage.getItem('user')) {
             this.props.history.push('/home');
         }
-        const { submitted, email, password } = this.state;
         return (
             <div>
                 <AuthPage />
@@ -90,7 +87,13 @@ class Login extends Component {
                         </div>
 
                         <div className="FormField">
-                            <button className="FormField__Button mr-20">Log In</button> <Link to="/signup" className="FormField__Link">Create an account</Link>
+                            <button className="FormField__Button mr-20">Log In</button>
+                        </div>
+                        <div className="FormField">
+                            <Link to="/signup" className="FormField__Link">Create an account</Link>
+                        </div>
+                        <div className="FormField">
+                            <Link to="/reset_password" className="FormField__Link">Forgot Password ?</Link>
                         </div>
                     </form>
                 </div>

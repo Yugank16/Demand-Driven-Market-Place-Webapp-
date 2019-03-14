@@ -28,6 +28,26 @@ export const loginAction = data => async (dispatch) => {
     return true;
 };
 
+export const tokenvalidation = (data, id, token) => async (dispatch) => {
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/password_reset/verify/${id}/${token}/`, {
+        method: 'GET',
+    });
+    if (response === 200) {
+        dispatch({
+            type: UserActionConstants.SUCCESS,
+            message: 'success',
+        });
+        return true;
+    }
+    response = await response.json();
+    dispatch({
+        type: UserActionConstants.FAILURE,
+        message: 'failure',
+    });
+    return true;
+};
+
+
 export const signupAction = data => async (dispatch) => {
     let response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
         method: 'POST',
@@ -59,9 +79,6 @@ export const updateProfileAction = data => async (dispatch) => {
     const userdata = JSON.parse(localStorage.getItem('user'));
     const formD = new FormData();
     Object.entries(data).forEach(([key, value]) => formD.append(key, value));
-    for (const key of formD.entries()) {
-        console.log(key[0] + ', ' + key[1]);
-    }
     let response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
         method: 'PATCH',
         headers: {
@@ -104,15 +121,60 @@ export const fetchProfileAction = () => async (dispatch) => {
             'Content-Type': 'application/json',
         },
     });
-    console.log('in actions');
     if (!response.ok && response.status === 400) {
         return false;
     }
     const data = await response.json();
-    console.log('in actions down=', data);
     dispatch({
         type: UserActionConstants.FETCH_PROFILE,
         payload: data,
+    });
+    return true;
+};
+export const passwordResetAction = (data, id, token) => async (dispatch) => {
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/password_reset/confirm/${id}/${token}/`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    if (response.status === 400) {
+        dispatch({
+            type: FlashMessageConstants.FAILURE,
+            message: 'Token not valid',
+        });
+        return false;
+    }
+    response = await response.json();
+    dispatch({
+        type: FlashMessageConstants.SUCCESS,
+        message: 'Password has been changed please login',
+    });
+    return true;
+};
+
+export const passwordResetRequestAction = (data) => async (dispatch) => {
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/password_reset/`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    if (response.status === 400) {
+        dispatch({
+            type: FlashMessageConstants.FAILURE,
+            message: 'There is no active user associated with this e-mail address or the password can not be changed',
+        });
+        return false;
+    }
+    response = await response.json();
+    dispatch({
+        type: FlashMessageConstants.SUCCESS,
+        message: 'Password reset Link has been sent to your registered email id',
     });
     return true;
 };

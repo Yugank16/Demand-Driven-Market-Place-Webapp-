@@ -6,7 +6,7 @@ const AuthPage = () => (
     <div className="Screen__Form">
 
         <div className="FormTitle">
-            <NavLink to="/" activeClassName="FormTitle__Link--Active" className="FormTitle__Link">Log In</NavLink> or
+            <NavLink exact to="/" activeClassName="FormTitle__Link--Active" className="FormTitle__Link">Log In</NavLink> or
             <NavLink exact to="/signup" activeClassName="FormTitle__Link--Active" className="FormTitle__Link">Sign Up</NavLink>
         </div>
     </div>

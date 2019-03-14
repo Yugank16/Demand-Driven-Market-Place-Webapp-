@@ -33,7 +33,7 @@ class SignUp extends Component {
     }
 
     handleValidation() {
-        const { firstName, lastName, password, email } = this.state;
+        const { firstName, lastName, password, email, confirmPassword } = this.state;
         const error = {};
         let formIsValid = true;
         // Email
@@ -68,6 +68,9 @@ class SignUp extends Component {
         } else if (password.length < 6) {
             formIsValid = false;
             error.password = 'Password should contain atleast 6 chracters';
+        } else if (confirmPassword !== password) {
+            formIsValid = false;
+            error.password = 'Password doesn\'t macth';
         }
 
         this.setState({ errors: error });
