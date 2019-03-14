@@ -12,6 +12,8 @@ class UpdateProfile extends Component {
             gender: '',
             phoneNumber: '',
             birthDate: '',
+            profilePhoto: '',
+            userType: 3,
             submitted: false,
             errors: {},
             isButtonDisabled: false,
@@ -19,6 +21,7 @@ class UpdateProfile extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleValidation = this.handleValidation.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handelFileChange = this.handelFileChange.bind(this);
     }
 
     componentDidMount() {
@@ -31,13 +34,18 @@ class UpdateProfile extends Component {
         this.setState({ lastName: nextprops.userdata.last_name });
         this.setState({ email: nextprops.userdata.email });
         this.setState({ gender: nextprops.userdata.gender });
-        this.setState({ phoneNumber: nextprops.userdata.phone_name });
+        this.setState({ phoneNumber: nextprops.userdata.phone_number });
         this.setState({ birthDate: nextprops.userdata.birth_date });
         this.setState({ gender: nextprops.userdata.gender });
     }
 
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+    }
+
+    handelFileChange(e) {
+        console.log(e.target);
+        this.setState({ profilePhoto: e.target.files[0] });
     }
 
     handleValidation() {
@@ -85,7 +93,7 @@ class UpdateProfile extends Component {
     }
 
 
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
         this.setState({ submitted: true, isButtonDisabled: true });
 
@@ -96,16 +104,17 @@ class UpdateProfile extends Component {
                 last_name: this.state.lastName,
                 phone_number: this.state.phoneNumber,
                 gender: this.state.gender,
-                birth_date: this.state.birth_date,
-                user_type: this.state.user_type,
+                birth_date: this.state.birthDate,
+                user_type: this.state.userType,
+                profile_photo: this.state.profilePhoto,
             };
             const { updateProfileAction, history } = this.props;
-            const response = updateProfileAction(data);
+            const response = await updateProfileAction(data);
             if (response) {
-                history.push('/home/user-profile');
+                console.log(response);
             }
-            this.setState({ isButtonDisabled: false });
         }
+        this.setState({ isButtonDisabled: false });
     }
 
     render() {
@@ -155,6 +164,10 @@ class UpdateProfile extends Component {
                                 <option className="drop_down_text" value="FEMALE" >FEMALE</option>
                                 <option className="drop_down_text" value="OTHERS" >OTHERS</option>
                             </select>
+                        </div>
+                        <div className="FormField">
+                            <label className="FormField__Label" htmlFor="email">profile Photo</label>
+                            <input type="file" id="profilephoto" name="profilePhoto" onChange={this.handelFileChange} />
                         </div>
                         <div className="FormField">
                             <button className="FormField__Button mr-20" disabled={this.state.isButtonDisabled}>Save</button>

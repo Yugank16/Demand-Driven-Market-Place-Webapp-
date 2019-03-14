@@ -10,7 +10,7 @@ import UserProfile from '../../Containers/UserProfile';
 import UpdateProfile from '../../Containers/UserProfile/UpdateProfile';
 import ChangePassword from '../../Containers/UserProfile/Changepassword';
 
-const PrivateLayout = (props) => (
+const PrivateLayout = () => (
     <div>
         <Dashboard />
         <Switch>
@@ -20,7 +20,6 @@ const PrivateLayout = (props) => (
             <ProtectedRoute exact path="/home/user-profile/change-password" component={ChangePassword} />
             <ProtectedRoute exact path="/home/request" component={RequestItem} />
             <ProtectedRoute exact path="/home/request-details/:id" component={RequestDetails} />
-            <Route path="*" component={NotFound} />
         </Switch>
     </div>
 

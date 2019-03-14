@@ -57,15 +57,21 @@ export const signupAction = data => async (dispatch) => {
 
 export const updateProfileAction = data => async (dispatch) => {
     const userdata = JSON.parse(localStorage.getItem('user'));
+    const formD = new FormData();
+    Object.entries(data).forEach(([key, value]) => formD.append(key, value));
+    for (const key of formD.entries()) {
+        console.log(key[0] + ', ' + key[1]);
+    }
     let response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
         method: 'PATCH',
         headers: {
             Authorization: `Token ${userdata.token}`,
-            'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: formD,
     });
-    if (!response.ok && response.status === 400) {
+    if (response.status === 400) {
+        response = await response.json();
+        console.log('hello', response);
         return false;
     }
     response = await response.json();
