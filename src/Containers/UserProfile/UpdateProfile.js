@@ -111,7 +111,7 @@ class UpdateProfile extends Component {
             const { updateProfileAction, history } = this.props;
             const response = await updateProfileAction(data);
             if (response) {
-                console.log(response);
+                history.push('/home/user-profile');
             }
         }
         this.setState({ isButtonDisabled: false });

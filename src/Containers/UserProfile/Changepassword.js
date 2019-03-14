@@ -59,7 +59,7 @@ class ChangePassword extends Component {
     }
 
 
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
         this.setState({ submitted: true, isButtonDisabled: true });
         console.log('hrer');
@@ -69,7 +69,7 @@ class ChangePassword extends Component {
                 new_password: this.state.newPassword,
             };
             const { ChangePasswordAction, history } = this.props;
-            const response = ChangePasswordAction(data);
+            const response = await ChangePasswordAction(data);
             if (response) {
                 history.push('/home/user-profile');
             }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './profile.css';
 
 const Profile = (props) => (
@@ -6,6 +7,8 @@ const Profile = (props) => (
         <div className="content">
             <div>
                 <h2>Profile</h2>
+                <Link to="/home/user-profile/update">Update Profile</Link>
+                <Link to="/home/user-profile/change-password">Change Password</Link>
                 <div>
                     <img src={props.data.profile_photo} alt="profile" />
                     <h3>First Name : {props.data.first_name}</h3>
