@@ -45,11 +45,11 @@ class ResetPasswordConfirm extends Component {
         const { newPassword } = this.state;
         if (this.handleValidation()) {
             const data = {
-                token: this.props.match.params.reset_token,
                 password: newPassword };
-            const { id } = this.props.match.params;
+            
+            const { id, resetToken } = this.props.match.params;
             const { passwordResetAction, history } = this.props;
-            const response = await passwordResetAction(data, id);
+            const response = await passwordResetAction(data, id, resetToken);
             if (response) {
                 history.push('/');
             }

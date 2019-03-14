@@ -55,8 +55,8 @@ export const signupAction = data => async (dispatch) => {
     return true;
 };
 
-export const passwordResetAction = (data, id) => async (dispatch) => {
-    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/password_reset/confirm/${id}/`, {
+export const passwordResetAction = (data, id, token) => async (dispatch) => {
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/password_reset/confirm/${id}/${token}/`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
