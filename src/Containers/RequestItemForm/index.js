@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { postRequestAction } from '../../Actions/RequestItemActions';
-import Dashboard from '../Dashboard';
 import '../../App.css';
-import FlashMessage from '../FlashMessage';
 
 class RequestItem extends Component {
     constructor() {

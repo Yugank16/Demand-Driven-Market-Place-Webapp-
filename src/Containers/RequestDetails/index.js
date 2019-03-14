@@ -15,7 +15,7 @@ class RequestDetails extends Component {
         if (this.props.item) {
             return (
                 <div>
-                    <RequestDetail data={this.props.items} />
+                    <RequestDetail data={this.props.item} />
                 </div>         
             );  
         }    

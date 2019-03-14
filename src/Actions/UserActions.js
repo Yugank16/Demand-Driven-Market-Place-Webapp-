@@ -55,6 +55,69 @@ export const signupAction = data => async (dispatch) => {
     return true;
 };
 
+export const updateProfileAction = data => async (dispatch) => {
+    const userdata = JSON.parse(localStorage.getItem('user'));
+    const formD = new FormData();
+    Object.entries(data).forEach(([key, value]) => formD.append(key, value));
+    for (const key of formD.entries()) {
+        console.log(key[0] + ', ' + key[1]);
+    }
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
+        method: 'PATCH',
+        headers: {
+            Authorization: `Token ${userdata.token}`,
+        },
+        body: formD,
+    });
+    if (response.status === 400) {
+        response = await response.json();
+        console.log('hello', response);
+        return false;
+    }
+    response = await response.json();
+    return true;
+};
+
+export const ChangePasswordAction = data => async (dispatch) => {
+    const userdata = JSON.parse(localStorage.getItem('user'));
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/change-password/`, {
+        method: 'PATCH',
+        headers: {
+            Authorization: `Token ${userdata.token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    if (!response.ok && response.status === 400) {
+        return false;
+    }
+    response = await response.json();
+    return true;
+};
+
+export const fetchProfileAction = () => async (dispatch) => {
+    const userdata = JSON.parse(localStorage.getItem('user'));
+    const response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
+        method: 'GET',
+        headers: {
+            Authorization: `Token ${userdata.token}`,
+            'Content-Type': 'application/json',
+        },
+    });
+    console.log('in actions');
+    if (!response.ok && response.status === 400) {
+        return false;
+    }
+    const data = await response.json();
+    console.log('in actions down=', data);
+    dispatch({
+        type: UserActionConstants.FETCH_PROFILE,
+        payload: data,
+    });
+    return true;
+};
+
+
 export const passwordResetAction = (data, id, token) => async (dispatch) => {
     let response = await fetch(`${UserActionConstants.API_BASE_URL}api/password_reset/confirm/${id}/${token}/`, {
         method: 'POST',
@@ -88,7 +151,6 @@ export const passwordResetRequestAction = (data) => async (dispatch) => {
         },
         body: JSON.stringify(data),
     });
-    
     if (response.status === 400) {
         dispatch({
             type: FlashMessageConstants.FAILURE,
@@ -103,6 +165,7 @@ export const passwordResetRequestAction = (data) => async (dispatch) => {
     });
     return true;
 };
+
 
 export const logout = () => {
     localStorage.removeItem("user");

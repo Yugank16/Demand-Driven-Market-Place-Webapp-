@@ -12,7 +12,7 @@ class App extends Component {
                     <FlashMessage />
                     <Switch>
                         <Route path="/home" component={PrivateLayout} />
-                        <Route path="/" component={PublicLayout} />
+                        <Route path="/" component={PublicLayout} />                   
                     </Switch>
                 </div>
             </BrowserRouter>

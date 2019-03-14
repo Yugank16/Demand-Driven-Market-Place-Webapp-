@@ -1,41 +1,52 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { fetchProfileAction, updateProfileAction } from '../../Actions/UserActions';
 
-import "../../App.css";
-import { signupAction } from '../../Actions/UserActions';
-import AuthPage from '../../Components/User/AuthPage';
-import FlashMessage from '../FlashMessage';
-
-class SignUp extends Component {
+class UpdateProfile extends Component {
     constructor() {
         super();
-
         this.state = {
             firstName: '',
             lastName: '',
             email: '',
-            password: '',
-            confirmPassword: '',
-            userType: 3,
-            gender: "MALE",
-            birthDate: '',
+            gender: '',
             phoneNumber: '',
+            profilePhoto: '',
+            userType: 3,
             errors: {},
             isButtonDisabled: false,
         };
-
         this.handleChange = this.handleChange.bind(this);
         this.handleValidation = this.handleValidation.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handelFileChange = this.handelFileChange.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.fetchProfileAction();
+    }
+
+    componentWillReceiveProps(nextprops) {
+        console.log('inside willreceive props=', nextprops.userdata.id);
+        this.setState({ firstName: nextprops.userdata.first_name });
+        this.setState({ lastName: nextprops.userdata.last_name });
+        this.setState({ email: nextprops.userdata.email });
+        this.setState({ gender: nextprops.userdata.gender });
+        this.setState({ phoneNumber: nextprops.userdata.phone_number });
+        this.setState({ birthDate: nextprops.userdata.birth_date });
+        this.setState({ gender: nextprops.userdata.gender });
     }
 
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
 
+    handleFileChange(e) {
+        this.setState({ profilePhoto: e.target.files[0] });
+    }
+
     handleValidation() {
-        const { firstName, lastName, password, email, confirmPassword, phoneNumber } = this.state;
+        const { firstName, lastName, email, phoneNumber } = this.state;
         const error = {};
         let formIsValid = true;
         // Email
@@ -56,23 +67,12 @@ class SignUp extends Component {
             error.firstName = "Firstname should be atleast 2 character";
         } else if (!firstName.match(/^[a-zA-Z ]*$/)) {
             formIsValid = false;
-            error.firstName = 'Please enter alphabet characters only';   
+            error.firstName = 'Please enter alphabet characters only';
         }
         // lastname
         if (lastName.length >= 1 && !lastName.match(/^[a-zA-Z ]*$/)) {
             formIsValid = false;
             error.lastName = 'Please enter alphabet characters only';
-        }
-        // Password
-        if (!password) {
-            formIsValid = false;
-            error.password = 'Password can not be empty';
-        } else if (password.length < 6) {
-            formIsValid = false;
-            error.password = 'Password should contain atleast 6 chracters';
-        } else if (confirmPassword !== password) {
-            formIsValid = false;
-            error.password = 'Password doesn\'t macth';
         }
 
         const phonepattern = new RegExp(/^[6-9]{1}\d{9}$/);
@@ -94,78 +94,64 @@ class SignUp extends Component {
         e.preventDefault();
         this.setState({ isButtonDisabled: true });
 
-
         if (this.handleValidation()) {
             const data = {
                 email: this.state.email,
-                password: this.state.password,
                 first_name: this.state.firstName,
                 last_name: this.state.lastName,
-                user_type: this.state.userType, 
-                birth_date: this.state.birthDate,
                 phone_number: this.state.phoneNumber,
-                gender: this.state.gender };
-            const { signupAction, history } = this.props;
-            const response = await signupAction(data);
+                gender: this.state.gender,
+                birth_date: this.state.birthDate,
+                user_type: this.state.userType,
+                profile_photo: this.state.profilePhoto,
+            };
+            const { updateProfileAction, history } = this.props;
+            const response = await updateProfileAction(data);
             if (response) {
-                history.push('/home'); 
+                history.push('/home/user-profile');
             }
-        } 
+        }
         this.setState({ isButtonDisabled: false });
     }
 
     render() {
-        if (localStorage.getItem('user')) {
-            this.props.history.push('/home');
-        } 
-        const { password, confirmPassword } = this.state;
-        
         return (
             <div>
-                <AuthPage />
-                <div className="FormCenter">
+                <div className="content">
+                    <h2>Update Profile</h2>
                     <form onSubmit={this.handleSubmit} className="FormFields">
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="first_name">First Name</label>
-                            <input type="text" id="first_name" className="FormField__Input" placeholder="Enter your First name" name="firstName" onChange={this.handleChange} /> 
+                            <input type="text" value={this.state.firstName} id="first_name" className="FormField__Input" placeholder="Enter your First name" name="firstName" onChange={this.handleChange} />
                             <div className="FormField__Label error-block">{this.state.errors.firstName}</div>
                         </div>
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="last_name">Last Name</label>
-                            <input type="text" id="last_name" className="FormField__Input" placeholder="Enter your Last name" name="lastName" onChange={this.handleChange} />
+                            <input type="text" value={this.state.lastName} id="last_name" className="FormField__Input" placeholder="Enter your Last name" name="lastName" onChange={this.handleChange} />
                             <div className="FormField__Label error-block">{this.state.errors.lastName}</div>
                         </div>
                         <div className="FormField">
+                            <label className="FormField__Label" htmlFor="Phone_number">Phone Number</label>
+                            <input type="text" value={this.state.phoneNumber} id="Phone_number" className="FormField__Input" name="phoneNumber" onChange={this.handleChange} />
+                            <div className="FormField__Label error-block">{this.state.errors.phoneNumber}</div>
+                        </div>
+                        <div className="FormField">
                             <label className="FormField__Label" htmlFor="email">E-Mail ID</label>
-                            <input type="email" id="email" className="FormField__Input" placeholder="Enter your email" name="email" onChange={this.handleChange} />
+                            <input type="email" value={this.state.email} id="email" className="FormField__Input" placeholder="Enter your email" name="email" onChange={this.handleChange} />
                             <div className="FormField__Label error-block">{this.state.errors.email}</div>
-                        </div>
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="password">Password</label>
-                            <input type="password" id="password" className="FormField__Input" placeholder="Enter your password" name="password" onChange={this.handleChange} />
-                            <div className="FormField__Label error-block">{this.state.errors.password}</div>
-                        </div>
-
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="password_confirmation">Confirm Password</label>
-                            <input type="password" id="confirm_password" className="FormField__Input" placeholder="Enter your password" name="confirmPassword" onChange={this.handleChange} />
-                            {password && confirmPassword !== password &&
-                                <div className="FormField__Label error-block">Password does not match</div>
-                            }
                         </div>
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="user_type">User Type</label>
                             <select className="FormField__Input" name="userType" onChange={this.handleChange}>
                                 <option className="drop_down_text" selected value={3}>Both Buyer and Seller</option>
-                                <option className="drop_down_text" value={2} > Only Seller</option>
+                                <option className="drop_down_text" value={2} >Only Seller</option>
                                 <option className="drop_down_text" value={1} >Only Buyer</option>
 
                             </select>
                         </div>
-
                         <div className="FormField">
-                            <label className="FormField__Label" htmlFor="datetime">Birth Date</label>
-                            <input type="date" id="datetime" className="FormField__Input" name="birthDate" onChange={this.handleChange} />
+                            <label className="FormField__Label" htmlFor="datetime">Birtth Date</label>
+                            <input type="date" value={this.state.birthDate} id="datetime" className="FormField__Input" name="birthDate" onChange={this.handleChange} />
                         </div>
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="user_type">Gender</label>
@@ -176,12 +162,11 @@ class SignUp extends Component {
                             </select>
                         </div>
                         <div className="FormField">
-                            <label className="FormField__Label" htmlFor="Phone_number">Phone Number</label>
-                            <input type="text" id="Phone_number" className="FormField__Input" name="phoneNumber" onChange={this.handleChange} />
-                            <div className="FormField__Label error-block">{this.state.errors.phoneNumber}</div>
+                            <label className="FormField__Label" htmlFor="email">profile Photo</label>
+                            <input type="file" id="profilephoto" name="profilePhoto" onChange={this.handleFileChange} />
                         </div>
                         <div className="FormField">
-                            <button className="FormField__Button mr-20" disabled={this.state.isButtonDisabled}>Sign Up</button> <Link to="/" className="FormField__Link">I&#39;m already member</Link>
+                            <button className="FormField__Button mr-20" disabled={this.state.isButtonDisabled}>Save</button>
                         </div>
                     </form>
                 </div>
@@ -189,6 +174,8 @@ class SignUp extends Component {
         );
     }
 }
-const mapStateToProps = state => ({ userInfo: state.auth.user });
+const mapStateToProps = state => ({
+    userdata: state.auth.user,
+});
 
-export default connect(mapStateToProps, { signupAction })(SignUp);
+export default connect(mapStateToProps, { fetchProfileAction, updateProfileAction })(UpdateProfile);

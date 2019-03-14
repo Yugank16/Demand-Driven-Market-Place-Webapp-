@@ -1,6 +1,5 @@
 import { UserActionConstants } from '../Constants/index';
 
-
 const initialState = {
     user: {},
     token: {},
@@ -14,6 +13,11 @@ export default function (state = initialState, action) {
             user: action.payload,
         };
     case UserActionConstants.FETCH_SIGNUP:
+        return {
+            ...state,
+            user: action.payload,
+        };
+    case UserActionConstants.FETCH_PROFILE:
         return {
             ...state,
             user: action.payload,
