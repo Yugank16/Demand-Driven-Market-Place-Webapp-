@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-import "../../App.css";
+import '../../App.css';
 import { signupAction } from '../../Actions/UserActions';
 import AuthPage from '../../Components/User/AuthPage';
 import FlashMessage from '../FlashMessage';
@@ -18,7 +17,7 @@ class SignUp extends Component {
             password: '',
             confirmPassword: '',
             userType: 3,
-            gender: "MALE",
+            gender: 'MALE',
             birthDate: '',
             phoneNumber: '',
             errors: {},
@@ -35,7 +34,7 @@ class SignUp extends Component {
     }
 
     handleValidation() {
-        const { firstName, lastName, password, email, confirmPassword, phoneNumber } = this.state;
+        const { firstName, lastName, password, email, confirmPassword, phoneNumber, birthDate } = this.state;
         const error = {};
         let formIsValid = true;
         // Email
@@ -53,10 +52,10 @@ class SignUp extends Component {
             error.firstName = 'Firstname can not be empty';
         } else if (firstName.length < 2) {
             formIsValid = false;
-            error.firstName = "Firstname should be atleast 2 character";
+            error.firstName = 'Firstname should be atleast 2 character';
         } else if (!firstName.match(/^[a-zA-Z ]*$/)) {
             formIsValid = false;
-            error.firstName = 'Please enter alphabet characters only';   
+            error.firstName = 'Please enter alphabet characters only';
         }
         // lastname
         if (lastName.length >= 1 && !lastName.match(/^[a-zA-Z ]*$/)) {
@@ -75,11 +74,20 @@ class SignUp extends Component {
             error.password = 'Password doesn\'t macth';
         }
 
+        const patternDate = new RegExp(/^(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/);
+        if (!birthDate) {
+            formIsValid = false;
+            error.birthDate = 'Birthdate can not be empty';
+        } else if (!patternDate.test(birthDate)) {
+            formIsValid = false;
+            error.birthDate = 'Please enter a valid Date';
+        }
+
         const phonepattern = new RegExp(/^[6-9]{1}\d{9}$/);
         // PhoneNumber
         if (!phoneNumber) {
             formIsValid = false;
-            error.phoneNumber = 'Phonenumber can not be empty'; 
+            error.phoneNumber = 'Phonenumber can not be empty';
         } else if (!phonepattern.test(phoneNumber)) {
             formIsValid = false;
             error.phoneNumber = 'Please enter a valid 10 digit Phonenumber';
@@ -101,25 +109,25 @@ class SignUp extends Component {
                 password: this.state.password,
                 first_name: this.state.firstName,
                 last_name: this.state.lastName,
-                user_type: this.state.userType, 
+                user_type: this.state.userType,
                 birth_date: this.state.birthDate,
                 phone_number: this.state.phoneNumber,
                 gender: this.state.gender };
             const { signupAction, history } = this.props;
             const response = await signupAction(data);
             if (response) {
-                history.push('/home'); 
+                history.push('/home');
             }
-        } 
+        }
         this.setState({ isButtonDisabled: false });
     }
 
     render() {
         if (localStorage.getItem('user')) {
             this.props.history.push('/home');
-        } 
+        }
         const { password, confirmPassword } = this.state;
-        
+
         return (
             <div>
                 <AuthPage />
@@ -127,7 +135,7 @@ class SignUp extends Component {
                     <form onSubmit={this.handleSubmit} className="FormFields">
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="first_name">First Name</label>
-                            <input type="text" id="first_name" className="FormField__Input" placeholder="Enter your First name" name="firstName" onChange={this.handleChange} /> 
+                            <input type="text" id="first_name" className="FormField__Input" placeholder="Enter your First name" name="firstName" onChange={this.handleChange} />
                             <div className="FormField__Label error-block">{this.state.errors.firstName}</div>
                         </div>
                         <div className="FormField">
@@ -166,6 +174,7 @@ class SignUp extends Component {
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="datetime">Birth Date</label>
                             <input type="date" id="datetime" className="FormField__Input" name="birthDate" onChange={this.handleChange} />
+                            <div className="FormField__Label error-block">{this.state.errors.birthDate}</div>
                         </div>
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="user_type">Gender</label>

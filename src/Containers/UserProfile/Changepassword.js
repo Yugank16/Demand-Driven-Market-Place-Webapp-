@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ChangePasswordAction } from '../../Actions/UserActions';
+import Dashboard from '../Dashboard';
 
 class ChangePassword extends Component {
     constructor() {
@@ -53,7 +54,6 @@ class ChangePassword extends Component {
             formIsValid = false;
             error.confirmPassword = 'Password does not match';
         }
-        console.log('hi');
         this.setState({ errors: error });
         return formIsValid;
     }
@@ -62,7 +62,6 @@ class ChangePassword extends Component {
     async handleSubmit(e) {
         e.preventDefault();
         this.setState({ submitted: true, isButtonDisabled: true });
-        console.log('hrer');
         if (this.handleValidation()) {
             const data = {
                 password: this.state.oldPassword,
@@ -73,14 +72,15 @@ class ChangePassword extends Component {
             if (response) {
                 history.push('/home/user-profile');
             }
-            this.setState({ isButtonDisabled: false });
         }
+        this.setState({ isButtonDisabled: false });
     }
 
     render() {
         const { submitted } = this.state;
         return (
             <div>
+                <Dashboard />
                 <div className="content">
                     <h2>Change  Password</h2>
                     <form onSubmit={this.handleSubmit} className="FormFields">

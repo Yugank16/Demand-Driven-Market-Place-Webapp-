@@ -8,7 +8,6 @@ const initialState = {
 export default function (state = initialState, action) {
     switch (action.type) {
     case FlashMessageConstants.SUCCESS:
-        console.log('success');
         return {
             message: action.message,
             className: 'alert-success',

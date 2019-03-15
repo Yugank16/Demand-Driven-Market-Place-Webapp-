@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { postRequestAction } from '../../Actions/RequestItemActions';
 import '../../App.css';
+import Dashboard from '../Dashboard';
 
 class RequestItem extends Component {
     constructor() {
@@ -12,7 +13,7 @@ class RequestItem extends Component {
             description: '',
             datetime: '',
             itemState: 1,
-            monthsOld: 2,
+            monthsOld: '',
             quantityRequired: 0,
             maxPrice: 0,
             moreInfo: '',
@@ -29,11 +30,10 @@ class RequestItem extends Component {
     }
 
     handleValidation() {
-        const { name, description, datetime, itemState, monthsOld, quantityRequired, maxPrice, moreInfo } = this.state;
+        const { name, description, datetime, itemState, monthsOld, quantityRequired, maxPrice } = this.state;
         const error = {};
         let formIsValid = true;
-
-        if (!name || !description || !datetime || !itemState || !monthsOld || !quantityRequired || !maxPrice || !moreInfo) {
+        if (!name || !description || !datetime || !itemState || !monthsOld || !quantityRequired || !maxPrice) {
             formIsValid = false;
         }
         return formIsValid;
@@ -66,6 +66,7 @@ class RequestItem extends Component {
 
         return (
             <div>
+                <Dashboard />
                 <div className="content">
                     <h1>Request Item</h1>
                     <div className="FormCenter">
@@ -101,31 +102,29 @@ class RequestItem extends Component {
                             </div>
                             <div className="FormField">
                                 <label className="FormField__Label" htmlFor="monthsOld">Months Old</label>
-                                <input type="text" id="monthsOld" className="FormField__Input" placeholder="Enter how many months old" name="monthsOld" onChange={this.handleChange} />
+                                <input type="number" id="monthsOld" className="FormField__Input" placeholder="Enter quantity required" name="monthsOld" onChange={this.handleChange} />
                                 {submitted && !monthsOld &&
-                                    <div className="FormField__Label error-block">Description is required</div>
+                                    <div className="FormField__Label error-block">Months is required</div>
                                 }
                             </div>
                             <div className="FormField">
                                 <label className="FormField__Label" htmlFor="quantityRequired">Quantity Required</label>
-                                <input type="text" id="quantityRequired" className="FormField__Input" placeholder="Enter quantity required" name="quantityRequired" onChange={this.handleChange} />
+                                <input type="number" id="quantityRequired" className="FormField__Input" placeholder="Enter quantity required" name="quantityRequired" onChange={this.handleChange} />
                                 {submitted && !quantityRequired &&
-                                    <div className="FormField__Label error-block">Description is required</div>
+                                    <div className="FormField__Label error-block">Quantity is required</div>
                                 }
                             </div>
                             <div className="FormField">
                                 <label className="FormField__Label" htmlFor="maxPrice">Max Price</label>
-                                <input type="text" id="maxPrice" className="FormField__Input" placeholder="Enter max price" name="maxPrice" onChange={this.handleChange} />
+                                <input type="number" id="maxPrice" className="FormField__Input" placeholder="Enter max price" name="maxPrice" onChange={this.handleChange} />
                                 {submitted && !maxPrice &&
-                                    <div className="FormField__Label error-block">Description is required</div>
+                                    <div className="FormField__Label error-block">Price is required</div>
                                 }
                             </div>
                             <div className="FormField">
                                 <label className="FormField__Label" htmlFor="moreInfo">More Information</label>
                                 <input type="text" id="moreInfo" className="FormField__Input" placeholder="Enter more specification for the item" name="moreInfo" onChange={this.handleChange} />
-                                {submitted && !moreInfo &&
-                                    <div className="FormField__Label error-block">Description is required</div>
-                                }
+
                             </div>
                             <div className="FormField">
                                 <button className="FormField__Button mr-20">Post</button>

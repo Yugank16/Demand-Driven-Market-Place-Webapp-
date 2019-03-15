@@ -30,6 +30,7 @@ export const loginAction = data => async (dispatch) => {
 };
 
 export const signupAction = data => async (dispatch) => {
+    console.log(data);
     let response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
         method: 'POST',
         headers: {
@@ -69,6 +70,10 @@ export const updateProfileAction = data => async (dispatch) => {
     });
     if (response.status === 400) {
         response = await response.json();
+        dispatch({
+            type: FlashMessageConstants.SUCCESS,
+            message: 'Oops Something Went Wrong ! Please check the provided details',
+        });
         return false;
     }
     response = await response.json();
@@ -86,6 +91,10 @@ export const ChangePasswordAction = data => async (dispatch) => {
         body: JSON.stringify(data),
     });
     if (!response.ok && response.status === 400) {
+        dispatch({
+            type: FlashMessageConstants.SUCCESS,
+            message: 'Old Password Incorrect',
+        });
         return false;
     }
     response = await response.json();
@@ -178,9 +187,10 @@ export const passwordResetRequestAction = (data) => async (dispatch) => {
     return true;
 };
 
-export const logout = () => {
-    localStorage.removeItem("user");
-    return {
-        type: UserActionConstants.AUTH_LOGOUT,
-    };
+export const logout = () => (dispatch) => {
+    localStorage.removeItem('user');
+    dispatch({
+        type: FlashMessageConstants.SUCCESS,
+        message: 'Logged Out Successfully',
+    });
 };

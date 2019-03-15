@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchProfileAction, updateProfileAction } from '../../Actions/UserActions';
+import Dashboard from '../Dashboard';
 
 class UpdateProfile extends Component {
     constructor() {
@@ -63,7 +64,7 @@ class UpdateProfile extends Component {
             error.firstName = 'Firstname can not be empty';
         } else if (firstName.length < 2) {
             formIsValid = false;
-            error.firstName = "Firstname should be atleast 2 character";
+            error.firstName = 'Firstname should be atleast 2 character';
         } else if (!firstName.match(/^[a-zA-Z ]*$/)) {
             formIsValid = false;
             error.firstName = 'Please enter alphabet characters only';
@@ -102,8 +103,10 @@ class UpdateProfile extends Component {
                 gender: this.state.gender,
                 birth_date: this.state.birthDate,
                 user_type: this.state.userType,
-                profile_photo: this.state.profilePhoto,
             };
+            if (this.state.profilePhoto) {
+                data.profile_photo = this.state.profilePhoto;
+            }
             const { updateProfileAction, history } = this.props;
             const response = await updateProfileAction(data);
             if (response) {
@@ -116,6 +119,7 @@ class UpdateProfile extends Component {
     render() {
         return (
             <div>
+                <Dashboard />
                 <div className="content">
                     <h2>Update Profile</h2>
                     <form onSubmit={this.handleSubmit} className="FormFields">

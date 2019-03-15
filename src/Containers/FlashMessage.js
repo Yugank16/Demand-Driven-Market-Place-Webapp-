@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import '../App.css';
 
 class FlashMessage extends Component {
     constructor(props) {
@@ -7,8 +8,9 @@ class FlashMessage extends Component {
         this.state = {
             isActive: true,
         };
+        this.hideAlert = this.hideAlert.bind(this);
     }
-
+   
     hideAlert() {
         this.setState({
             isActive: false,
@@ -21,11 +23,14 @@ class FlashMessage extends Component {
             this.state = {
                 isActive: true,
             };
+            setTimeout(() => {
+                this.hideAlert();
+            }, 2000);
             return (
                 <div >
                     {
                         this.state.isActive &&
-                        <div className={'col-md-12 alert' + className + 'alert-dismissible'} role="alert">
+                        <div className="flash" role="alert">
                             <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={() => this.hideAlert()}><span aria-hidden="true">&times;</span></button>
                             {message}
                         </div>         

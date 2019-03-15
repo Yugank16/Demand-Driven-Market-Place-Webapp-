@@ -10,13 +10,14 @@
   padding: 25px 20px;
   
 }
-
+.flash{
+  margin-left: 400px;
+}
 
 .FormTitle {
   color: #707C8B;
   font-weight: 300;
   margin-bottom: 20px;
-  padding-left: 40%;
 }
 
 .FormTitle__Link {

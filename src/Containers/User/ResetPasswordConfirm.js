@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { passwordResetAction } from '../../Actions/UserActions';
-import "../../App.css";
+import '../../App.css';
 
 
 class ResetPasswordConfirm extends Component {
@@ -30,9 +30,12 @@ class ResetPasswordConfirm extends Component {
         let formIsValid = true;
 
         // Password
-        if (!newPassword || !confirmPassword) {
+        if (!newPassword) {
             formIsValid = false;
-            error.password = 'Field can not be empty';
+            error.password = 'Password can not be empty';
+        } else if (!confirmPassword) {
+            formIsValid = false;
+            error.password = 'Confirm Password can not be empty';
         } else if (newPassword.length < 6) {
             formIsValid = false;
             error.password = 'Password should contain atleast 6 chracters';
