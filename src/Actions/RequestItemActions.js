@@ -2,7 +2,7 @@ import { RequestItemConstants, UserActionConstants, FlashMessageConstants } from
 
 export const postRequestAction = (data) => async (dispatch) => {
     const userdata = JSON.parse(localStorage.getItem('user'));
-    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/items/`, {
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/requests/`, {
         method: 'POST',
         headers: {
             Authorization: `Token ${userdata.token}`,

@@ -34,7 +34,7 @@ class SignUp extends Component {
     }
 
     handleValidation() {
-        const { firstName, lastName, password, email, confirmPassword, phoneNumber } = this.state;
+        const { firstName, lastName, password, email, confirmPassword, phoneNumber, birthDate } = this.state;
         const error = {};
         let formIsValid = true;
         // Email
@@ -82,6 +82,15 @@ class SignUp extends Component {
         } else if (!phonepattern.test(phoneNumber)) {
             formIsValid = false;
             error.phoneNumber = 'Please enter a valid 10 digit Phonenumber';
+        }
+
+        const patternDate = new RegExp(/^(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/);
+        if (!birthDate) {
+            formIsValid = false;
+            error.birthDate = 'Birthdate can not be empty'; 
+        } else if (!patternDate.test(birthDate)) {
+            formIsValid = false;
+            error.birthDate = 'Please enter a valid Date';
         }
 
         this.setState({ errors: error });
@@ -165,6 +174,7 @@ class SignUp extends Component {
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="datetime">Birth Date</label>
                             <input type="date" id="datetime" className="FormField__Input" name="birthDate" onChange={this.handleChange} />
+                            <div className="FormField__Label error-block">{this.state.errors.birthDate}</div>
                         </div>
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="user_type">Gender</label>

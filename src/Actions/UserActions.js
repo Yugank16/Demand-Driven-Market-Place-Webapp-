@@ -96,6 +96,10 @@ export const ChangePasswordAction = data => async (dispatch) => {
         return false;
     }
     response = await response.json();
+    dispatch({
+        type: FlashMessageConstants.SUCCESS,
+        message: 'Password Changed Successfully',
+    });
     return true;
 };
 
@@ -160,7 +164,7 @@ export const tokenvalidation = (id, token) => async (dispatch) => {
             message: 'success',
         });
         return true;
-    }   
+    }
     dispatch({
         type: UserActionConstants.RESPONSE,
         message: 'failure',
