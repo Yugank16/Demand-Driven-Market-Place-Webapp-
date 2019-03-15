@@ -18,6 +18,7 @@ class RequestItem extends Component {
             maxPrice: 0,
             moreInfo: '',
             submitted: false,
+            isButtonDisabled: false,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -38,12 +39,13 @@ class RequestItem extends Component {
         }
         return formIsValid;
     }
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
         this.setState({ submitted: true });
 
 
         if (this.handleValidation()) {
+            this.setState({ isButtonDisabled: true });
             const data = {
                 name: this.state.name,
                 short_description: this.state.description,
@@ -56,8 +58,11 @@ class RequestItem extends Component {
                 item_status: 1,
             };
             const { postRequestAction, history } = this.props;
-            postRequestAction(data);
-            history.push('/home');
+            const response = await postRequestAction(data);
+            if (response) {
+                history.push('/home');
+            }    
+            this.setState({ isButtonDisabled: false });     
         }
     }
 
@@ -127,7 +132,7 @@ class RequestItem extends Component {
 
                             </div>
                             <div className="FormField">
-                                <button className="FormField__Button mr-20">Post</button>
+                                <button className="FormField__Button mr-20" disabled={this.state.isButtonDisabled}>Post</button>
                             </div>
                         </form>
                     </div>

@@ -39,11 +39,11 @@ class ResetPasswordConfirm extends Component {
         } else if (newPassword.length < 6) {
             formIsValid = false;
             error.password = 'Password should contain atleast 6 chracters';
-        } else if (confirmPassword !== newPassword) {
+        } 
+        if (confirmPassword !== newPassword) {
             formIsValid = false;
-            error.password = 'Password doesn\'t macth';
+            error.confirmPassword = 'Password doesn\'t macth';
         }
-
 
         this.setState({ errors: error });
         return formIsValid;
@@ -54,8 +54,8 @@ class ResetPasswordConfirm extends Component {
         const { newPassword } = this.state;
         if (this.handleValidation()) {
             const data = {
-                password: newPassword };
-            
+                password: newPassword,
+            };
             const { id, reset_token: resetToken } = this.props.data;
             const { passwordResetAction, history } = this.props;
             const response = await passwordResetAction(data, id, resetToken);
@@ -78,7 +78,7 @@ class ResetPasswordConfirm extends Component {
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="confirm_password">Confirm Password</label>
                             <input type="password" id="password" className="FormField__Input" placeholder="Enter your new password again" name="confirmPassword" onChange={this.handleChange} />
-                            <div className="FormField__Label error-block">{this.state.errors.password}</div>
+                            <div className="FormField__Label error-block">{this.state.errors.confirmPassword}</div>
                         </div>
 
                         <div className="FormField">
