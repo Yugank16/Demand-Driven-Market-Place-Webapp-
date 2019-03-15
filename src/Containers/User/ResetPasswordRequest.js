@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { passwordResetRequestAction } from '../../Actions/UserActions';
+import AuthPage from '../../Components/User/AuthPage';
 import '../../App.css';
 
 
@@ -47,7 +48,6 @@ class ResetPasswordRequest extends Component {
                 email };
             const { passwordResetRequestAction, history } = this.props;
             const response = await passwordResetRequestAction(data);
-            
             history.push('/');
         }
     }
@@ -57,17 +57,24 @@ class ResetPasswordRequest extends Component {
             this.props.history.push('/home');
         }
         return (
-            <div className="FormCenter">
-                <form onSubmit={this.handleSubmit} className="FormFields" >
-                    <div className="FormField">
-                        <label className="FormField__Label" htmlFor="email">REGISTERED E-Mail ID</label>
-                        <input type="text" id="email" className="FormField__Input" placeholder="Enter your registered email" name="email" onChange={this.handleChange} />
-                        <div className="FormField__Label error-block">{this.state.errors.email}</div>
+            <div className="Screen">
+                <div className="LoginDiv">
+                    <AuthPage />
+                    <div className="FormCenter">
+                        <form onSubmit={this.handleSubmit} className="FormFields" >
+                            <div className="FormField">
+                                <label className="FormField__Label" htmlFor="email">Registered Email</label>
+                                <input type="text" id="email" className="FormField__Input" placeholder="Enter your registered email" name="email" onChange={this.handleChange} />
+                                <div className="FormField__Label error-block">{this.state.errors.email}</div>
+                            </div>
+
+                            <div className="FormField clearfix">
+                                <button className="FormField__Button ">Send Password Reset Link</button>
+                            </div>
+
+                        </form>
                     </div>
-                    <div className="FormField">
-                        <button className="FormField__Button mr-20">Submit</button>
-                    </div>
-                </form>
+                </div>
             </div>
         );
     }

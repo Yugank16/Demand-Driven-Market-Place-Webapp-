@@ -20,6 +20,7 @@ export const loginAction = data => async (dispatch) => {
     }
     response = await response.json();
     user = response;
+    // Storing User Token in local storage
     localStorage.setItem(UserConstants.USER, JSON.stringify(user));
     dispatch({
         type: FlashMessageConstants.SUCCESS,
@@ -29,6 +30,7 @@ export const loginAction = data => async (dispatch) => {
 };
 
 export const signupAction = data => async (dispatch) => {
+    console.log(data);
     let response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
         method: 'POST',
         headers: {
