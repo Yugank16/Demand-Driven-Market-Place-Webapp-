@@ -19,7 +19,7 @@ class UpdateProfile extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleValidation = this.handleValidation.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handelFileChange = this.handelFileChange.bind(this);
+        this.handleFileChange = this.handleFileChange.bind(this);
     }
 
     componentDidMount() {
@@ -27,7 +27,6 @@ class UpdateProfile extends Component {
     }
 
     componentWillReceiveProps(nextprops) {
-        console.log('inside willreceive props=', nextprops.userdata.id);
         this.setState({ firstName: nextprops.userdata.first_name });
         this.setState({ lastName: nextprops.userdata.last_name });
         this.setState({ email: nextprops.userdata.email });

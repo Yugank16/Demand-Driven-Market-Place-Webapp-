@@ -33,6 +33,12 @@ class ResetPasswordConfirm extends Component {
         if (!newPassword || !confirmPassword) {
             formIsValid = false;
             error.password = 'Field can not be empty';
+        } else if (newPassword.length < 6) {
+            formIsValid = false;
+            error.password = 'Password should contain atleast 6 chracters';
+        } else if (confirmPassword !== newPassword) {
+            formIsValid = false;
+            error.password = 'Password doesn\'t macth';
         }
 
 
@@ -57,7 +63,6 @@ class ResetPasswordConfirm extends Component {
     }
 
     render() {
-        console.log(this.props.data);
         return (
             <div>
                 <div className="FormCenter">

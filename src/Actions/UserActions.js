@@ -20,6 +20,7 @@ export const loginAction = data => async (dispatch) => {
     }
     response = await response.json();
     user = response;
+    // Storing User Token in local storage
     localStorage.setItem(UserConstants.USER, JSON.stringify(user));
     dispatch({
         type: FlashMessageConstants.SUCCESS,
@@ -68,7 +69,6 @@ export const updateProfileAction = data => async (dispatch) => {
     });
     if (response.status === 400) {
         response = await response.json();
-        console.log('hello', response);
         return false;
     }
     response = await response.json();

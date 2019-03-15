@@ -12,19 +12,19 @@ import ChangePassword from '../../Containers/UserProfile/Changepassword';
 
 const PrivateLayout = () => (
     <div>
-        <ProtectedRoute >
-            <Dashboard />
-            <Switch>
-                <ProtectedRoute exact path="/home" component={RequestItemList} />
-                <ProtectedRoute exact path="/home/user-profile" component={UserProfile} />
-                <ProtectedRoute exact path="/home/user-profile/update" component={UpdateProfile} />
-                <ProtectedRoute exact path="/home/user-profile/change-password" component={ChangePassword} />
-                <ProtectedRoute exact path="/home/request" component={RequestItem} />
-                <ProtectedRoute exact path="/home/request-details/:id" component={RequestDetails} />
 
-            </Switch>
-        </ProtectedRoute>
-        <Route path="*" component={NotFound} />
+        <Dashboard />
+        <Switch>
+            <ProtectedRoute exact path="/home" component={RequestItemList} />
+            <ProtectedRoute exact path="/home/user-profile" component={UserProfile} />
+            <ProtectedRoute exact path="/home/user-profile/update" component={UpdateProfile} />
+            <ProtectedRoute exact path="/home/user-profile/change-password" component={ChangePassword} />
+            <ProtectedRoute exact path="/home/request" component={RequestItem} />
+            <ProtectedRoute exact path="/home/request-details/:id" component={RequestDetails} />
+            <ProtectedRoute path="/home/*" component={NotFound} />
+        </Switch>
+
+        
     </div>
 
 );
