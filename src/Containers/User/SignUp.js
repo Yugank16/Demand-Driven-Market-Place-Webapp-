@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-import "../../App.css";
+import '../../App.css';
 import { signupAction } from '../../Actions/UserActions';
 import AuthPage from '../../Components/User/AuthPage';
 import FlashMessage from '../FlashMessage';
@@ -18,7 +17,7 @@ class SignUp extends Component {
             password: '',
             confirmPassword: '',
             userType: 3,
-            gender: "MALE",
+            gender: 'MALE',
             birthDate: '',
             phoneNumber: '',
             errors: {},
@@ -53,7 +52,7 @@ class SignUp extends Component {
             error.firstName = 'Firstname can not be empty';
         } else if (firstName.length < 2) {
             formIsValid = false;
-            error.firstName = "Firstname should be atleast 2 character";
+            error.firstName = 'Firstname should be atleast 2 character';
         } else if (!firstName.match(/^[a-zA-Z ]*$/)) {
             formIsValid = false;
             error.firstName = 'Please enter alphabet characters only';   

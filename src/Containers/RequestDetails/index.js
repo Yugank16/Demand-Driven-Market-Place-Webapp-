@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchDetailsAction } from '../../Actions/RequestItemActions';
 import RequestDetail from '../../Components/RequestDetails';
-import "../../App.css"; 
+import '../../App.css'; 
 
 class RequestDetails extends Component {
     componentDidMount() {

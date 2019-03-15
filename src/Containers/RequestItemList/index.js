@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchRequestsAction } from '../../Actions/RequestItemActions';
 import RequestItem from '../../Components/RequestItem';
-import "../../App.css";
+import '../../App.css';
 
 class RequestItemList extends Component {
     componentDidMount() {

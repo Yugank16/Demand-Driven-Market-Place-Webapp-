@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { passwordResetRequestAction } from '../../Actions/UserActions';
-import "../../App.css";
+import '../../App.css';
 
 
 class ResetPasswordRequest extends Component {

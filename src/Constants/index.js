@@ -1,5 +1,5 @@
 export const UserActionConstants = {
-    API_BASE_URL: "http://127.0.0.1:8000/",
+    API_BASE_URL: 'http://127.0.0.1:8000/',
     FETCH_LOGIN: 'FETCH_LOGIN',
     FETCH_SIGNUP: 'FETCH_SIGNUP',
     AUTH_LOGOUT: 'AUTH_LOGOUT',

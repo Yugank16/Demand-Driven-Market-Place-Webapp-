@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { passwordResetAction } from '../../Actions/UserActions';
-import "../../App.css";
+import '../../App.css';
 
 
 class ResetPasswordConfirm extends Component {
@@ -57,7 +57,6 @@ class ResetPasswordConfirm extends Component {
     }
 
     render() {
-        console.log(this.props.data);
         return (
             <div>
                 <div className="FormCenter">

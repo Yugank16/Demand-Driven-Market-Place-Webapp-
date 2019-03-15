@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './profile.css';
+import Dashboard from '../../Containers/Dashboard';
+import dummyimage from './index.png';
 
 const Profile = (props) => (
     <div>
+        <Dashboard />
         <div className="content">
             <div>
                 <h2>Profile</h2>
@@ -14,7 +17,10 @@ const Profile = (props) => (
                     <Link to="/home/user-profile/change-password">Change Password</Link>
                 </div>
                 <div>
-                    <img src={props.data.profile_photo} alt="profile" />
+                    {props.data.profile_photo &&
+                        <img src={props.data.profile_photo} alt="profile" />}
+                    {!props.data.profile_photo &&
+                        <img src={dummyimage} alt="hello" />}
                     <h3>First Name : {props.data.first_name}</h3>
                     <h3>Last Name : {props.data.last_name}</h3>
                     <h3>Email : {props.data.email}</h3>
