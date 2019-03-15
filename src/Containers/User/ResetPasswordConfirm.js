@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { passwordResetAction } from '../../Actions/UserActions';
 import "../../App.css";
@@ -47,7 +47,7 @@ class ResetPasswordConfirm extends Component {
             const data = {
                 password: newPassword };
             
-            const { id, resetToken } = this.props.match.params;
+            const { id, reset_token: resetToken } = this.props.data;
             const { passwordResetAction, history } = this.props;
             const response = await passwordResetAction(data, id, resetToken);
             if (response) {
@@ -57,6 +57,7 @@ class ResetPasswordConfirm extends Component {
     }
 
     render() {
+        console.log(this.props.data);
         return (
             <div>
                 <div className="FormCenter">
@@ -82,4 +83,4 @@ class ResetPasswordConfirm extends Component {
     }
 }
 
-export default connect(null, { passwordResetAction })(ResetPasswordConfirm);
+export default withRouter(connect(null, { passwordResetAction })(ResetPasswordConfirm));

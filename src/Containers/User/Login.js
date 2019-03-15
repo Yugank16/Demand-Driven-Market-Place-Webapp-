@@ -93,7 +93,7 @@ class Login extends Component {
                             <Link to="/signup" className="FormField__Link">Create an account</Link>
                         </div>
                         <div className="FormField">
-                            <Link to="/reset_password" className="FormField__Link">Forgot Password ?</Link>
+                            <Link to="/reset-password" className="FormField__Link">Forgot Password ?</Link>
                         </div>
                     </form>
                 </div>

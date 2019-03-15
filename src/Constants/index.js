@@ -4,6 +4,7 @@ export const UserActionConstants = {
     FETCH_SIGNUP: 'FETCH_SIGNUP',
     AUTH_LOGOUT: 'AUTH_LOGOUT',
     FETCH_PROFILE: 'FETCH_PROFILE',
+    RESPONSE: 'RESPONSE',
 };
 
 export const RequestItemConstants = {
@@ -19,5 +20,6 @@ export const FlashMessageConstants = {
 
 export const UserConstants = {
     USER: 'user',
+    INVALID_TOKEN_MESSAGE: 'The link you are trying to access has been expired or is invalid',
 };
 

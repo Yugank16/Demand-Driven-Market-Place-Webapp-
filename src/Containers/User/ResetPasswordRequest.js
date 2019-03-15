@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { passwordResetRequestAction } from '../../Actions/UserActions';
 import "../../App.css";
@@ -36,8 +35,6 @@ class ResetPasswordRequest extends Component {
             formIsValid = false;
             error.email = 'Please enter valid Email-ID';
         }
-
-
         this.setState({ errors: error });
         return formIsValid;
     }
@@ -56,6 +53,9 @@ class ResetPasswordRequest extends Component {
     }
 
     render() {
+        if (localStorage.getItem('user')) {
+            this.props.history.push('/home');
+        }
         return (
             <div className="FormCenter">
                 <form onSubmit={this.handleSubmit} className="FormFields" >

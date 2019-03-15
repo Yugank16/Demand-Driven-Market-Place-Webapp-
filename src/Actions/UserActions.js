@@ -59,9 +59,6 @@ export const updateProfileAction = data => async (dispatch) => {
     const userdata = JSON.parse(localStorage.getItem('user'));
     const formD = new FormData();
     Object.entries(data).forEach(([key, value]) => formD.append(key, value));
-    for (const key of formD.entries()) {
-        console.log(key[0] + ', ' + key[1]);
-    }
     let response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
         method: 'PATCH',
         headers: {
@@ -104,22 +101,18 @@ export const fetchProfileAction = () => async (dispatch) => {
             'Content-Type': 'application/json',
         },
     });
-    console.log('in actions');
     if (!response.ok && response.status === 400) {
         return false;
     }
     const data = await response.json();
-    console.log('in actions down=', data);
     dispatch({
         type: UserActionConstants.FETCH_PROFILE,
         payload: data,
     });
     return true;
 };
-
-
 export const passwordResetAction = (data, id, token) => async (dispatch) => {
-    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/password_reset/confirm/${id}/${token}/`, {
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/password-reset/confirm/${id}/${token}/`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -130,7 +123,7 @@ export const passwordResetAction = (data, id, token) => async (dispatch) => {
     if (response.status === 400) {
         dispatch({
             type: FlashMessageConstants.FAILURE,
-            message: 'Token not valid',
+            message: UserConstants.INVALID_TOKEN_MESSAGE,
         });
         return false;
     }
@@ -142,8 +135,34 @@ export const passwordResetAction = (data, id, token) => async (dispatch) => {
     return true;
 };
 
+export const tokenvalidation = (id, token) => async (dispatch) => {
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/password-reset/verify/${id}/${token}/`, {
+        method: 'GET',
+    });
+    if (response.status === 404) {
+        dispatch({
+            type: UserActionConstants.RESPONSE,
+            message: 'failure',
+        });
+        return false;
+    }
+    response = await response.json();
+    if (response.status === 200) {
+        dispatch({
+            type: UserActionConstants.RESPONSE,
+            message: 'success',
+        });
+        return true;
+    }   
+    dispatch({
+        type: UserActionConstants.RESPONSE,
+        message: 'failure',
+    });
+    return false;
+};
+
 export const passwordResetRequestAction = (data) => async (dispatch) => {
-    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/password_reset/`, {
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/password-reset/`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -151,13 +170,6 @@ export const passwordResetRequestAction = (data) => async (dispatch) => {
         },
         body: JSON.stringify(data),
     });
-    if (response.status === 400) {
-        dispatch({
-            type: FlashMessageConstants.FAILURE,
-            message: 'There is no active user associated with this e-mail address or the password can not be changed',
-        });
-        return false;
-    }
     response = await response.json();
     dispatch({
         type: FlashMessageConstants.SUCCESS,
@@ -165,7 +177,6 @@ export const passwordResetRequestAction = (data) => async (dispatch) => {
     });
     return true;
 };
-
 
 export const logout = () => {
     localStorage.removeItem("user");
