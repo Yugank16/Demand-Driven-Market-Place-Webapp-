@@ -129,7 +129,6 @@ class RequestItem extends Component {
                             <div className="FormField">
                                 <label className="FormField__Label" htmlFor="moreInfo">More Information</label>
                                 <input type="text" id="moreInfo" className="FormField__Input" placeholder="Enter more specification for the item" name="moreInfo" onChange={this.handleChange} />
-
                             </div>
                             <div className="FormField">
                                 <button className="FormField__Button mr-20" disabled={this.state.isButtonDisabled}>Post</button>
