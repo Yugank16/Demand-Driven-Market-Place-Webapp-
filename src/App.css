@@ -34,8 +34,6 @@
   display: flex;
 }
 
-
-
 .FormTitle {
   color: #707C8B;
   font-weight: 300;
@@ -139,8 +137,6 @@
     width: 70%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 1% 5%;
-
-
 }
 
 .FormFields_Signup{
@@ -166,9 +162,7 @@
   position:absolute;
   bottom: 5%;
   right: 10%;
-
 }
-
 
 table {
   font-family: arial, sans-serif;
@@ -184,5 +178,10 @@ td, th {
 
 
 .flash{
-  margin-left: 400px;
+  position: absolute;
+  top:2%;
+  left:45%;
+  z-index: 100;
+  background-color: lightcoral;
+  padding: 3px 5px;
 }

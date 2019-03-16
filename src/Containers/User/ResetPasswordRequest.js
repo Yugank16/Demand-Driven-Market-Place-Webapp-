@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { passwordResetRequestAction } from '../../Actions/UserActions';
 import AuthPage from '../../Components/User/AuthPage';
 import '../../App.css';
@@ -34,7 +35,7 @@ class ResetPasswordRequest extends Component {
             error.email = 'Email can not  be empty';
         } else if (!pattern.test(email)) {
             formIsValid = false;
-            error.email = 'Please enter valid Email-ID';
+            error.email = 'Please enter valid Email';
         }
         this.setState({ errors: error });
         return formIsValid;
@@ -70,6 +71,7 @@ class ResetPasswordRequest extends Component {
 
                             <div className="FormField clearfix">
                                 <button className="FormField__Button ">Send Password Reset Link</button>
+                                <Link to="/" className="FormField__Link">Login</Link>
                             </div>
 
                         </form>

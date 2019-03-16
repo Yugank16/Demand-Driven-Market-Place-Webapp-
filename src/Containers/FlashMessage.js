@@ -25,13 +25,12 @@ class FlashMessage extends Component {
             };
             setTimeout(() => {
                 this.hideAlert();
-            }, 2000);
+            }, 1000);
             return (
-                <div >
+                <div>
                     {
                         this.state.isActive &&
                         <div className="flash" role="alert">
-                            <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={() => this.hideAlert()}><span aria-hidden="true">&times;</span></button>
                             {message}
                         </div>         
                     }

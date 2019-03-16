@@ -30,7 +30,6 @@ export const loginAction = data => async (dispatch) => {
 };
 
 export const signupAction = data => async (dispatch) => {
-    console.log(data);
     let response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
         method: 'POST',
         headers: {
