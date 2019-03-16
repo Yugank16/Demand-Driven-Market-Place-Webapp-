@@ -1,36 +1,52 @@
 .Screen {
   height: 100vh;
-  display: flex;
   color: white;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+
+/* Login */
+
+.LoginDiv{
+  position:fixed;
+    top: 5%;
+    left: 32%;
+    width: 30%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 1% 5%;
 }
 
 .Screen__Form {
   height: 100%;
   background-color:white;
-  padding: 25px 40px;
-}
+  padding: 25px 20px;
+} 
 
-.FormCenter {
-  margin-bottom: 100px;
+.FormCenter{
+  display: flex;
 }
 
 .FormTitle {
   color: #707C8B;
   font-weight: 300;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .FormTitle__Link {
   color: #707C8B;
   text-decoration: none;
   display: inline-block;
-  font-size: 1.7em;
+  font-size: 1.4em;
   margin: 0 10px;
-  padding-bottom: 5px;
-}
-
-.FormTitle__Link:first-child {
-  margin-left: 0;
 }
 
 .FormTitle__Link--Active {
@@ -38,24 +54,28 @@
   border-bottom: 1px solid #199087;
 }
 
+.FormFields{
+  width: 100%;
+}
+
 .FormField {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .FormField__Label {
   display: block;
   text-transform: uppercase;
-  font-size: .9em;
+  font-size: 0.9em;
   color: black;
 }
 .FormField__Input {
-  width: 85%;
+  width: 100%;
   background-color: transparent;
   border: none;
   color: darkslategray;
   outline: none;
   border-bottom: 1px solid #445366;
-  font-size: 1em;
+  font-size: 0.8em;
   font-weight: 300;
   padding-bottom: 10px;
   margin-top: 10px;
@@ -66,27 +86,29 @@
 }
 
 .FormField__Button {
-  background-color: #4C5D72;
+  background-color: blue;
   color: white;
   border: none;
   outline: none;
   border-radius: 25px;
-  padding: 15px 70px;
+  padding: 15px 50px;
   font-size: .8em;
   font-weight: 500;
+  float: right;
 }
 
 .FormField__Link {
   color: #66707D;
   text-decoration: none;
   display: inline-block;
-  border-bottom: 1.5px solid #225E62;
-  padding-bottom: 5px;
+  font-size: .8em;
 }
- 
 
-.drop_down_text{
-  color: black;
+.float_right{
+  float: right;
+}
+.float_left{
+  float: left;
 }
 
 .error-block{
@@ -95,6 +117,51 @@
   margin-top: .3em;
   font-size: .7em;
   color: orangered;
+  z-index: 10;
+}
+ 
+
+/* Sinup */
+
+.Screen_Signup {
+  height: 596px;
+  width: 1286px;
+  color: white;
+}
+
+.SignupDiv{
+    position:fixed;
+    top: 4%;
+    left: 10%;
+    right: 10%;
+    width: 70%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 1% 5%;
+}
+
+.FormFields_Signup{
+  width: 100%;
+}
+
+.FormField_Signup {
+  margin-bottom: 20px;
+  margin-left: 20px;
+  float: left;
+  width: 47%;
+}
+
+.drop_down_text{
+  color: black;
+}
+
+.margin_signup_button{
+  margin: 20px 20px;
+}
+
+.signup_link{
+  position:absolute;
+  bottom: 5%;
+  right: 10%;
 }
 
 table {
@@ -107,4 +174,14 @@ td, th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
+}
+
+
+.flash{
+  position: absolute;
+  top:2%;
+  left:45%;
+  z-index: 100;
+  background-color: lightcoral;
+  padding: 3px 5px;
 }

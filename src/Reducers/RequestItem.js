@@ -1,6 +1,5 @@
 import { RequestItemConstants } from '../Constants/index';
 
-
 const initialState = {
     data: {},
 };
@@ -17,6 +16,12 @@ export default function (state = initialState, action) {
             ...state,
             data: action.payload,
         };
+    case RequestItemConstants.FETCH_PARTICULAR_REQUEST:
+        return {
+            ...state,
+            data: action.payload,
+        };
+
     default:
         return state;
     }

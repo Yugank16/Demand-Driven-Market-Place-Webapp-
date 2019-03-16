@@ -2,7 +2,7 @@ import React from 'react';
 import Dashboard from '../../Containers/Dashboard';
 
 const RequestItem = (props) => (
-    <div className="main-container ">
+    <div>
         <Dashboard />
         <div className="content">
             <div>

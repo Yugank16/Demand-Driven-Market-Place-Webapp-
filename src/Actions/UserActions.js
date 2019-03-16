@@ -1,72 +1,199 @@
-import { UserActionConstants, UserConstants } from '../Constants/index';
+import { UserActionConstants, UserConstants, FlashMessageConstants } from '../Constants/index';
 
-let token;
 let user;
 
-export const loginAction = (data) => dispatch => {
-    fetch(`${UserActionConstants.API_BASE_URL}api/login/`, {
+export const loginAction = data => async (dispatch) => {
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/login/`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-    }).then(res => {
-        console.log(res);
-        if (res.status === 400) {
-            throw Error("User Credentials not Valid");
-        }
-        return res.json();
-    })
-        .then(data => {
-            token = `${data.token}`;
-            fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
-                method: 'GET',
-                headers: {
-                    Authorization: `Token ${data.token}`,
-                    'Content-Type': 'application/json',
-                },
-            }).then(res => res.json())
-                .then(data => {
-                    user = data;
-                    user.token = token;
-                    localStorage.setItem(UserConstants.USER, JSON.stringify(user));
-                    dispatch({
-                        type: UserActionConstants.FETCH_LOGIN,
-                        payload: user,
-                    });
-                });
-        })
-        .catch((err) => alert(err));
+    });
+    if (response.status === 400) {
+        dispatch({
+            type: FlashMessageConstants.FAILURE,
+            message: 'User Credentials not Valid',
+        });
+        return false;
+    }
+    response = await response.json();
+    user = response;
+    // Storing User Token in local storage
+    localStorage.setItem(UserConstants.USER, JSON.stringify(user));
+    dispatch({
+        type: FlashMessageConstants.SUCCESS,
+        message: 'Logged In Successfully',
+    });
+    return true;
 };
 
-export const signupAction = (data) => dispatch => {
-    fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
+export const signupAction = data => async (dispatch) => {
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-    }).then(res => {
-        if (!res.ok && res.status === 400) {
-            throw Error("User Already Exist");
-        }
-        return res.json();
-    })
-        .then(data => {
-            dispatch({
-                type: UserActionConstants.FETCH_SIGNUP,
-                payload: data,
-            });
-        })
-        .catch((err) => alert(err));
+    });
+    if (!response.ok && response.status === 400) {
+        dispatch({
+            type: FlashMessageConstants.FAILURE,
+            message: 'User With Email-Id Already Exist',
+        });
+        return false;
+    }
+    response = await response.json();
+    user = {};
+    user.token = response.token;
+    localStorage.setItem(UserConstants.USER, JSON.stringify(user));
+    dispatch({
+        type: FlashMessageConstants.SUCCESS,
+        message: 'You have successfully signed up',
+    });
+    return true;
 };
 
-export const logout = () => {
-    console.log('hi');
-    localStorage.removeItem("user");
-    return {
-        type: UserActionConstants.AUTH_LOGOUT,
-    };
+export const updateProfileAction = data => async (dispatch) => {
+    const userdata = JSON.parse(localStorage.getItem('user'));
+    const formD = new FormData();
+    Object.entries(data).forEach(([key, value]) => formD.append(key, value));
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
+        method: 'PATCH',
+        headers: {
+            Authorization: `Token ${userdata.token}`,
+        },
+        body: formD,
+    });
+    if (response.status === 400) {
+        response = await response.json();
+        dispatch({
+            type: FlashMessageConstants.SUCCESS,
+            message: 'Oops Something Went Wrong ! Please check the provided details',
+        });
+        return false;
+    }
+    response = await response.json();
+    return true;
+};
+
+export const ChangePasswordAction = data => async (dispatch) => {
+    const userdata = JSON.parse(localStorage.getItem('user'));
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/change-password/`, {
+        method: 'PATCH',
+        headers: {
+            Authorization: `Token ${userdata.token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    if (!response.ok && response.status === 400) {
+        dispatch({
+            type: FlashMessageConstants.SUCCESS,
+            message: 'Old Password Incorrect',
+        });
+        return false;
+    }
+    response = await response.json();
+    dispatch({
+        type: FlashMessageConstants.SUCCESS,
+        message: 'Password Changed Successfully',
+    });
+    return true;
+};
+
+export const fetchProfileAction = () => async (dispatch) => {
+    const userdata = JSON.parse(localStorage.getItem('user'));
+    const response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
+        method: 'GET',
+        headers: {
+            Authorization: `Token ${userdata.token}`,
+            'Content-Type': 'application/json',
+        },
+    });
+    if (!response.ok && response.status === 400) {
+        return false;
+    }
+    const data = await response.json();
+    dispatch({
+        type: UserActionConstants.FETCH_PROFILE,
+        payload: data,
+    });
+    return true;
+};
+export const passwordResetAction = (data, id, token) => async (dispatch) => {
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/password-reset/confirm/${id}/${token}/`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    if (response.status === 400) {
+        dispatch({
+            type: FlashMessageConstants.FAILURE,
+            message: UserConstants.INVALID_TOKEN_MESSAGE,
+        });
+        return false;
+    }
+    response = await response.json();
+    dispatch({
+        type: FlashMessageConstants.SUCCESS,
+        message: 'Password has been changed please login',
+    });
+    return true;
+};
+
+export const tokenvalidation = (id, token) => async (dispatch) => {
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/password-reset/verify/${id}/${token}/`, {
+        method: 'GET',
+    });
+    if (response.status === 404) {
+        dispatch({
+            type: UserActionConstants.RESPONSE,
+            message: 'failure',
+        });
+        return false;
+    }
+    response = await response.json();
+    if (response.status === 200) {
+        dispatch({
+            type: UserActionConstants.RESPONSE,
+            message: 'success',
+        });
+        return true;
+    }
+    dispatch({
+        type: UserActionConstants.RESPONSE,
+        message: 'failure',
+    });
+    return false;
+};
+
+export const passwordResetRequestAction = (data) => async (dispatch) => {
+    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/password-reset/`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    response = await response.json();
+    dispatch({
+        type: FlashMessageConstants.SUCCESS,
+        message: 'Password reset Link has been sent to your registered email id',
+    });
+    return true;
+};
+
+export const logout = () => (dispatch) => {
+    localStorage.removeItem('user');
+    dispatch({
+        type: FlashMessageConstants.SUCCESS,
+        message: 'Logged Out Successfully',
+    });
 };

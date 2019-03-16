@@ -15,14 +15,14 @@
             }
         ],
         "max-len": [1, {
-            "code": 120,
+            "code": 240,
             "tabWidth": 4
           }],
         "indent": ["error", 4],
         "react/jsx-indent": ["error", 4],
         "prefer-template": 0,
         "import/prefer-default-export": 0,
-        "no-trailing-spaces": 1,
+        "no-trailing-spaces": 0,
         "comma-dangle": ["error", {
             "arrays": "always-multiline",
             "objects": "always-multiline",
@@ -33,7 +33,6 @@
         "arrow-body-style": ["error", "as-needed"],
         "quotes": [1, "single"],
         "no-unused-expressions": 0,
-        "react/destructuring-assignment": [1, "always"],
         "react/jsx-first-prop-new-line": 0,
         "jsx-a11y/label-has-for": 0,
         "object-curly-newline": 0,
@@ -57,14 +56,13 @@
         "import/no-cycle": 1,
         "no-restricted-syntax": 0,
         "react/prefer-stateless-function": 0,
-        "react/prop-types": 1,
+        "react/prop-types": 0,
         "no-shadow": "off",
         "single":"single",
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "linebreak-style": "off",
         "import/no-named-as-default": 0,
         "react/forbid-prop-types": [ <enabled>, { "forbid": [<string>], checkContextTypes: <boolean>, checkChildContextTypes: <boolean> }],
-        "prefer-destructuring": ["error", {"object": true, "array": false}],
         "radix": 0
     },
     "settings": {

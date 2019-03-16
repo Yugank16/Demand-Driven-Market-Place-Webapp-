@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { postRequestAction } from '../../Actions/RequestItemActions';
-import Dashboard from '../Dashboard';
 import '../../App.css';
+import Dashboard from '../Dashboard';
 
 class RequestItem extends Component {
     constructor() {
@@ -13,11 +13,12 @@ class RequestItem extends Component {
             description: '',
             datetime: '',
             itemState: 1,
-            monthsOld: 2,
+            monthsOld: '',
             quantityRequired: 0,
             maxPrice: 0,
             moreInfo: '',
             submitted: false,
+            isButtonDisabled: false,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -30,21 +31,21 @@ class RequestItem extends Component {
     }
 
     handleValidation() {
-        const { name, description, datetime, itemState, monthsOld, quantityRequired, maxPrice, moreInfo } = this.state;
+        const { name, description, datetime, itemState, monthsOld, quantityRequired, maxPrice } = this.state;
         const error = {};
         let formIsValid = true;
-
-        if (!name || !description || !datetime || !itemState || !monthsOld || !quantityRequired || !maxPrice || !moreInfo) {
+        if (!name || !description || !datetime || !itemState || !monthsOld || !quantityRequired || !maxPrice) {
             formIsValid = false;
         }
         return formIsValid;
     }
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
         this.setState({ submitted: true });
 
 
         if (this.handleValidation()) {
+            this.setState({ isButtonDisabled: true });
             const data = {
                 name: this.state.name,
                 short_description: this.state.description,
@@ -56,8 +57,12 @@ class RequestItem extends Component {
                 more_info: this.state.moreInfo,
                 item_status: 1,
             };
-            this.props.postRequestAction(data);
-            this.props.history.push('/home');
+            const { postRequestAction, history } = this.props;
+            const response = await postRequestAction(data);
+            if (response) {
+                history.push('/home');
+            }    
+            this.setState({ isButtonDisabled: false });     
         }
     }
 
@@ -65,7 +70,7 @@ class RequestItem extends Component {
         const { name, description, datetime, itemState, monthsOld, quantityRequired, maxPrice, moreInfo, submitted } = this.state;
 
         return (
-            <div className="main-container ">
+            <div>
                 <Dashboard />
                 <div className="content">
                     <h1>Request Item</h1>
@@ -102,9 +107,9 @@ class RequestItem extends Component {
                             </div>
                             <div className="FormField">
                                 <label className="FormField__Label" htmlFor="monthsOld">Months Old</label>
-                                <input type="number" id="monthsOld" className="FormField__Input" placeholder="Enter how many months old" name="monthsOld" onChange={this.handleChange} />
+                                <input type="number" id="monthsOld" className="FormField__Input" placeholder="Enter quantity required" name="monthsOld" onChange={this.handleChange} />
                                 {submitted && !monthsOld &&
-                                    <div className="FormField__Label error-block">Field is required</div>
+                                    <div className="FormField__Label error-block">Months is required</div>
                                 }
                             </div>
                             <div className="FormField">
@@ -118,7 +123,7 @@ class RequestItem extends Component {
                                 <label className="FormField__Label" htmlFor="maxPrice">Max Price</label>
                                 <input type="number" id="maxPrice" className="FormField__Input" placeholder="Enter max price" name="maxPrice" onChange={this.handleChange} />
                                 {submitted && !maxPrice &&
-                                    <div className="FormField__Label error-block">Max Price is required</div>
+                                    <div className="FormField__Label error-block">Price is required</div>
                                 }
                             </div>
                             <div className="FormField">
@@ -126,7 +131,7 @@ class RequestItem extends Component {
                                 <input type="text" id="moreInfo" className="FormField__Input" placeholder="Enter more specification for the item" name="moreInfo" onChange={this.handleChange} />
                             </div>
                             <div className="FormField">
-                                <button className="FormField__Button mr-20">Post</button>
+                                <button className="FormField__Button mr-20" disabled={this.state.isButtonDisabled}>Post</button>
                             </div>
                         </form>
                     </div>
