@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Cookies from 'js-cookie';
+import { UserConstants } from '../../Constants/index';
 import ResetPasswordConfirm from './ResetPasswordConfirm';
 import InvalidToken from '../../Components/User/InvalidToken';
 import { tokenvalidation } from '../../Actions/UserActions';
@@ -12,7 +14,7 @@ class ForgotPassword extends Component {
     }
 
     render() {
-        if (localStorage.getItem('user')) {
+        if (Cookies.get(UserConstants.USER)) {
             this.props.history.push('/home');
         }
         if (this.props.response === 'success') {

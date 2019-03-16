@@ -1,4 +1,6 @@
+import Cookies from 'js-cookie';
 import { UserActionConstants, UserConstants, FlashMessageConstants } from '../Constants/index';
+
 
 let user;
 
@@ -20,8 +22,7 @@ export const loginAction = data => async (dispatch) => {
     }
     response = await response.json();
     user = response;
-    // Storing User Token in local storage
-    localStorage.setItem(UserConstants.USER, JSON.stringify(user));
+    Cookies.set(UserConstants.USER, JSON.stringify(user));
     dispatch({
         type: FlashMessageConstants.SUCCESS,
         message: 'Logged In Successfully',
@@ -48,7 +49,7 @@ export const signupAction = data => async (dispatch) => {
     response = await response.json();
     user = {};
     user.token = response.token;
-    localStorage.setItem(UserConstants.USER, JSON.stringify(user));
+    Cookies.set(UserConstants.USER, JSON.stringify(user));
     dispatch({
         type: FlashMessageConstants.SUCCESS,
         message: 'You have successfully signed up',
@@ -57,7 +58,7 @@ export const signupAction = data => async (dispatch) => {
 };
 
 export const updateProfileAction = data => async (dispatch) => {
-    const userdata = JSON.parse(localStorage.getItem('user'));
+    const userdata = JSON.parse(Cookies.get(UserConstants.USER));
     const formD = new FormData();
     Object.entries(data).forEach(([key, value]) => formD.append(key, value));
     let response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
@@ -80,7 +81,7 @@ export const updateProfileAction = data => async (dispatch) => {
 };
 
 export const ChangePasswordAction = data => async (dispatch) => {
-    const userdata = JSON.parse(localStorage.getItem('user'));
+    const userdata = JSON.parse(Cookies.get(UserConstants.USER));
     let response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/change-password/`, {
         method: 'PATCH',
         headers: {
@@ -105,7 +106,7 @@ export const ChangePasswordAction = data => async (dispatch) => {
 };
 
 export const fetchProfileAction = () => async (dispatch) => {
-    const userdata = JSON.parse(localStorage.getItem('user'));
+    const userdata = JSON.parse(Cookies.get(UserConstants.USER));
     const response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
         method: 'GET',
         headers: {
@@ -191,7 +192,7 @@ export const passwordResetRequestAction = (data) => async (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
-    localStorage.removeItem('user');
+    Cookies.remove(UserConstants.USER);
     dispatch({
         type: FlashMessageConstants.SUCCESS,
         message: 'Logged Out Successfully',

@@ -1,7 +1,8 @@
-import { RequestItemConstants, UserActionConstants, FlashMessageConstants } from '../Constants/index';
+import Cookies from 'js-cookie';
+import { UserConstants, RequestItemConstants, UserActionConstants, FlashMessageConstants } from '../Constants/index';
 
 export const postRequestAction = (data) => async (dispatch) => {
-    const userdata = JSON.parse(localStorage.getItem('user'));
+    const userdata = JSON.parse(Cookies.get(UserConstants.USER));
     let response = await fetch(`${UserActionConstants.API_BASE_URL}api/requests/`, {
         method: 'POST',
         headers: {
@@ -26,7 +27,7 @@ export const postRequestAction = (data) => async (dispatch) => {
 };
 
 export const fetchRequestsAction = () => dispatch => {
-    const userdata = JSON.parse(localStorage.getItem('user'));
+    const userdata = JSON.parse(Cookies.get(UserConstants.USER));
     fetch(`${UserActionConstants.API_BASE_URL}api/requests/`, {
         method: 'GET',
         headers: {
@@ -42,7 +43,7 @@ export const fetchRequestsAction = () => dispatch => {
 };
 
 export const fetchDetailsAction = (id) => dispatch => {
-    const userdata = JSON.parse(localStorage.getItem('user'));
+    const userdata = JSON.parse(Cookies.get(UserConstants.USER));
     fetch(`${UserActionConstants.API_BASE_URL}api/request-details/${id}`, {
         method: 'GET',
         headers: {

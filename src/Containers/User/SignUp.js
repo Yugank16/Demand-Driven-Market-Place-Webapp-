@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Cookies from 'js-cookie';
+import { UserConstants } from '../../Constants/index';
 import '../../App.css';
 import { signupAction } from '../../Actions/UserActions';
 import AuthPage from '../../Components/User/AuthPage';
@@ -122,7 +124,7 @@ class SignUp extends Component {
     }
 
     render() {
-        if (localStorage.getItem('user')) {
+        if (Cookies.get(UserConstants.USER)) {
             this.props.history.push('/home');
         }
         const { password, confirmPassword } = this.state;

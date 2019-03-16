@@ -1,12 +1,13 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import { UserConstants } from '../Constants/index';
 
 export const ProtectedRoute = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props => {
-            if (localStorage.getItem(UserConstants.USER)) {
+            if (Cookies.get(UserConstants.USER)) {
                 return <Component {...props} />;
             }
             

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { UserConstants } from '../../Constants/index';
 import { passwordResetRequestAction } from '../../Actions/UserActions';
 import AuthPage from '../../Components/User/AuthPage';
 import '../../App.css';
@@ -54,7 +56,7 @@ class ResetPasswordRequest extends Component {
     }
 
     render() {
-        if (localStorage.getItem('user')) {
+        if (Cookies.get(UserConstants.USER)) {
             this.props.history.push('/home');
         }
         return (

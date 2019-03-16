@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Cookies from 'js-cookie';
 import '../../App.css';
 import AuthPage from '../../Components/User/AuthPage';
 import { loginAction } from '../../Actions/UserActions';
-
+import { UserConstants } from '../../Constants/index';
 
 class Login extends Component {
     constructor() {
@@ -70,7 +71,7 @@ class Login extends Component {
     }
 
     render() {
-        if (localStorage.getItem('user')) {
+        if (Cookies.get(UserConstants.USER)) {
             this.props.history.push('/home');
         }
         return (
