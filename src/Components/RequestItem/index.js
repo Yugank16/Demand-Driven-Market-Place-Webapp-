@@ -6,16 +6,7 @@ const RequestItem = (props) => (
         <Dashboard />
         <div className="content">
             <div>
-                <h2>Item List</h2>
-                <table>
-                    <tr>
-                        <th>Item Name</th>
-                        <th>Max Price</th>
-                        <th>Requester</th>
-                        <th>Sell</th>
-                    </tr>
-                    {props.data}
-                </table>
+                {props.data}
             </div>
         </div>
     </div>

@@ -10,7 +10,6 @@ class ChangePassword extends Component {
             oldPassword: '',
             newPassword: '',
             confirmPassword: '',
-            submitted: false,
             errors: {},
             isButtonDisabled: false,
         };
@@ -61,7 +60,7 @@ class ChangePassword extends Component {
 
     async handleSubmit(e) {
         e.preventDefault();
-        this.setState({ submitted: true, isButtonDisabled: true });
+        this.setState({ isButtonDisabled: true });
         if (this.handleValidation()) {
             const data = {
                 password: this.state.oldPassword,
@@ -77,7 +76,6 @@ class ChangePassword extends Component {
     }
 
     render() {
-        const { submitted } = this.state;
         return (
             <div>
                 <Dashboard />
