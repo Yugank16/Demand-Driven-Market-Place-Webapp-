@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ChangePasswordAction } from '../../Actions/UserActions';
-import Dashboard from '../Dashboard';
 
 class ChangePassword extends Component {
     constructor() {
@@ -80,7 +79,6 @@ class ChangePassword extends Component {
         const { submitted } = this.state;
         return (
             <div>
-                <Dashboard />
                 <div className="content">
                     <h2>Change  Password</h2>
                     <form onSubmit={this.handleSubmit} className="FormFields">

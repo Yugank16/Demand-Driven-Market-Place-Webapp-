@@ -1,7 +1,6 @@
 import Cookies from 'js-cookie';
 import { UserActionConstants, UserConstants, FlashMessageConstants } from '../Constants/index';
 
-
 let user;
 
 export const loginAction = data => async (dispatch) => {
@@ -40,11 +39,8 @@ export const signupAction = data => async (dispatch) => {
         body: JSON.stringify(data),
     });
     if (!response.ok && response.status === 400) {
-        dispatch({
-            type: FlashMessageConstants.FAILURE,
-            message: 'User With Email-Id Already Exist',
-        });
-        return false;
+        response = await response.json();
+        return response;
     }
     response = await response.json();
     user = {};
@@ -70,11 +66,7 @@ export const updateProfileAction = data => async (dispatch) => {
     });
     if (response.status === 400) {
         response = await response.json();
-        dispatch({
-            type: FlashMessageConstants.SUCCESS,
-            message: 'Oops Something Went Wrong ! Please check the provided details',
-        });
-        return false;
+        return response;
     }
     response = await response.json();
     return true;
@@ -191,10 +183,17 @@ export const passwordResetRequestAction = (data) => async (dispatch) => {
     return true;
 };
 
-export const logout = () => (dispatch) => {
+export const logout = (token = 'valid') => (dispatch) => {
     Cookies.remove(UserConstants.USER);
-    dispatch({
-        type: FlashMessageConstants.SUCCESS,
-        message: 'Logged Out Successfully',
-    });
+    if (token === 'valid') {
+        dispatch({
+            type: FlashMessageConstants.SUCCESS,
+            message: 'Logged Out Successfully',
+        });
+    } else {
+        dispatch({
+            type: FlashMessageConstants.SUCCESS,
+            message: 'Please Login Again',
+        });
+    }
 };

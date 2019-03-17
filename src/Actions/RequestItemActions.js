@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import { UserConstants, RequestItemConstants, UserActionConstants, FlashMessageConstants } from '../Constants/index';
+import { logout } from './UserActions';
 
 export const postRequestAction = (data) => async (dispatch) => {
     const userdata = JSON.parse(Cookies.get(UserConstants.USER));
@@ -12,13 +13,13 @@ export const postRequestAction = (data) => async (dispatch) => {
         body: JSON.stringify(data),
     });
     if (!response.ok && response.status === 400) {
+        response = await response.json();
         dispatch({
-            type: FlashMessageConstants.FAILURE,
-            message: 'Oops Something Went Wrong',
+            type: RequestItemConstants.ERRORS,
+            message: 'hello',
         });
-        return false;
+        return response;
     }
-    response = await response.json();
     dispatch({
         type: RequestItemConstants.POST_ITEM_REQUEST,
         payload: data,
@@ -35,6 +36,7 @@ export const fetchRequestsAction = () => dispatch => {
         },
     }).then(res => res.json())
         .then(data => {
+            console.log(data);
             dispatch({
                 type: RequestItemConstants.FETCH_ALL_REQUEST,
                 payload: data,

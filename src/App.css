@@ -182,6 +182,7 @@ td, th {
   top:2%;
   left:45%;
   z-index: 100;
-  background-color: lightcoral;
+  background-color: #dddddd;
+  color: black;
   padding: 3px 5px;
 }

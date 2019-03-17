@@ -20,7 +20,6 @@ const PrivateLayout = () => (
             <ProtectedRoute exact path="/home/request-details/:id" component={RequestDetails} />
             <Route path="*" component={NotFound} />
         </Switch>
-        
     </div>
 
 );

@@ -13,7 +13,6 @@ const PublicLayout = (props) => (
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/reset-password/" component={ResetPasswordRequest} />
             <Route exact path="/reset-password/confirm/:id/:reset_token" component={ForgotPassword} />
-            <Route path="*" component={NotFound} />
         </Switch>
     </div>
 

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchProfileAction, updateProfileAction } from '../../Actions/UserActions';
-import Dashboard from '../Dashboard';
 
 class UpdateProfile extends Component {
     constructor() {
@@ -9,7 +8,6 @@ class UpdateProfile extends Component {
         this.state = {
             firstName: '',
             lastName: '',
-            email: '',
             gender: '',
             phoneNumber: '',
             profilePhoto: '',
@@ -30,7 +28,6 @@ class UpdateProfile extends Component {
     componentWillReceiveProps(nextprops) {
         this.setState({ firstName: nextprops.userdata.first_name });
         this.setState({ lastName: nextprops.userdata.last_name });
-        this.setState({ email: nextprops.userdata.email });
         this.setState({ gender: nextprops.userdata.gender });
         this.setState({ phoneNumber: nextprops.userdata.phone_number });
         this.setState({ birthDate: nextprops.userdata.birth_date });
@@ -46,18 +43,10 @@ class UpdateProfile extends Component {
     }
 
     handleValidation() {
-        const { firstName, lastName, email, phoneNumber } = this.state;
+        const { firstName, lastName, phoneNumber, birthDate } = this.state;
         const error = {};
         let formIsValid = true;
-        // Email
-        const pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-        if (!email) {
-            formIsValid = false;
-            error.email = 'Email can not  be empty';
-        } else if (!pattern.test(email)) {
-            formIsValid = false;
-            error.email = 'Please enter valid Email-ID';
-        }
+    
         // Firstname
         if (!firstName) {
             formIsValid = false;
@@ -75,14 +64,24 @@ class UpdateProfile extends Component {
             error.lastName = 'Please enter alphabet characters only';
         }
 
-        const phonepattern = new RegExp(/^[6-9]{1}\d{9}$/);
         // PhoneNumber
+        const phonepattern = new RegExp(/^[6-9]{1}\d{9}$/);
         if (!phoneNumber) {
             formIsValid = false;
             error.phoneNumber = 'Phonenumber can not be empty'; 
         } else if (!phonepattern.test(phoneNumber)) {
             formIsValid = false;
             error.phoneNumber = 'Please enter a valid 10 digit Phonenumber';
+        }
+        
+        // Birthdate
+        const patternDate = new RegExp(/^(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/);
+        if (!birthDate) {
+            formIsValid = false;
+            error.birthDate = 'Birthdate can not be empty';
+        } else if (!patternDate.test(birthDate)) {
+            formIsValid = false;
+            error.birthDate = 'Please enter a valid Date';
         }
 
         this.setState({ errors: error });
@@ -96,7 +95,6 @@ class UpdateProfile extends Component {
 
         if (this.handleValidation()) {
             const data = {
-                email: this.state.email,
                 first_name: this.state.firstName,
                 last_name: this.state.lastName,
                 phone_number: this.state.phoneNumber,
@@ -109,8 +107,13 @@ class UpdateProfile extends Component {
             }
             const { updateProfileAction, history } = this.props;
             const response = await updateProfileAction(data);
-            if (response) {
+            if (response === true) {
                 history.push('/home/user-profile');
+            } else {
+                console.log(response);
+                const { first_name: firstName, last_name: lastName, birth_date: birthDate, phone_number: phoneNumber, gender, profile_photo: profilePhoto } = response;
+                const error = { firstName, lastName, birthDate, phoneNumber, gender, profilePhoto };
+                this.setState({ isButtonDisabled: false, errors: error });
             }
         }
         this.setState({ isButtonDisabled: false });
@@ -119,7 +122,6 @@ class UpdateProfile extends Component {
     render() {
         return (
             <div>
-                <Dashboard />
                 <div className="content">
                     <h2>Update Profile</h2>
                     <form onSubmit={this.handleSubmit} className="FormFields">
@@ -139,18 +141,13 @@ class UpdateProfile extends Component {
                             <div className="FormField__Label error-block">{this.state.errors.phoneNumber}</div>
                         </div>
                         <div className="FormField">
-                            <label className="FormField__Label" htmlFor="email">E-Mail ID</label>
-                            <input type="email" value={this.state.email} id="email" className="FormField__Input" placeholder="Enter your email" name="email" onChange={this.handleChange} />
-                            <div className="FormField__Label error-block">{this.state.errors.email}</div>
-                        </div>
-                        <div className="FormField">
                             <label className="FormField__Label" htmlFor="user_type">User Type</label>
                             <select className="FormField__Input" name="userType" onChange={this.handleChange}>
                                 <option className="drop_down_text" selected value={3}>Both Buyer and Seller</option>
                                 <option className="drop_down_text" value={2} >Only Seller</option>
                                 <option className="drop_down_text" value={1} >Only Buyer</option>
-
                             </select>
+                            <div className="FormField__Label error-block">{this.state.errors.userType}</div>
                         </div>
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="datetime">Birtth Date</label>
@@ -163,10 +160,12 @@ class UpdateProfile extends Component {
                                 <option className="drop_down_text" value="FEMALE" >FEMALE</option>
                                 <option className="drop_down_text" value="OTHERS" >OTHERS</option>
                             </select>
+                            <div className="FormField__Label error-block">{this.state.errors.gender}</div>
                         </div>
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="email">profile Photo</label>
                             <input type="file" id="profilephoto" name="profilePhoto" onChange={this.handleFileChange} />
+                            <div className="FormField__Label error-block">{this.state.errors.profilePhoto}</div>
                         </div>
                         <div className="FormField">
                             <button className="FormField__Button mr-20" disabled={this.state.isButtonDisabled}>Save</button>

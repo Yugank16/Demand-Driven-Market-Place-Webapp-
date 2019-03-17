@@ -1,9 +1,7 @@
 import React from 'react';
-import Dashboard from '../../Containers/Dashboard';
 
 const RequestItemDetails = (props) => (
-    <div className="main-container ">
-        <Dashboard />
+    <div >
         <div className="content">
             hi
         </div>

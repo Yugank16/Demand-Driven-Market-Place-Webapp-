@@ -2,15 +2,22 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { UserConstants } from '../Constants/index';
+import Dashboard from '../Containers/Dashboard';
 
 export const ProtectedRoute = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props => {
             if (Cookies.get(UserConstants.USER)) {
-                return <Component {...props} />;
+                return (
+                    <div>
+                        <Dashboard />
+                        <Component {...props} />
+                    </div>
+
+                );
             }
-            
+
             return (<Redirect to={
                 {
                     pathname: '/',
@@ -18,7 +25,7 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => (
                         from: props.location,
                     },
                 }
-            } 
+            }
             />);
         }}
     />

@@ -31,7 +31,10 @@ class SignUp extends Component {
     }
 
     handleChange(e) {
+        // const { named:name } = e.target;
         this.setState({ [e.target.name]: e.target.value });
+
+        this.setState({ errors: { ...this.state.errors, [e.target.name]: null } });
     }
 
     handleValidation() {
@@ -116,8 +119,12 @@ class SignUp extends Component {
                 gender: this.state.gender };
             const { signupAction, history } = this.props;
             const response = await signupAction(data);
-            if (response) {
+            if (response === true) {
                 history.push('/home');
+            } else {
+                const { email, password, first_name: firstName, last_name: lastName, user_type: userType, birth_date: birthDate, phone_number: phoneNumber, gender } = response;
+                const error = { email, password, firstName, lastName, userType, birthDate, phoneNumber, gender };
+                this.setState({ isButtonDisabled: false, errors: error });
             }
         }
         this.setState({ isButtonDisabled: false });
@@ -150,7 +157,7 @@ class SignUp extends Component {
                             <div className="clearfix">
                                 <div className="FormField_Signup">
                                     <label className="FormField__Label" htmlFor="email">E-Mail ID</label>
-                                    <input type="email" id="email" className="FormField__Input" placeholder="Enter your email" name="email" onChange={this.handleChange} />
+                                    <input type="text" id="email" className="FormField__Input" placeholder="Enter your email" name="email" onChange={this.handleChange} />
                                     <div className="FormField__Label error-block">{this.state.errors.email}</div>
                                 </div>
                                 <div className="FormField_Signup">
@@ -209,6 +216,6 @@ class SignUp extends Component {
         );
     }
 }
-const mapStateToProps = state => ({ userInfo: state.auth.user });
+const mapStateToProps = state => ({ errors: state.auth.errors });
 
 export default connect(mapStateToProps, { signupAction })(SignUp);

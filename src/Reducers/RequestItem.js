@@ -2,6 +2,7 @@ import { RequestItemConstants } from '../Constants/index';
 
 const initialState = {
     data: {},
+    errors: {},
 };
 
 export default function (state = initialState, action) {
@@ -21,7 +22,10 @@ export default function (state = initialState, action) {
             ...state,
             data: action.payload,
         };
-
+    case RequestItemConstants.ERRORS:
+        return {
+            errors: action.payload,
+        };
     default:
         return state;
     }

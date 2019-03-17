@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './profile.css';
-import Dashboard from '../../Containers/Dashboard';
 import dummyimage from '../../Assets/Images/index.png';
 
 const Profile = (props) => (
     <div>
-        <Dashboard />
         <div className="content">
             <div>
                 <h2>Profile</h2>

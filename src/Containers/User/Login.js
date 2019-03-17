@@ -63,8 +63,12 @@ class Login extends Component {
                 password: this.state.password };
             const { loginAction, history } = this.props;
             const response = await loginAction(data);
-            if (response) {
+            if (response === true) {
                 history.push('/home');
+            } else {
+                const { email, password } = response;
+                const error = { email, password };
+                this.setState({ isButtonDisabled: false, errors: error });
             }
         }
         this.setState({ isButtonDisabled: false });

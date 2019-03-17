@@ -14,6 +14,7 @@ class ResetPasswordRequest extends Component {
 
         this.state = {
             email: '',
+            isButtonDisabled: false,
             errors: {},
         };
 
@@ -45,14 +46,22 @@ class ResetPasswordRequest extends Component {
 
     async handleSubmit(e) {
         e.preventDefault();
+        this.setState({ isButtonDisabled: true });
         const { email } = this.state;
         if (this.handleValidation()) {
             const data = {
                 email };
             const { passwordResetRequestAction, history } = this.props;
             const response = await passwordResetRequestAction(data);
-            history.push('/');
+            if (response === true) {
+                history.push('/');
+            } else {
+                const { email } = response;
+                const error = { email };
+                this.setState({ isButtonDisabled: false, errors: error });
+            }   
         }
+        this.setState({ isButtonDisabled: false });
     }
 
     render() {
@@ -72,7 +81,7 @@ class ResetPasswordRequest extends Component {
                             </div>
 
                             <div className="FormField clearfix">
-                                <button className="FormField__Button ">Send Password Reset Link</button>
+                                <button className="FormField__Button " disabled={this.state.isButtonDisabled}>Send Password Reset Link</button>
                                 <Link to="/" className="FormField__Link">Login</Link>
                             </div>
 
