@@ -1,4 +1,53 @@
-img{
+.content{
+	margin-left: 200px; 
+	font-size: 20px; 
+	padding: 0px 80px;
+}
+
+.clearfix::after {
+	content: "";
+	clear: both;
+	display: table;
+}
+
+.profile-div{
+    position:absolute;
+    top: 10%;
+    left: 25%;
+    width: 53%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 1% 5%;
+    display: flex;
+  }
+
+
+.dp-info{
+    float: left;
+    margin: 10px 50px 50px 0px;
+} 
+
+.user-info{
+    float: left;
+    margin: 0px 50px;
+}
+
+.profile-update-link{
+    position: absolute;
+    left:5%;
+    bottom: 5%;
+    text-decoration: none;
+
+}
+
+.change-password-link{
+    position: absolute;
+    right:5%;
+    bottom: 5%;
+    text-decoration: none;
+    
+}
+
+.dp{
     width :200px;
-    height: 300px;
+    height: 200px;
 }
