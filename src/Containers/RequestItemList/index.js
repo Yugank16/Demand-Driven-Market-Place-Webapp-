@@ -23,6 +23,7 @@ class RequestItemList extends Component {
             ));
             return (
                 <div>
+                    <input type="text" id="name" className="search-item-input" placeholder="Search by name" name="name" onChange={this.handleChange} />
                     <RequestItem data={data} />
                 </div>
             );
