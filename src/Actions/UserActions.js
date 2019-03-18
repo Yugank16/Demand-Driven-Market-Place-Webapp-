@@ -83,11 +83,12 @@ export const ChangePasswordAction = data => async (dispatch) => {
         body: JSON.stringify(data),
     });
     if (!response.ok && response.status === 400) {
+        response = await response.json();
         dispatch({
             type: FlashMessageConstants.SUCCESS,
             message: 'Old Password Incorrect',
         });
-        return false;
+        return response;
     }
     response = await response.json();
     dispatch({

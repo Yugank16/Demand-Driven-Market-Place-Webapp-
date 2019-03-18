@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { UserConstants } from '../../Constants/index';
+import { UserConstants, REGEX } from '../../Constants';
 import { passwordResetRequestAction } from '../../Actions/UserActions';
 import AuthPage from '../../Components/User/AuthPage';
 import '../../App.css';
@@ -25,6 +25,7 @@ class ResetPasswordRequest extends Component {
 
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+        this.setState({ errors: { ...this.state.errors, [e.target.name]: null } });
     }
 
     handleValidation() {
@@ -32,7 +33,7 @@ class ResetPasswordRequest extends Component {
         const error = {};
         let formIsValid = true;
         // Email
-        const pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+        const pattern = REGEX.EMAIL;
         if (!email) {
             formIsValid = false;
             error.email = 'Email can not  be empty';

@@ -9,7 +9,6 @@ class ChangePassword extends Component {
             oldPassword: '',
             newPassword: '',
             confirmPassword: '',
-            submitted: false,
             errors: {},
             isButtonDisabled: false,
         };
@@ -20,6 +19,7 @@ class ChangePassword extends Component {
 
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+        this.setState({ errors: { ...this.state.errors, [e.target.name]: null } });
     }
 
     handleValidation() {
@@ -60,7 +60,8 @@ class ChangePassword extends Component {
 
     async handleSubmit(e) {
         e.preventDefault();
-        this.setState({ submitted: true, isButtonDisabled: true });
+        this.setState({ isButtonDisabled: true });
+        const error = {};
         if (this.handleValidation()) {
             const data = {
                 password: this.state.oldPassword,
@@ -68,15 +69,17 @@ class ChangePassword extends Component {
             };
             const { ChangePasswordAction, history } = this.props;
             const response = await ChangePasswordAction(data);
-            if (response) {
+            if (response === true) {
                 history.push('/home/user-profile');
+            } else {
+                const error = { oldPassword: response.non_field_errors[0] };
+                this.setState({ isButtonDisabled: false, errors: error });
             }
         }
         this.setState({ isButtonDisabled: false });
     }
 
     render() {
-        const { submitted } = this.state;
         return (
             <div>
                 <div className="content">

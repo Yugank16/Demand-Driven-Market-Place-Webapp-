@@ -65,7 +65,7 @@
 .FormField__Label {
   display: block;
   text-transform: uppercase;
-  font-size: 0.9em;
+  font-size: 0.8em;
   color: black;
 }
 .FormField__Input {
@@ -164,18 +164,58 @@
   right: 10%;
 }
 
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
+/* Request List */
+
+.item-card{
+  position: relative;
+  width: 80%;
+  margin: 2% 0%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+  padding: 1% 5%;
+  border-left: yellowgreen 3px solid;
 }
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
+.item-name{
+  font-size: 20px;
+  float: left;
+  width: 75%;
 }
 
+.item-price{
+  font-size: 14px;
+  float: left;
+  position: absolute;
+  bottom:11%;
+  margin-top:20px 
+}
+.item-requester{
+  font-size: 14px;
+  float: right;
+}
+
+.item-required-time{
+  font-size: 14px;
+  float: right;
+  position: relative;
+  margin-top:20px
+}
+
+.search-item-input{
+  width: 20%;
+  position: relative;
+  top : 5%;
+  left: 23%;
+  background-color: transparent;
+  border: none;
+  color: darkslategray;
+  outline: none;
+  border-bottom: 1px solid #445366;
+  font-size: 0.8em;
+  font-weight: 300;
+  padding-bottom: 10px;
+  margin-top: 10px;
+
+}
 
 .flash{
   position: absolute;
@@ -186,3 +226,5 @@ td, th {
   color: black;
   padding: 3px 5px;
 }
+
+

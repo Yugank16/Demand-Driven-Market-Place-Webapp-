@@ -27,6 +27,7 @@ class RequestItem extends Component {
 
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+        this.setState({ errors: { ...this.state.errors, [e.target.name]: null } });
     }
 
     handleValidation() {
@@ -92,13 +93,11 @@ class RequestItem extends Component {
             };
             const { postRequestAction, history } = this.props;
             const response = await postRequestAction(data);
-            if (response === 'true') {
+            if (response === true) {
                 history.push('/home');
             } else {
-                console.log(response);
                 const { date_time: datetime, name, short_description: description, item_state: itemState, months_old: monthsOld, quantity_required: quantityRequired, max_price: maxPrice } = response;
                 const error = { datetime, name, description, itemState, monthsOld, quantityRequired, maxPrice };
-                console.log(datetime);
                 this.setState({ isButtonDisabled: false, errors: error });
             }       
         }

@@ -8,11 +8,11 @@ class UserProfile extends Component {
         this.props.fetchProfileAction();
     }
 
-    render() {
+    render() {  
         if (this.props.userdata) {
             return (
                 <div>
-                    <Profile data={this.props.userdata} />
+                    <Profile key={this.props.userdata.id} data={this.props.userdata} />
                 </div>         
             );  
         }    

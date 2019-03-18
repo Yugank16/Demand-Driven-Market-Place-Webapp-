@@ -22,6 +22,7 @@ class ResetPasswordConfirm extends Component {
 
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+        this.setState({ errors: { ...this.state.errors, [e.target.name]: null } });
     }
 
     handleValidation() {

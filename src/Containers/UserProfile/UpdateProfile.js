@@ -8,7 +8,7 @@ class UpdateProfile extends Component {
         this.state = {
             firstName: '',
             lastName: '',
-            gender: '',
+            gender: 'MALE',
             phoneNumber: '',
             profilePhoto: '',
             userType: 3,
@@ -28,7 +28,6 @@ class UpdateProfile extends Component {
     componentWillReceiveProps(nextprops) {
         this.setState({ firstName: nextprops.userdata.first_name });
         this.setState({ lastName: nextprops.userdata.last_name });
-        this.setState({ gender: nextprops.userdata.gender });
         this.setState({ phoneNumber: nextprops.userdata.phone_number });
         this.setState({ birthDate: nextprops.userdata.birth_date });
         this.setState({ gender: nextprops.userdata.gender });
@@ -36,6 +35,7 @@ class UpdateProfile extends Component {
 
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+        this.setState({ errors: { ...this.state.errors, [e.target.name]: null } });
     }
 
     handleFileChange(e) {
@@ -92,7 +92,6 @@ class UpdateProfile extends Component {
     async handleSubmit(e) {
         e.preventDefault();
         this.setState({ isButtonDisabled: true });
-
         if (this.handleValidation()) {
             const data = {
                 first_name: this.state.firstName,
@@ -110,7 +109,6 @@ class UpdateProfile extends Component {
             if (response === true) {
                 history.push('/home/user-profile');
             } else {
-                console.log(response);
                 const { first_name: firstName, last_name: lastName, birth_date: birthDate, phone_number: phoneNumber, gender, profile_photo: profilePhoto } = response;
                 const error = { firstName, lastName, birthDate, phoneNumber, gender, profilePhoto };
                 this.setState({ isButtonDisabled: false, errors: error });
@@ -141,22 +139,13 @@ class UpdateProfile extends Component {
                             <div className="FormField__Label error-block">{this.state.errors.phoneNumber}</div>
                         </div>
                         <div className="FormField">
-                            <label className="FormField__Label" htmlFor="user_type">User Type</label>
-                            <select className="FormField__Input" name="userType" onChange={this.handleChange}>
-                                <option className="drop_down_text" selected value={3}>Both Buyer and Seller</option>
-                                <option className="drop_down_text" value={2} >Only Seller</option>
-                                <option className="drop_down_text" value={1} >Only Buyer</option>
-                            </select>
-                            <div className="FormField__Label error-block">{this.state.errors.userType}</div>
-                        </div>
-                        <div className="FormField">
                             <label className="FormField__Label" htmlFor="datetime">Birtth Date</label>
                             <input type="date" value={this.state.birthDate} id="datetime" className="FormField__Input" name="birthDate" onChange={this.handleChange} />
                         </div>
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="user_type">Gender</label>
-                            <select className="FormField__Input" name="gender" onChange={this.handleChange}>
-                                <option className="drop_down_text" selected value="MALE">MALE</option>
+                            <select value={this.state.gender} className="FormField__Input" name="gender" onChange={this.handleChange}>
+                                <option className="drop_down_text" value="MALE">MALE</option>
                                 <option className="drop_down_text" value="FEMALE" >FEMALE</option>
                                 <option className="drop_down_text" value="OTHERS" >OTHERS</option>
                             </select>
@@ -181,3 +170,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, { fetchProfileAction, updateProfileAction })(UpdateProfile);
+
