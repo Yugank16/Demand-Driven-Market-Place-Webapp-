@@ -13,7 +13,7 @@ class RequestItemList extends Component {
     render() {
         if (this.props.items[0]) {
             const data = this.props.items.map((data) => (
-                <div className="item-card clearfix">
+                <div key={data.id} className="item-card clearfix">
                     <div className="item-name" >{data.name}</div>
                     <div className="item-price">{data.max_price}</div>
                     <div className="item-requester">{data.requester.first_name}</div>
