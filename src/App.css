@@ -1,0 +1,230 @@
+.Screen {
+  height: 100vh;
+  color: white;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+
+/* Login */
+
+.LoginDiv{
+  position:fixed;
+    top: 5%;
+    left: 32%;
+    width: 30%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 1% 5%;
+}
+
+.Screen__Form {
+  height: 100%;
+  background-color:white;
+  padding: 25px 20px;
+} 
+
+.FormCenter{
+  display: flex;
+}
+
+.FormTitle {
+  color: #707C8B;
+  font-weight: 300;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.FormTitle__Link {
+  color: #707C8B;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1.4em;
+  margin: 0 10px;
+}
+
+.FormTitle__Link--Active {
+  color: black;
+  border-bottom: 1px solid #199087;
+}
+
+.FormFields{
+  width: 100%;
+}
+
+.FormField {
+  margin-bottom: 30px;
+}
+
+.FormField__Label {
+  display: block;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  color: black;
+}
+.FormField__Input {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  color: darkslategray;
+  outline: none;
+  border-bottom: 1px solid #445366;
+  font-size: 0.8em;
+  font-weight: 300;
+  padding-bottom: 10px;
+  margin-top: 10px;
+}
+
+.FormField__Input::placeholder {
+  color: #616E7F;
+}
+
+.FormField__Button {
+  background-color: blue;
+  color: white;
+  border: none;
+  outline: none;
+  border-radius: 25px;
+  padding: 15px 50px;
+  font-size: .8em;
+  font-weight: 500;
+  float: right;
+}
+
+.FormField__Link {
+  color: #66707D;
+  text-decoration: none;
+  display: inline-block;
+  font-size: .8em;
+}
+
+.float_right{
+  float: right;
+}
+.float_left{
+  float: left;
+}
+
+.error-block{
+  display: block;
+  text-transform: uppercase;
+  margin-top: .3em;
+  font-size: .7em;
+  color: orangered;
+  z-index: 10;
+}
+ 
+
+/* Sinup */
+
+.Screen_Signup {
+  height: 596px;
+  width: 1286px;
+  color: white;
+}
+
+.SignupDiv{
+    position:fixed;
+    top: 4%;
+    left: 10%;
+    right: 10%;
+    width: 70%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 1% 5%;
+}
+
+.FormFields_Signup{
+  width: 100%;
+}
+
+.FormField_Signup {
+  margin-bottom: 20px;
+  margin-left: 20px;
+  float: left;
+  width: 47%;
+}
+
+.drop_down_text{
+  color: black;
+}
+
+.margin_signup_button{
+  margin: 20px 20px;
+}
+
+.signup_link{
+  position:absolute;
+  bottom: 5%;
+  right: 10%;
+}
+
+/* Request List */
+
+.item-card{
+  position: relative;
+  width: 80%;
+  margin: 2% 0%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+  padding: 1% 5%;
+  border-left: yellowgreen 3px solid;
+}
+
+.item-name{
+  font-size: 20px;
+  float: left;
+  width: 75%;
+}
+
+.item-price{
+  font-size: 14px;
+  float: left;
+  position: absolute;
+  bottom:11%;
+  margin-top:20px 
+}
+.item-requester{
+  font-size: 14px;
+  float: right;
+}
+
+.item-required-time{
+  font-size: 14px;
+  float: right;
+  position: relative;
+  margin-top:20px
+}
+
+.search-item-input{
+  width: 20%;
+  position: relative;
+  top : 5%;
+  left: 23%;
+  background-color: transparent;
+  border: none;
+  color: darkslategray;
+  outline: none;
+  border-bottom: 1px solid #445366;
+  font-size: 0.8em;
+  font-weight: 300;
+  padding-bottom: 10px;
+  margin-top: 10px;
+
+}
+
+.flash{
+  position: absolute;
+  top:2%;
+  left:45%;
+  z-index: 100;
+  background-color: #dddddd;
+  color: black;
+  padding: 3px 5px;
+}
+
+
