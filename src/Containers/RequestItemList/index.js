@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import Loader from 'react-loader-spinner';
+import queryString from 'query-string';
 import { fetchRequestsAction, loadingTrueAction, loadingFalseAction } from '../../Actions/RequestItemActions';
 import RequestItem from '../../Components/RequestItem';
 import '../../App.css';
@@ -21,9 +22,9 @@ class RequestItemList extends Component {
     }
 
     componentDidMount() {
-        const { nameParam } = this.state;
         loadingTrueAction();
-        this.props.fetchRequestsAction(nameParam);
+        const values = queryString.parse(this.props.location.search); 
+        this.props.fetchRequestsAction(values.name);
     }
 
     handleChange(e) {
@@ -33,17 +34,19 @@ class RequestItemList extends Component {
     handleSearch = (e) => {
         const { nameParam } = this.state;
         this.props.fetchRequestsAction(nameParam);
+        this.props.history.push({            
+            search: nameParam ? `?name=${nameParam}` : '',
+        });
     }
     handleClear = (e) => {
         this.setState({ nameParam: '' });        
     }
 
     render() {
-        const NO_RESULT_MESSAGE = "Sorry ! No results were found.";
-        console.log("opp", this.props.isLoading);
+        const NO_RESULT_MESSAGE = 'Sorry ! No results were found.';
+    
         if (!this.props.isLoading) {
             let data = <div className="no-results">{NO_RESULT_MESSAGE}</div>;
-            loadingTrueAction();
             if (this.props.items.length !== 0) {
                 data = this.props.items.map((data) => (
                     <LinkContainer key={data.id} to={'/home/request-details/' + data.id}>
