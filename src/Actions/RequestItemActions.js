@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+import axios from "axios";
 import { UserConstants, RequestItemConstants, UserActionConstants, FlashMessageConstants } from '../Constants/index';
 
 export const postRequestAction = (data) => async (dispatch) => {
@@ -22,20 +23,33 @@ export const postRequestAction = (data) => async (dispatch) => {
     return true;
 };
 
-export const fetchRequestsAction = () => dispatch => {
+export const loadingTrueAction = () => dispatch => {
+    dispatch({
+        type: RequestItemConstants.LOADING_TRUE,
+    });
+};
+
+export const loadingFalseAction = () => dispatch => {
+    dispatch({
+        type: RequestItemConstants.LOADING_FALSE,
+    });
+};
+
+export const fetchRequestsAction = (nameParam) => dispatch => {
     const userdata = JSON.parse(Cookies.get(UserConstants.USER));
-    fetch(`${UserActionConstants.API_BASE_URL}api/requests/`, {
-        method: 'GET',
+    axios.get(`${UserActionConstants.API_BASE_URL}api/requests/`, {
         headers: {
             Authorization: `Token ${userdata.token}`,
         },
-    }).then(res => res.json())
-        .then(data => {
-            dispatch({
-                type: RequestItemConstants.FETCH_ALL_REQUEST,
-                payload: data,
-            });
+        params: {
+            name: nameParam,
+        },
+    }).then(res => {
+        dispatch({
+            type: RequestItemConstants.FETCH_ALL_REQUEST,
+            payload: res.data,
         });
+    });
 };
 
 export const fetchDetailsAction = (id) => dispatch => {

@@ -12,6 +12,8 @@ export const RequestItemConstants = {
     FETCH_ALL_REQUEST: 'FETCH_ALL_REQUEST',
     FETCH_PARTICULAR_REQUEST: 'FETCH_PARTICULAR_REQUEST',
     ERRORS: 'ERRORS',
+    LOADING_TRUE: 'LOADING_TRUE',
+    LOADING_FALSE: 'LOADING_FALSE',
 };
 
 export const FlashMessageConstants = {

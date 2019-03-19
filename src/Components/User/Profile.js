@@ -5,7 +5,7 @@ import dummyimage from '../../Assets/Images/index.png';
 
 const Profile = (props) => (
     <div>
-        <div className="content">
+        <div className="profile-div">
             <div>
                 <h2>Profile</h2>
                 

@@ -16,7 +16,7 @@ class UserProfile extends Component {
                 </div>         
             );  
         }    
-        return <div>Please wait.....</div>;  
+        return <div className="float_right" >Please wait.....</div>;  
     }
 }
 
@@ -25,3 +25,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, { fetchProfileAction })(UserProfile);
+

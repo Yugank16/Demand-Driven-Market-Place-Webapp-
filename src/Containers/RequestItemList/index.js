@@ -1,39 +1,85 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { fetchRequestsAction } from '../../Actions/RequestItemActions';
+import { LinkContainer } from 'react-router-bootstrap';
+import Loader from 'react-loader-spinner';
+import { fetchRequestsAction, loadingTrueAction, loadingFalseAction } from '../../Actions/RequestItemActions';
 import RequestItem from '../../Components/RequestItem';
 import '../../App.css';
 
 class RequestItemList extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            nameParam: '',
+        };
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    componentWillMount() {
+        loadingTrueAction();
+    }
+
     componentDidMount() {
-        this.props.fetchRequestsAction();
+        const { nameParam } = this.state;
+        loadingTrueAction();
+        this.props.fetchRequestsAction(nameParam);
+    }
+
+    handleChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    handleSearch = (e) => {
+        const { nameParam } = this.state;
+        this.props.fetchRequestsAction(nameParam);
+    }
+    handleClear = (e) => {
+        this.setState({ nameParam: '' });        
     }
 
     render() {
-        if (this.props.items[0]) {
-            const data = this.props.items.map((data) => (
-                <div className="item-card clearfix">
-                    <div className="item-name" >{data.name}</div>
-                    <div className="item-price">{data.max_price}</div>
-                    <div className="item-requester">{data.requester.first_name}</div>
-                    <div className="item-required-time"> 6:00 pm , 12 August 2019</div>
-                    {/* <div><Link to={'/home/request-details/' + data.id}>sell</Link></td> */}
-                </div>
-            ));
+        const NO_RESULT_MESSAGE = "Sorry ! No results were found.";
+        console.log("opp", this.props.isLoading);
+        if (!this.props.isLoading) {
+            let data = <div className="no-results">{NO_RESULT_MESSAGE}</div>;
+            loadingTrueAction();
+            if (this.props.items.length !== 0) {
+                data = this.props.items.map((data) => (
+                    <LinkContainer key={data.id} to={'/home/request-details/' + data.id}>
+                        <div className="item-card clearfix" >
+                            <div className="item-name" >{data.name}</div>
+                            <div className="item-price">&#8377; {data.max_price}</div>
+                            <div className="item-requester">{data.requester.first_name}</div>
+                            <div className="item-required-time"> 6:00 pm , 12 August 2019</div>
+                        </div>
+                    </LinkContainer>
+                ));
+            }
             return (
                 <div>
-                    <input type="text" id="name" className="search-item-input" placeholder="Search by name" name="name" onChange={this.handleChange} />
+                    <div className="search-bar">
+                        <input type="text" id="name" className="search-item-input" placeholder="Search by name" name="nameParam" value={this.state.nameParam} onChange={this.handleChange} />
+                        <button type="button" className="item-search-button" onClick={this.handleSearch} >Search</button>
+                        <button type="button" className="item-search-button" onClick={this.handleClear} >Clear</button>
+                    </div>
                     <RequestItem data={data} />
+                    
                 </div>
-            );
+            ); 
         }
-        return <div>Please wait.....</div>;
+        return <div className="loader-main"><Loader type="Grid" color="#somecolor" height={80} width={80} /></div>;
     }
 }
 
+RequestItemList.defaultProps = {
+    isLoading: true,
+    items: [],
+};
+
 const mapStateToProps = state => ({
-    items: state.requestItem.data,
+    items: state.requestItem.items,
+    isLoading: state.requestItem.isLoading,
 });
 
 export default connect(mapStateToProps, { fetchRequestsAction })(RequestItemList);
