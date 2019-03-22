@@ -54,7 +54,7 @@ class RequestItemList extends Component {
                             <div className="item-name" >{data.name}</div>
                             <div className="item-price">&#8377; {data.max_price}</div>
                             <div className="item-requester">{data.requester.first_name}</div>
-                            <div className="item-required-time"> 6:00 pm , 12 August 2019</div>
+                            <div className="item-required-time"> {data.date_time}</div>
                         </div>
                     </LinkContainer>
                 ));
