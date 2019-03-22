@@ -12,6 +12,8 @@ import UpdateProfile from './Containers/UserProfile/UpdateProfile';
 import ChangePassword from './Containers/UserProfile/Changepassword';
 import RequestDetails from './Containers/RequestDetails';
 import RequestItem from './Containers/RequestItemForm';
+import BidForm from './Containers/Bid/BidForm';
+
 import { ProtectedRoute } from './Helpers/ProtectedRoute';
 
 class App extends Component {
@@ -28,6 +30,7 @@ class App extends Component {
                         <ProtectedRoute exact path="/home" component={RequestItemList} />
                         <ProtectedRoute exact path="/home/user-profile" component={UserProfile} />
                         <ProtectedRoute exact path="/home/user-profile/update" component={UpdateProfile} />
+                        <ProtectedRoute exact path="/home/request/:id/bid" component={BidForm} />
                         <ProtectedRoute exact path="/home/user-profile/change-password" component={ChangePassword} />
                         <ProtectedRoute exact path="/home/request" component={RequestItem} />
                         <ProtectedRoute exact path="/home/request-details/:id" component={RequestDetails} />
