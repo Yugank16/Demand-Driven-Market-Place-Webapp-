@@ -35,7 +35,7 @@ export const loadingFalseAction = () => dispatch => {
     });
 };
 
-export const fetchRequestsAction = (nameParam) => dispatch => {
+export const fetchRequestsAction = (nameParam, itemStatus, orderBy) => dispatch => {
     const userdata = JSON.parse(Cookies.get(UserConstants.USER));
     axios.get(`${UserActionConstants.API_BASE_URL}api/requests/`, {
         headers: {
@@ -43,6 +43,8 @@ export const fetchRequestsAction = (nameParam) => dispatch => {
         },
         params: {
             name: nameParam,
+            item_status: itemStatus,
+            ordering: orderBy,
         },
     }).then(res => {
         dispatch({
