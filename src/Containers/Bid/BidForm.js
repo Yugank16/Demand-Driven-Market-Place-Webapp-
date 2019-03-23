@@ -8,7 +8,7 @@ class Bid extends Component {
         this.state = {
             price: '',
             description: '',
-            photos: ['', '', '', '', '', ''],
+            photos: [],
             isButtonDisabled: false,
             errors: {},
         };
@@ -22,9 +22,9 @@ class Bid extends Component {
     handleFileChange = e => {
         const statecopy = Object.assign({}, this.state);
         const { photos } = statecopy;
-        photos[e.target.id] = [e.target.files[0]];
+        photos.push(e.target.files[0]);
+        e.target.value = '';
         this.setState({ photos });
-        console.log(this.state.photos);
     }
 
     handleValidation = () => {
@@ -60,7 +60,6 @@ class Bid extends Component {
             const { postBid, history } = this.props;
             const { id } = this.props.match.params;
             const response = await postBid(data, id);
-            console.log(response);
             if (response === true) {
                 console.log(response);
             } else {
@@ -71,13 +70,20 @@ class Bid extends Component {
         }
         this.setState({ isButtonDisabled: false });
     };
+    deletePhoto = (e) => {
+        e.preventDefault();
+        const statecopy = Object.assign({}, this.state);
+        const { photos } = statecopy;
+        photos.splice(e.target.name, 1);
+        this.setState({ photos });
+    }
 
     render() {
         return (
             <div>
                 <div className="content">
                     <h2>Bid</h2>
-                    <form onSubmit={this.handleSubmit} className="FormFields">
+                    <form className="FormFields">
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="description">Price</label>
                             <input type="int" id="price" className="FormField__Input" placeholder="Enter your price" name="price" onChange={this.handleChange} />
@@ -93,28 +99,10 @@ class Bid extends Component {
                             <label className="FormField__Label" htmlFor="photo">Photo</label>
                             <input type="file" id="0" name="photo" onChange={this.handleFileChange} />
                         </div>
+                        {this.state.photos.map((image, index) => 
+                            <p>{image.name}<button onClick={this.deletePhoto} name={index}>remove</button></p>)}
                         <div className="FormField">
-                            <label className="FormField__Label" htmlFor="photo1">Photo</label>
-                            <input type="file" id="1" name="photo1" onChange={this.handleFileChange} />
-                        </div>
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="photo2">Photo</label>
-                            <input type="file" id="2" name="photo2" onChange={this.handleFileChange} />
-                        </div>
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="photo3">Photo</label>
-                            <input type="file" id="3" name="photo3" onChange={this.handleFileChange} />
-                        </div>
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="photo4">Photo</label>
-                            <input type="file" id="4" name="photo4" onChange={this.handleFileChange} />
-                        </div>
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="photo5">Photo</label>
-                            <input type="file" id="5" name="photo5" onChange={this.handleFileChange} />
-                        </div>
-                        <div className="FormField">
-                            <button className="FormField__Button mr-20" disabled={this.state.isButtonDisabled}>Bid</button>
+                            <button type="submit" className="FormField__Button mr-20" disabled={this.state.isButtonDisabled} onClick={this.handleSubmit}>Bid</button>
                         </div>
                     </form>
                 </div>

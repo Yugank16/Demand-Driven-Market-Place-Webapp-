@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import axios from "axios";
+import axios from 'axios';
 import { UserConstants, RequestItemConstants, UserActionConstants } from '../Constants/index';
 
 export const postRequestAction = (data) => async (dispatch) => {
@@ -38,6 +38,23 @@ export const loadingFalseAction = () => dispatch => {
 export const fetchRequestsAction = (nameParam) => dispatch => {
     const userdata = JSON.parse(Cookies.get(UserConstants.USER));
     axios.get(`${UserActionConstants.API_BASE_URL}api/requests/`, {
+        headers: {
+            Authorization: `Token ${userdata.token}`,
+        },
+        params: {
+            name: nameParam,
+        },
+    }).then(res => {
+        dispatch({
+            type: RequestItemConstants.FETCH_ALL_REQUEST,
+            payload: res.data,
+        });
+    });
+};
+
+export const fetchMyRequestsAction = (nameParam) => dispatch => {
+    const userdata = JSON.parse(Cookies.get(UserConstants.USER));
+    axios.get(`${UserActionConstants.API_BASE_URL}api/my-requests/`, {
         headers: {
             Authorization: `Token ${userdata.token}`,
         },

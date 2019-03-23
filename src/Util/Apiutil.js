@@ -1,32 +1,36 @@
 import Cookies from 'js-cookie';
 import { UserConstants } from '../Constants';
 
-export const checkUser = () => {
-    if (Cookies.get(UserConstants.USER)) {
-        return `Token ${JSON.parse(Cookies.get(UserConstants.USER))}`;
-    }
-    return null;
-};
-
 export const setUser = (response) => {
     Cookies.set(UserConstants.USER, JSON.stringify(response));
 };
 
-export const fetchUrl = (URL, METHOD, data = {}, CONTENTTYPE = 'application/json') => {
-    const token = checkUser();
-    console.log(token);
+export const fetchUrl = (URL, METHOD, data, CONTENTTYPE = 'application/json') => {
+    let userdata;
+    if (Cookies.get(UserConstants.USER)) {
+        userdata = JSON.parse(Cookies.get(UserConstants.USER));
+        userdata = `Token ${userdata.token}`;
+    }   
+    let headers;
     if (CONTENTTYPE === 'application/json') {
         data = JSON.stringify(data);
+        headers = {
+            Authorization: userdata,
+            'Content-Type': CONTENTTYPE,
+        };
+    } else {
+        headers = {
+            Authorization: userdata,
+        };
     }
-    const headers = {
-        Authorization: token,
-        'Content-Type': CONTENTTYPE,
-    };
+    
     const fetchData = {
         method: METHOD,
-        body: data,
         headers,
     };
+    if (data) {
+        fetchData.body = data;
+    }
     return fetch(URL, fetchData)
         .then((response) => {
             if (!response.ok && response.status !== 400) {
