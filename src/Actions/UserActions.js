@@ -1,32 +1,32 @@
 import Cookies from 'js-cookie';
 import { UserActionConstants, UserConstants, FlashMessageConstants } from '../Constants/index';
+import { fetchUrl, setUser } from '../Util/Apiutil';
 
 let user;
 
 export const loginAction = data => async (dispatch) => {
-    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/login/`, {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
-    if (response.status === 400) {
+    let response = await fetchUrl(`${UserActionConstants.API_BASE_URL}api/login/`, 'POST', data);
+
+    if (!response.ok && response.status === 400) {
         dispatch({
             type: FlashMessageConstants.FAILURE,
             message: 'User Credentials not Valid',
         });
         return false;
+    } else if (response.ok) {
+        response = await response.json();
+        setUser(response);
+        dispatch({
+            type: FlashMessageConstants.SUCCESS,
+            message: 'Logged In Successfully',
+        });
+        return true;
     }
-    response = await response.json();
-    user = response;
-    Cookies.set(UserConstants.USER, JSON.stringify(user));
     dispatch({
-        type: FlashMessageConstants.SUCCESS,
-        message: 'Logged In Successfully',
+        type: FlashMessageConstants.FAILURE,
+        message: 'Something Went Wrong',
     });
-    return true;
+    return false;
 };
 
 export const signupAction = data => async (dispatch) => {
@@ -82,15 +82,16 @@ export const ChangePasswordAction = data => async (dispatch) => {
         },
         body: JSON.stringify(data),
     });
+
     if (!response.ok && response.status === 400) {
-        response = await response.json();
+        response = response.json();
         dispatch({
             type: FlashMessageConstants.SUCCESS,
             message: 'Old Password Incorrect',
         });
         return response;
     }
-    response = await response.json();
+    response = response.json();
     dispatch({
         type: FlashMessageConstants.SUCCESS,
         message: 'Password Changed Successfully',
@@ -152,7 +153,7 @@ export const tokenvalidation = (id, token) => async (dispatch) => {
         });
         return false;
     }
-    response = await response.json();
+    response = response.json();
     if (response.status === 200) {
         dispatch({
             type: UserActionConstants.RESPONSE,
@@ -176,7 +177,7 @@ export const passwordResetRequestAction = (data) => async (dispatch) => {
         },
         body: JSON.stringify(data),
     });
-    response = await response.json();
+    response = response.json();
     dispatch({
         type: FlashMessageConstants.SUCCESS,
         message: 'Password reset Link has been sent to your registered email id',

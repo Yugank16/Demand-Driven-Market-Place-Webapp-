@@ -141,6 +141,7 @@ class UpdateProfile extends Component {
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="datetime">Birtth Date</label>
                             <input type="date" value={this.state.birthDate} id="datetime" className="FormField__Input" name="birthDate" onChange={this.handleChange} />
+                            <div className="FormField__Label error-block">{this.state.errors.birthDate}</div>
                         </div>
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="user_type">Gender</label>
@@ -152,7 +153,7 @@ class UpdateProfile extends Component {
                             <div className="FormField__Label error-block">{this.state.errors.gender}</div>
                         </div>
                         <div className="FormField">
-                            <label className="FormField__Label" htmlFor="email">profile Photo</label>
+                            <label className="FormField__Label" htmlFor="photo">profile Photo</label>
                             <input type="file" id="profilephoto" name="profilePhoto" onChange={this.handleFileChange} />
                             <div className="FormField__Label error-block">{this.state.errors.profilePhoto}</div>
                         </div>

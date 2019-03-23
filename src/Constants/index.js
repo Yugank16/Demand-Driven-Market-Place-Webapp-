@@ -16,6 +16,14 @@ export const RequestItemConstants = {
     LOADING_FALSE: 'LOADING_FALSE',
 };
 
+export const BidConstants = {
+    FETCH_ALL_BIDS: 'FETCH_ALL_BIDS',
+    FETCH_PARTICULAR_BID: 'FETCH_PARTICULAR_BID',
+    ERRORS: 'ERRORS',
+    LOADING_TRUE: 'LOADING_TRUE',
+    LOADING_FALSE: 'LOADING_FALSE',
+};
+
 export const FlashMessageConstants = {
     SUCCESS: 'SUCCESS',
     FAILURE: 'FAILURE',
@@ -30,3 +38,4 @@ export const UserConstants = {
 export const REGEX = {
     EMAIL: new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i),
 };
+

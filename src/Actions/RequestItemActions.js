@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
-import axios from "axios";
-import { UserConstants, RequestItemConstants, UserActionConstants, FlashMessageConstants } from '../Constants/index';
+import axios from 'axios';
+import { UserConstants, RequestItemConstants, UserActionConstants } from '../Constants/index';
 
 export const postRequestAction = (data) => async (dispatch) => {
     const userdata = JSON.parse(Cookies.get(UserConstants.USER));
@@ -13,7 +13,7 @@ export const postRequestAction = (data) => async (dispatch) => {
         body: JSON.stringify(data),
     });
     if (!response.ok && response.status === 400) {
-        response = await response.json();
+        response = response.json();
         return response;
     }
     dispatch({
@@ -45,6 +45,23 @@ export const fetchRequestsAction = (nameParam, itemStatus, orderBy) => dispatch 
             name: nameParam,
             item_status: itemStatus,
             ordering: orderBy,
+        },
+    }).then(res => {
+        dispatch({
+            type: RequestItemConstants.FETCH_ALL_REQUEST,
+            payload: res.data,
+        });
+    });
+};
+
+export const fetchMyRequestsAction = (nameParam) => dispatch => {
+    const userdata = JSON.parse(Cookies.get(UserConstants.USER));
+    axios.get(`${UserActionConstants.API_BASE_URL}api/my-requests/`, {
+        headers: {
+            Authorization: `Token ${userdata.token}`,
+        },
+        params: {
+            name: nameParam,
         },
     }).then(res => {
         dispatch({
