@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
+import PropTypes from 'prop-types';
 import Loader from 'react-loader-spinner';
 import queryString from 'query-string';
 import { fetchMyRequestsAction, loadingTrueAction } from '../../Actions/RequestItemActions';
@@ -15,10 +16,6 @@ class MyItemRequestList extends Component {
             nameParam: '',
         };
         this.handleChange = this.handleChange.bind(this);
-    }
-
-    componentWillMount() {
-        loadingTrueAction();
     }
 
     componentDidMount() {
@@ -49,7 +46,7 @@ class MyItemRequestList extends Component {
             let data = <div className="no-results">{NO_RESULT_MESSAGE}</div>;
             if (this.props.items.length !== 0) {
                 data = this.props.items.map((data) => (
-                    <LinkContainer key={data.id} to={'/home/request-details/' + data.id}>
+                    <LinkContainer key={data.id} to={'/home/request/' + data.id}>
                         <div className="item-card clearfix" >
                             <div className="item-name" >{data.name}</div>
                         </div>
@@ -75,6 +72,11 @@ class MyItemRequestList extends Component {
 MyItemRequestList.defaultProps = {
     isLoading: true,
     items: [],
+};
+
+MyItemRequestList.propTypes = {
+    isLoading: PropTypes.bool,
+    items: PropTypes.array,
 };
 
 const mapStateToProps = state => ({

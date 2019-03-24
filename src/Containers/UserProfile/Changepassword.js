@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ChangePasswordAction } from '../../Actions/UserActions';
+import { changePasswordAction } from '../../Actions/UserActions';
 
 class ChangePassword extends Component {
     constructor() {
@@ -67,8 +67,8 @@ class ChangePassword extends Component {
                 password: this.state.oldPassword,
                 new_password: this.state.newPassword,
             };
-            const { ChangePasswordAction, history } = this.props;
-            const response = await ChangePasswordAction(data);
+            const { changePasswordAction, history } = this.props;
+            const response = await changePasswordAction(data);
             if (response === true) {
                 history.push('/home/user-profile');
             } else {
@@ -111,4 +111,4 @@ class ChangePassword extends Component {
 }
 
 
-export default connect(null, { ChangePasswordAction })(ChangePassword);
+export default connect(null, { changePasswordAction })(ChangePassword);

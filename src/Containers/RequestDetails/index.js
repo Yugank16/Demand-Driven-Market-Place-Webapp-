@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { fetchDetailsAction } from '../../Actions/RequestItemActions';
 import RequestDetail from '../../Components/RequestDetails';
 import '../../App.css';
@@ -40,6 +41,10 @@ class RequestDetails extends Component {
         return <div>Please wait.....</div>;
     }
 }
+
+RequestDetails.propType = {
+    item: PropTypes.object,
+};
 
 const mapStateToProps = state => ({
     item: state.requestItem.data,

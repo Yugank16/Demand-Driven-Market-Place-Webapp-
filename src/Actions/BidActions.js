@@ -1,5 +1,6 @@
 import { UserActionConstants, BidConstants, FlashMessageConstants } from '../Constants/index';
 import { fetchUrl } from '../Util/Apiutil';
+import { API } from '../Constants/Urls';
 
 export const postBid = (data, id) => async (dispatch) => {
     const formD = new FormData();
@@ -9,9 +10,10 @@ export const postBid = (data, id) => async (dispatch) => {
         formD.append('images[' + i + ']', data.images[i]);
     }
     data = formD;
-    let response = await fetchUrl(`${UserActionConstants.API_BASE_URL}api/request/${id}/bid/`, 'POST', data, '');
+    let response = await fetchUrl(`${API.ITEM_REQUEST}${id}/bid/`, 'POST', dispatch, data, '');
     if (!response.ok && response.status === 400) {
         response = await response.json();
+        console.log(response);
         dispatch({
             type: FlashMessageConstants.FAILURE,
             message: 'Check the input Fields',
@@ -32,7 +34,7 @@ export const postBid = (data, id) => async (dispatch) => {
 };
 
 export const bidDetails = (id) => async (dispatch) => {
-    let response = await fetchUrl(`${UserActionConstants.API_BASE_URL}api/bid/${id}/`, 'GET');
+    let response = await fetchUrl(`${API.BID_DEATILS}${id}/`, 'GET', dispatch);
     if (response.ok) {
         response = await response.json(); 
         dispatch({
@@ -48,3 +50,50 @@ export const bidDetails = (id) => async (dispatch) => {
     return false;
 };
 
+export const loadingTrueAction = () => dispatch => {
+    dispatch({
+        type: BidConstants.LOADING_TRUE,
+    });
+};
+
+export const loadingFalseAction = () => dispatch => {
+    dispatch({
+        type: BidConstants.LOADING_FALSE,
+    });
+};
+
+export const allBids = (id) => async (dispatch) => {
+    let response = await fetchUrl(`${API.ITEM_REQUEST}${id}/bid`, 'GET', dispatch);
+    if (response.ok) {
+        response = await response.json(); 
+        console.log(response);
+        dispatch({
+            type: BidConstants.FETCH_ALL_BIDS,
+            payload: response,
+        });
+        return true;
+    }
+    dispatch({
+        type: FlashMessageConstants.FAILURE,
+        message: 'Something Went Wrong',
+    });
+    return false;
+};
+
+export const myBids = () => async (dispatch) => {
+    let response = await fetchUrl(`${API.MY_BIDS}`, 'GET', dispatch);
+    if (response.ok) {
+        response = await response.json(); 
+        console.log(response);
+        dispatch({
+            type: BidConstants.FETCH_MY_BIDS,
+            payload: response,
+        });
+        return true;
+    }
+    dispatch({
+        type: FlashMessageConstants.FAILURE,
+        message: 'Something Went Wrong',
+    });
+    return false;
+};

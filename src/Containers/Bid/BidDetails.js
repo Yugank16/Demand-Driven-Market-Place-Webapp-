@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { bidDetails } from '../../Actions/BidActions';
 import BidDetail from '../../Components/Bid/BidDetails';
 import '../../App.css';
@@ -24,6 +25,10 @@ class BidDetails extends Component {
         return <div>Please wait.....</div>;
     }
 }
+
+BidDetails.propType = {
+    bid: PropTypes.object,
+};
 
 const mapStateToProps = state => ({
     bid: state.bid.data,

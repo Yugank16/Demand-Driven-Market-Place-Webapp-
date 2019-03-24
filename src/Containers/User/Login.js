@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Cookies from 'js-cookie';
 import '../../App.css';
 import AuthPage from '../../Components/User/AuthPage';
@@ -76,9 +77,6 @@ class Login extends Component {
     }
 
     render() {
-        if (Cookies.get(UserConstants.USER)) {
-            this.props.history.push('/home');
-        }
         return (
             <div className="Screen">
                 <div className="LoginDiv">
@@ -111,6 +109,9 @@ class Login extends Component {
     }
 }
 
-const mapStateToProps = state => ({ userToken: state.auth.token });
+Login.protoType = {
+    error: PropTypes.object,
+};
+const mapStateToProps = state => ({ errors: state.auth.errors });
 
 export default connect(mapStateToProps, { loginAction })(Login);

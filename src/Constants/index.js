@@ -18,6 +18,7 @@ export const RequestItemConstants = {
 
 export const BidConstants = {
     FETCH_ALL_BIDS: 'FETCH_ALL_BIDS',
+    FETCH_MY_BIDS: 'FETCH_MY_BIDS',
     FETCH_PARTICULAR_BID: 'FETCH_PARTICULAR_BID',
     ERRORS: 'ERRORS',
     LOADING_TRUE: 'LOADING_TRUE',
