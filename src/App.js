@@ -14,8 +14,11 @@ import RequestDetails from './Containers/RequestDetails';
 import RequestItem from './Containers/RequestItemForm';
 import BidForm from './Containers/Bid/BidForm';
 import { ProtectedRoute } from './Helpers/ProtectedRoute';
+import { OpenRoutes } from "./Helpers/OpenRoutes";
 import MyItemRequests from './Containers/MyItemRequests';
 import BidDetails from './Containers/Bid/BidDetails';
+import AllBids from './Containers/Bid/AllBids';
+import MyBids from './Containers/Bid/MyBids';
 
 class App extends Component {
     render() {
@@ -24,19 +27,21 @@ class App extends Component {
                 <div>
                     <FlashMessage />
                     <Switch>
-                        <Route exact path="/" component={Login} />
-                        <Route exact path="/signup" component={Signup} />
-                        <Route exact path="/reset-password/" component={ResetPasswordRequest} />
-                        <Route exact path="/reset-password/confirm/:id/:reset_token" component={ForgotPassword} />
+                        <OpenRoutes exact path="/" component={Login} />
+                        <OpenRoutes exact path="/signup" component={Signup} />
+                        <OpenRoutes exact path="/reset-password/" component={ResetPasswordRequest} />
+                        <OpenRoutes exact path="/reset-password/confirm/:id/:reset_token" component={ForgotPassword} />
                         <ProtectedRoute exact path="/home" component={RequestItemList} />
                         <ProtectedRoute exact path="/home/my-requests" component={MyItemRequests} />
                         <ProtectedRoute exact path="/home/user-profile" component={UserProfile} />
                         <ProtectedRoute exact path="/home/user-profile/update" component={UpdateProfile} />
                         <ProtectedRoute exact path="/home/mybid/:id" component={BidDetails} />
                         <ProtectedRoute exact path="/home/request/:id/bid" component={BidForm} />
+                        <ProtectedRoute exact path="/home/request/:id/bids" component={AllBids} />
+                        <ProtectedRoute exact path="/home/mybids" component={MyBids} />
                         <ProtectedRoute exact path="/home/user-profile/change-password" component={ChangePassword} />
                         <ProtectedRoute exact path="/home/request" component={RequestItem} />
-                        <ProtectedRoute exact path="/home/request-details/:id" component={RequestDetails} />
+                        <ProtectedRoute exact path="/home/request/:id" component={RequestDetails} />
                         <Route path="*" component={NotFound} />
                     </Switch>
                 </div>

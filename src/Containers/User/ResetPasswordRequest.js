@@ -66,9 +66,6 @@ class ResetPasswordRequest extends Component {
     }
 
     render() {
-        if (Cookies.get(UserConstants.USER)) {
-            this.props.history.push('/home');
-        }
         return (
             <div className="screen">
                 <div className="login-div">

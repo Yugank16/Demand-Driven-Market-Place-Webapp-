@@ -25,7 +25,7 @@ class FlashMessage extends Component {
             };
             setTimeout(() => {
                 this.hideAlert();
-            }, 1000);
+            }, 2500);
             return (
                 <div>
                     {

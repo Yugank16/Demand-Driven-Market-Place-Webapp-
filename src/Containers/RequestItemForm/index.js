@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { postRequestAction } from '../../Actions/RequestItemActions';
 import '../../App.css';
 
@@ -59,14 +60,14 @@ class RequestItem extends Component {
         if (!quantityRequired) {
             formIsValid = false;
             error.quantityRequired = 'Please enter the required quantity';
-        } else if (quantityRequired <= 0) {
+        } else if (quantityRequired <= 0 && quantityRequired > 1000) {
             formIsValid = false;
-            error.quantityRequired = 'Please enter valid quantity';
+            error.quantityRequired = 'Please enter valid quantity between 0-1000';
         }
         if (!maxPrice) {
             formIsValid = false;
             error.maxPrice = 'Price can not be empty';
-        } else if (maxPrice < 0) {
+        } else if (maxPrice <= 0) {
             formIsValid = false;
             error.maxPrice = 'Please enter valid price';
         }
@@ -164,6 +165,10 @@ class RequestItem extends Component {
         );
     }
 }
+
+RequestItem.protoType = {
+    error: PropTypes.object,
+};
 
 const mapStateToProps = state => ({
     errors: state.requestItem.errors,

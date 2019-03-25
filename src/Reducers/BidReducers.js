@@ -17,7 +17,13 @@ export default function (state = initialState, action) {
         return {
             isLoading: false,
         };
-    case BidConstants.FETCH_ALL_BID:
+    case BidConstants.FETCH_ALL_BIDS:
+        return {
+            ...state,
+            isLoading: false,
+            bids: action.payload,
+        };
+    case BidConstants.FETCH_MY_BIDS:
         return {
             ...state,
             isLoading: false,

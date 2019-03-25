@@ -1,11 +1,14 @@
+import { push } from 'react-router-redux';
+import { BrowserRouter } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { UserActionConstants, UserConstants, FlashMessageConstants } from '../Constants/index';
+import { UserActionConstants, UserConstants, FlashMessageConstants } from '../Constants';
+import { API } from '../Constants/Urls';
 import { fetchUrl, setUser } from '../Util/Apiutil';
 
 let user;
 
 export const loginAction = data => async (dispatch) => {
-    let response = await fetchUrl(`${UserActionConstants.API_BASE_URL}api/login/`, 'POST', data);
+    let response = await fetchUrl(`${API.LOGIN}`, 'POST', dispatch, data);
 
     if (!response.ok && response.status === 400) {
         dispatch({
@@ -30,7 +33,7 @@ export const loginAction = data => async (dispatch) => {
 };
 
 export const signupAction = data => async (dispatch) => {
-    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
+    let response = await fetch(`${API.USER}`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -57,7 +60,7 @@ export const updateProfileAction = data => async (dispatch) => {
     const userdata = JSON.parse(Cookies.get(UserConstants.USER));
     const formD = new FormData();
     Object.entries(data).forEach(([key, value]) => formD.append(key, value));
-    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
+    let response = await fetch(`${API.USER}`, {
         method: 'PATCH',
         headers: {
             Authorization: `Token ${userdata.token}`,
@@ -72,9 +75,9 @@ export const updateProfileAction = data => async (dispatch) => {
     return true;
 };
 
-export const ChangePasswordAction = data => async (dispatch) => {
+export const changePasswordAction = data => async (dispatch) => {
     const userdata = JSON.parse(Cookies.get(UserConstants.USER));
-    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/change-password/`, {
+    let response = await fetch(`${API.CHANGE_PASSWORD}`, {
         method: 'PATCH',
         headers: {
             Authorization: `Token ${userdata.token}`,
@@ -100,26 +103,20 @@ export const ChangePasswordAction = data => async (dispatch) => {
 };
 
 export const fetchProfileAction = () => async (dispatch) => {
-    const userdata = JSON.parse(Cookies.get(UserConstants.USER));
-    const response = await fetch(`${UserActionConstants.API_BASE_URL}api/users/`, {
-        method: 'GET',
-        headers: {
-            Authorization: `Token ${userdata.token}`,
-            'Content-Type': 'application/json',
-        },
-    });
-    if (!response.ok && response.status === 400) {
+    let response = await fetchUrl(`${API.USER}`, 'GET', dispatch);
+    if (!response.ok && response.status !== 400) {
         return false;
     }
-    const data = await response.json();
+    console.log(response);
+    response = await response.json();
     dispatch({
         type: UserActionConstants.FETCH_PROFILE,
-        payload: data,
+        payload: response,
     });
     return true;
 };
 export const passwordResetAction = (data, id, token) => async (dispatch) => {
-    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/password-reset/confirm/${id}/${token}/`, {
+    let response = await fetch(`$${API.PASSWORD_RESET}${id}/${token}/`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -143,7 +140,7 @@ export const passwordResetAction = (data, id, token) => async (dispatch) => {
 };
 
 export const tokenvalidation = (id, token) => async (dispatch) => {
-    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/password-reset/verify/${id}/${token}/`, {
+    let response = await fetch(`${API.TOKEN_VALIDATION}${id}/${token}/`, {
         method: 'GET',
     });
     if (response.status === 404) {
@@ -169,7 +166,7 @@ export const tokenvalidation = (id, token) => async (dispatch) => {
 };
 
 export const passwordResetRequestAction = (data) => async (dispatch) => {
-    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/password-reset/`, {
+    let response = await fetch(`${API.PASSWORD_RESET_REQUEST}`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -185,17 +182,20 @@ export const passwordResetRequestAction = (data) => async (dispatch) => {
     return true;
 };
 
-export const logout = (token = 'valid') => (dispatch) => {
+export const logout = () => (dispatch) => {
     Cookies.remove(UserConstants.USER);
-    if (token === 'valid') {
-        dispatch({
-            type: FlashMessageConstants.SUCCESS,
-            message: 'Logged Out Successfully',
-        });
-    } else {
-        dispatch({
-            type: FlashMessageConstants.SUCCESS,
-            message: 'Please Login Again',
-        });
-    }
+    dispatch({
+        type: FlashMessageConstants.SUCCESS,
+        message: 'Logged Out Successfully',
+    });
+};
+
+export const logoutinvalid = (dispatch) => {
+    Cookies.remove(UserConstants.USER);
+    dispatch({
+        type: FlashMessageConstants.SUCCESS,
+        message: 'Please Login Again',
+    });
+    BrowserRouter.push('/');
+    console.log('here');
 };

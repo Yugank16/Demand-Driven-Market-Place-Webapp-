@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import { fetchProfileAction, updateProfileAction } from '../../Actions/UserActions';
 
 class UpdateProfile extends Component {
@@ -166,6 +168,10 @@ class UpdateProfile extends Component {
         );
     }
 }
+UpdateProfile.protoType = {
+    userdata: PropTypes.object,
+};
+
 const mapStateToProps = state => ({
     userdata: state.auth.user,
 });

@@ -1,10 +1,11 @@
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import { UserConstants, RequestItemConstants, UserActionConstants } from '../Constants/index';
+import { UserConstants, RequestItemConstants, UserActionConstants } from '../Constants';
+import { API } from '../Constants/Urls';
 
 export const postRequestAction = (data) => async (dispatch) => {
     const userdata = JSON.parse(Cookies.get(UserConstants.USER));
-    let response = await fetch(`${UserActionConstants.API_BASE_URL}api/requests/`, {
+    let response = await fetch(`${API.ITEM_REQUEST}`, {
         method: 'POST',
         headers: {
             Authorization: `Token ${userdata.token}`,
@@ -37,7 +38,7 @@ export const loadingFalseAction = () => dispatch => {
 
 export const fetchRequestsAction = (nameParam, itemStatus, orderBy) => dispatch => {
     const userdata = JSON.parse(Cookies.get(UserConstants.USER));
-    axios.get(`${UserActionConstants.API_BASE_URL}api/requests/`, {
+    axios.get(`${API.ITEM_REQUEST}`, {
         headers: {
             Authorization: `Token ${userdata.token}`,
         },
@@ -56,7 +57,7 @@ export const fetchRequestsAction = (nameParam, itemStatus, orderBy) => dispatch 
 
 export const fetchMyRequestsAction = (nameParam) => dispatch => {
     const userdata = JSON.parse(Cookies.get(UserConstants.USER));
-    axios.get(`${UserActionConstants.API_BASE_URL}api/my-requests/`, {
+    axios.get(`${API.MY_REQUEST}`, {
         headers: {
             Authorization: `Token ${userdata.token}`,
         },
@@ -73,7 +74,7 @@ export const fetchMyRequestsAction = (nameParam) => dispatch => {
 
 export const fetchDetailsAction = (id) => dispatch => {
     const userdata = JSON.parse(Cookies.get(UserConstants.USER));
-    fetch(`${UserActionConstants.API_BASE_URL}api/request-details/${id}`, {
+    fetch(`${API.REQUEST_DETAILS}${id}`, {
         method: 'GET',
         headers: {
             Authorization: `Token ${userdata.token}`,

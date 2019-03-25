@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Cookies from 'js-cookie';
-import { UserConstants, REGEX } from '../../Constants/index';
+import PropTypes from 'prop-types';
+import { REGEX } from '../../Constants/index';
 import '../../App.css';
 import { signupAction } from '../../Actions/UserActions';
 import AuthPage from '../../Components/User/AuthPage';
@@ -130,12 +130,8 @@ class SignUp extends Component {
         this.setState({ isButtonDisabled: false });
     }
 
-    render() {
-        if (Cookies.get(UserConstants.USER)) {
-            this.props.history.push('/home');
-        }
+    render() {   
         const { password, confirmPassword } = this.state;
-
         return (
             <div className="screen-signup">
                 <div className="signup-div">
@@ -162,7 +158,7 @@ class SignUp extends Component {
                                 </div>
                                 <div className="form-field-signup">
                                     <label className="form-field-label" htmlFor="Phone_number">Phone Number</label>
-                                    <input type="text" id="Phone_number" className="form-field-input" name="phoneNumber" onChange={this.handleChange} />
+                                    <input type="text" id="Phone_number" className="form-field-input" placeholder="Enter your mobile number" name="phoneNumber" onChange={this.handleChange} />
                                     <div className="form-field-label error-block">{this.state.errors.phoneNumber}</div>
                                 </div>
                             </div>
@@ -216,6 +212,11 @@ class SignUp extends Component {
         );
     }
 }
+
+SignUp.protoType = {
+    error: PropTypes.object,
+};
+
 const mapStateToProps = state => ({ errors: state.auth.errors });
 
 export default connect(mapStateToProps, { signupAction })(SignUp);
