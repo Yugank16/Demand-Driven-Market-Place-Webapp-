@@ -75,15 +75,15 @@ class RequestItemList extends Component {
                         <button type="button" className="item-search-button" onClick={this.handleSearch} >Search</button>
                         <button type="button" className="item-search-button" onClick={this.handleClear} >Clear</button>
                         <select className="item-status-drop" name="itemStatus" value={this.state.itemStatus} onChange={this.handleDropChange}>
-                            <option className="drop_down_text" value="2">Live</option>
-                            <option className="drop_down_text" value="1" > Pending</option>
+                            <option className="drop-down-text" value="2">Live</option>
+                            <option className="drop-down-text" value="1" > Pending</option>
                         </select>
                         <select className="order-price-drop" name="orderBy" value={this.state.orderBy} onChange={this.handleDropChange}>
-                            <option className="drop_down_text" value="" >No Filter</option>
-                            <option className="drop_down_text" value="max_price">Price Increasing</option>
-                            <option className="drop_down_text" value="-max_price" >Price Decreasing</option>
-                            <option className="drop_down_text" value="date_time">Increasing Date Time</option>
-                            <option className="drop_down_text" value="-date_time" >Decreasing Date Time</option>
+                            <option className="drop-down-text" value="" >No Filter</option>
+                            <option className="drop-down-text" value="max_price">Price Increasing</option>
+                            <option className="drop-down-text" value="-max_price" >Price Decreasing</option>
+                            <option className="drop-down-text" value="date_time">Increasing Date Time</option>
+                            <option className="drop-down-text" value="-date_time" >Decreasing Date Time</option>
                         </select>
                     </div>
                     <RequestItem data={data} />

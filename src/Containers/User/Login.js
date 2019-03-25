@@ -80,28 +80,28 @@ class Login extends Component {
             this.props.history.push('/home');
         }
         return (
-            <div className="Screen">
-                <div className="LoginDiv">
+            <div className="screen">
+                <div className="login-div">
                     <AuthPage />
-                    <div className="FormCenter">
-                        <form onSubmit={this.handleSubmit} className="FormFields" >
-                            <div className="FormField">
-                                <label className="FormField__Label" htmlFor="email">E-Mail ID</label>
-                                <input type="text" id="email" className="FormField__Input" placeholder="Enter your email" name="email" onChange={this.handleChange} />
-                                <div className="FormField__Label error-block">{this.state.errors.email}</div>
+                    <div className="form-center">
+                        <form onSubmit={this.handleSubmit} className="form-fields" >
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="email">E-Mail ID</label>
+                                <input type="text" id="email" className="form-field-input" placeholder="Enter your email" name="email" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.email}</div>
                             </div>
-                            <div className="FormField">
-                                <label className="FormField__Label" htmlFor="password">Password</label>
-                                <input type="password" id="password" className="FormField__Input" placeholder="Enter your password" name="password" onChange={this.handleChange} />
-                                <div className="FormField__Label error-block">{this.state.errors.password}</div>
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="password">Password</label>
+                                <input type="password" id="password" className="form-field-input" placeholder="Enter your password" name="password" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.password}</div>
                             </div>
 
-                            <div className="FormField clearfix">
-                                <button className="FormField__Button mr-20" disabled={this.state.isButtonDisabled}>Log In</button>
+                            <div className="form-field clearfix">
+                                <button className="form-field-button mr-20" disabled={this.state.isButtonDisabled}>Log In</button>
                             </div>
-                            <div className="FormField">
-                                <Link to="/signup" className="FormField__Link">Create an account</Link>
-                                <Link to="/reset-password" className="FormField__Link float_right">Forgot Password ?</Link>
+                            <div className="form-field">
+                                <Link to="/signup" className="form-field-link">Create an account</Link>
+                                <Link to="/reset-password" className="form-field-link float-right">Forgot Password ?</Link>
                             </div>
                         </form>
                     </div>

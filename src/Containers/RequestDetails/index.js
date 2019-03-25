@@ -31,8 +31,8 @@ class RequestDetails extends Component {
             return (
                 <div>
                     <RequestDetail key={this.props.item.id} data={this.props.item} date={date} time={time} />
-                    <div className="FormField clearfix">
-                        <button className="FormField__Button " disabled={this.state.isButtonDisabled}>Bid Now</button>
+                    <div className="form-field clearfix">
+                        <button className="form-field-button " disabled={this.state.isButtonDisabled}>Bid Now</button>
                     </div>
                 </div>
             );

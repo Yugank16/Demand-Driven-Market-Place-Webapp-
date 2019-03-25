@@ -122,43 +122,43 @@ class UpdateProfile extends Component {
             <div>
                 <div className="content">
                     <h2>Update Profile</h2>
-                    <form onSubmit={this.handleSubmit} className="FormFields">
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="first_name">First Name</label>
-                            <input type="text" value={this.state.firstName} id="first_name" className="FormField__Input" placeholder="Enter your First name" name="firstName" onChange={this.handleChange} />
-                            <div className="FormField__Label error-block">{this.state.errors.firstName}</div>
+                    <form onSubmit={this.handleSubmit} className="form-fields">
+                        <div className="form-field">
+                            <label className="form-field-label" htmlFor="first_name">First Name</label>
+                            <input type="text" value={this.state.firstName} id="first_name" className="form-field-input" placeholder="Enter your First name" name="firstName" onChange={this.handleChange} />
+                            <div className="form-field-label error-block">{this.state.errors.firstName}</div>
                         </div>
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="last_name">Last Name</label>
-                            <input type="text" value={this.state.lastName} id="last_name" className="FormField__Input" placeholder="Enter your Last name" name="lastName" onChange={this.handleChange} />
-                            <div className="FormField__Label error-block">{this.state.errors.lastName}</div>
+                        <div className="form-field">
+                            <label className="form-field-label" htmlFor="last_name">Last Name</label>
+                            <input type="text" value={this.state.lastName} id="last_name" className="form-field-input" placeholder="Enter your Last name" name="lastName" onChange={this.handleChange} />
+                            <div className="form-field-label error-block">{this.state.errors.lastName}</div>
                         </div>
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="Phone_number">Phone Number</label>
-                            <input type="text" value={this.state.phoneNumber} id="Phone_number" className="FormField__Input" name="phoneNumber" onChange={this.handleChange} />
-                            <div className="FormField__Label error-block">{this.state.errors.phoneNumber}</div>
+                        <div className="form-field">
+                            <label className="form-field-label" htmlFor="Phone_number">Phone Number</label>
+                            <input type="text" value={this.state.phoneNumber} id="Phone_number" className="form-field-input" name="phoneNumber" onChange={this.handleChange} />
+                            <div className="form-field-label error-block">{this.state.errors.phoneNumber}</div>
                         </div>
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="datetime">Birtth Date</label>
-                            <input type="date" value={this.state.birthDate} id="datetime" className="FormField__Input" name="birthDate" onChange={this.handleChange} />
-                            <div className="FormField__Label error-block">{this.state.errors.birthDate}</div>
+                        <div className="form-field">
+                            <label className="form-field-label" htmlFor="datetime">Birtth Date</label>
+                            <input type="date" value={this.state.birthDate} id="datetime" className="form-field-input" name="birthDate" onChange={this.handleChange} />
+                            <div className="form-field-label error-block">{this.state.errors.birthDate}</div>
                         </div>
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="user_type">Gender</label>
-                            <select value={this.state.gender} className="FormField__Input" name="gender" onChange={this.handleChange}>
-                                <option className="drop_down_text" value="MALE">MALE</option>
-                                <option className="drop_down_text" value="FEMALE" >FEMALE</option>
-                                <option className="drop_down_text" value="OTHERS" >OTHERS</option>
+                        <div className="form-field">
+                            <label className="form-field-label" htmlFor="user_type">Gender</label>
+                            <select value={this.state.gender} className="form-field-input" name="gender" onChange={this.handleChange}>
+                                <option className="drop-down-text" value="MALE">MALE</option>
+                                <option className="drop-down-text" value="FEMALE" >FEMALE</option>
+                                <option className="drop-down-text" value="OTHERS" >OTHERS</option>
                             </select>
-                            <div className="FormField__Label error-block">{this.state.errors.gender}</div>
+                            <div className="form-field-label error-block">{this.state.errors.gender}</div>
                         </div>
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="photo">profile Photo</label>
+                        <div className="form-field">
+                            <label className="form-field-label" htmlFor="photo">profile Photo</label>
                             <input type="file" id="profilephoto" name="profilePhoto" onChange={this.handleFileChange} />
-                            <div className="FormField__Label error-block">{this.state.errors.profilePhoto}</div>
+                            <div className="form-field-label error-block">{this.state.errors.profilePhoto}</div>
                         </div>
-                        <div className="FormField">
-                            <button className="FormField__Button mr-20" disabled={this.state.isButtonDisabled}>Save</button>
+                        <div className="form-field">
+                            <button className="form-field-button mr-20" disabled={this.state.isButtonDisabled}>Save</button>
                         </div>
                     </form>
                 </div>
