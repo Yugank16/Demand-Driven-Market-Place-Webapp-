@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import { UserConstants } from '../Constants/index';
 
 export const OpenRoutes = ({ component: Component, ...rest }) => (
+   
     <Route
         {...rest}
         render={props => {

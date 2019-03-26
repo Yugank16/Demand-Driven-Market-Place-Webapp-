@@ -2,6 +2,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { UserConstants, RequestItemConstants, UserActionConstants } from '../Constants';
 import { API } from '../Constants/Urls';
+import { fetchUrl, setUser } from '../Util/Apiutil';
 
 export const postRequestAction = (data) => async (dispatch) => {
     const userdata = JSON.parse(Cookies.get(UserConstants.USER));
@@ -72,20 +73,20 @@ export const fetchMyRequestsAction = (nameParam) => dispatch => {
     });
 };
 
-export const fetchDetailsAction = (id) => dispatch => {
-    const userdata = JSON.parse(Cookies.get(UserConstants.USER));
-    fetch(`${API.REQUEST_DETAILS}${id}`, {
-        method: 'GET',
-        headers: {
-            Authorization: `Token ${userdata.token}`,
-            'Content-Type': 'application/json',
-        },
-    }).then(res => res.json())
-        .then(data => {
-            dispatch({
-                type: RequestItemConstants.FETCH_PARTICULAR_REQUEST,
-                payload: data,
-            });
+export const fetchDetailsAction = (id) => async (dispatch) => {
+    let response = await fetchUrl(`${API.REQUEST_DETAILS}${id}`, 'GET', dispatch);
+    let user = await fetchUrl(`${API.USER}`, 'GET', dispatch);
+    if (response.ok && user.ok) {
+        response = await response.json();
+        user = await user.json();
+        if (user.id === response.requester.id) {
+            response.flag = true;
+        } else {
+            response.flag = false;
+        }
+        dispatch({
+            type: RequestItemConstants.FETCH_PARTICULAR_REQUEST,
+            payload: response,
         });
+    }     
 };
-

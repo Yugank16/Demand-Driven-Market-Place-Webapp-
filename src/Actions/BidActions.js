@@ -66,7 +66,6 @@ export const allBids = (id) => async (dispatch) => {
     let response = await fetchUrl(`${API.ITEM_REQUEST}${id}/bid`, 'GET', dispatch);
     if (response.ok) {
         response = await response.json(); 
-        console.log(response);
         dispatch({
             type: BidConstants.FETCH_ALL_BIDS,
             payload: response,
@@ -84,7 +83,6 @@ export const myBids = () => async (dispatch) => {
     let response = await fetchUrl(`${API.MY_BIDS}`, 'GET', dispatch);
     if (response.ok) {
         response = await response.json(); 
-        console.log(response);
         dispatch({
             type: BidConstants.FETCH_MY_BIDS,
             payload: response,

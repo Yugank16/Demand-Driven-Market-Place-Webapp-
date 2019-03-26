@@ -60,6 +60,7 @@ class Bid extends Component {
             const { postBid, history } = this.props;
             const { id } = this.props.match.params;
             const response = await postBid(data, id);
+            console.log(response);
             if (response === true) {
                 console.log(response);
             } else {
