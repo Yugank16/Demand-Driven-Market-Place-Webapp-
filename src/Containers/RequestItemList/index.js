@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Loader from 'react-loader-spinner';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
-import { fetchRequestsAction, loadingTrueAction, loadingFalseAction } from '../../Actions/RequestItemActions';
+import { fetchRequestsAction } from '../../Actions/RequestItemActions';
 import RequestItem from '../../Components/RequestItem';
 import '../../App.css';
 
@@ -23,7 +23,6 @@ class RequestItemList extends Component {
     }
 
     componentDidMount() {
-        loadingTrueAction();
         const { nameParam, itemStatus, orderBy: ordering } = this.state; 
         this.props.fetchRequestsAction(nameParam, itemStatus || 2, ordering);
     }

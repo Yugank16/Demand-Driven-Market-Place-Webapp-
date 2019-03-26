@@ -8,7 +8,7 @@ import { fetchUrl, setUser } from '../Util/Apiutil';
 let user;
 
 export const loginAction = data => async (dispatch) => {
-    let response = await fetchUrl(`${API.LOGIN}`, 'POST', dispatch, data);
+    let response = await fetchUrl(`${API.LOGIN}`, 'POST', data);
 
     if (!response.ok && response.status === 400) {
         dispatch({
@@ -103,7 +103,7 @@ export const changePasswordAction = data => async (dispatch) => {
 };
 
 export const fetchProfileAction = () => async (dispatch) => {
-    let response = await fetchUrl(`${API.USER}`, 'GET', dispatch);
+    let response = await fetchUrl(`${API.USER}`, 'GET');
     if (!response.ok && response.status !== 400) {
         return false;
     }
@@ -190,12 +190,8 @@ export const logout = () => (dispatch) => {
     });
 };
 
-export const logoutinvalid = (dispatch) => {
+export const logoutinvalid = () => {
     Cookies.remove(UserConstants.USER);
-    dispatch({
-        type: FlashMessageConstants.SUCCESS,
-        message: 'Please Login Again',
-    });
     BrowserRouter.push('/');
-    console.log('here');
 };
+

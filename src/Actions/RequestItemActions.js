@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import { UserConstants, RequestItemConstants, UserActionConstants } from '../Constants';
+import { UserConstants, RequestItemConstants, FlashMessageConstants } from '../Constants';
 import { API } from '../Constants/Urls';
 import { fetchUrl, setUser } from '../Util/Apiutil';
 
@@ -17,12 +17,14 @@ export const postRequestAction = (data) => async (dispatch) => {
     if (!response.ok && response.status === 400) {
         response = response.json();
         return response;
-    }
-    dispatch({
-        type: RequestItemConstants.POST_ITEM_REQUEST,
-        payload: data,
-    });
-    return true;
+    } else if (response.ok) {
+        dispatch({
+            type: FlashMessageConstants.SUCCESS,
+            message: 'Item Posted Successfully',
+        });
+        return true;
+    }  
+    return false;
 };
 
 export const loadingTrueAction = () => dispatch => {
@@ -74,10 +76,10 @@ export const fetchMyRequestsAction = (nameParam) => dispatch => {
 };
 
 export const fetchDetailsAction = (id) => async (dispatch) => {
-    let response = await fetchUrl(`${API.REQUEST_DETAILS}${id}`, 'GET', dispatch);
-    let user = await fetchUrl(`${API.USER}`, 'GET', dispatch);
-    if (response.ok && user.ok) {
+    let response = await fetchUrl(`${API.REQUEST_DETAILS}${id}`, 'GET');
+    if (response.ok) {
         response = await response.json();
+        let user = await fetchUrl(`${API.USER}`, 'GET');
         user = await user.json();
         if (user.id === response.requester.id) {
             response.flag = true;
@@ -88,5 +90,30 @@ export const fetchDetailsAction = (id) => async (dispatch) => {
             type: RequestItemConstants.FETCH_PARTICULAR_REQUEST,
             payload: response,
         });
-    }     
+        return true;
+    } else if (response.status === 403 || response.status === 404) {
+        dispatch({
+            type: RequestItemConstants.ERRORS,
+            error: 'forbidden',
+        });
+        return false;
+    } 
+    return false;  
+};
+
+
+export const bidClose = (data, id) => async (dispatch) => {
+    const response = await fetchUrl(`${API.REQUEST_DETAILS}${id}/`, 'PATCH', data);
+    if (response.ok) {
+        dispatch({
+            type: FlashMessageConstants.SUCCESS,
+            message: 'Bid closed.',
+        });
+        return true;
+    }
+    dispatch({
+        type: FlashMessageConstants.SUCCESS,
+        message: 'Something went wrong',
+    });
+    return false;
 };

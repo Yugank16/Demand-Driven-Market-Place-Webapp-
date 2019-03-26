@@ -80,6 +80,10 @@
   color: #616E7F;
 }
 
+.item-button {
+  margin-right : 250px;
+}
+
 .form-field-button {
   background-color: blue;
   color: white;
@@ -90,6 +94,12 @@
   font-size: .8em;
   font-weight: 500;
   float: right;
+}
+.button-red {
+  background-color: red;
+}
+.button-green {
+  background-color: green;
 }
 
 .form-field-link {

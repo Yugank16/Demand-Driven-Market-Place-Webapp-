@@ -3,13 +3,12 @@ import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import PropTypes from 'prop-types';
 import Loader from 'react-loader-spinner';
-import { myBids, loadingTrueAction } from '../../Actions/BidActions';
+import { myBids } from '../../Actions/BidActions';
 import RequestItem from '../../Components/RequestItem';
 import '../../App.css';
 
 class MyBids extends Component {
     componentDidMount() {
-        loadingTrueAction();
         const { myBids } = this.props;
         myBids();
     }
@@ -20,9 +19,8 @@ class MyBids extends Component {
         if (!this.props.isLoading) {
             let data = <div className="no-results">{NO_RESULT_MESSAGE}</div>;
             if (this.props.bids.length !== 0) {
-                console.log(this.props.bids);
                 data = this.props.bids.map((data) => (
-                    <LinkContainer key={data.id} to={'/home/mybid/' + data.id}>
+                    <LinkContainer key={data.id} to={'/home/bid/' + data.id}>
                         <div className="item-card clearfix" >
                             <div className="item-name" >{data.item.name}</div>
                             <div className="item-requester">&#8377; {data.bid_price}</div>

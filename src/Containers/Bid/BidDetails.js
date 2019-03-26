@@ -1,28 +1,84 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { bidDetails } from '../../Actions/BidActions';
+import Loader from 'react-loader-spinner';
+import { bidDetails, updateBidValidity, deleteBid } from '../../Actions/BidActions';
 import BidDetail from '../../Components/Bid/BidDetails';
 import '../../App.css';
+import Forbidden from '../../Components/Forbidden';
 
 class BidDetails extends Component {  
+    constructor() {
+        super();
+        this.state = {
+            isvalid: 2,
+            error: '',
+        };
+    }
     componentDidMount() {
         const { id } = this.props.match.params;
         const { bidDetails } = this.props;
         bidDetails(id);
     }
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.someValue !== prevState.someValue) {
+            return { someState: nextProps.someValue };
+        }
+        return null;
+    }
+     
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.someValue !== this.props.someValue) {
+            this.setState({ isvalid: this.props.someValue.validity });
+            this.classMethod();
+        }
+    }
+    handleDelete= (e) => {
+        e.preventDefault();
+        const { id } = this.props.match.params;
+        deleteBid(id);
+    }
+    handleInvalid= async (e) => {
+        e.preventDefault();
+        const { id } = this.props.match.params;
+        const response = await updateBidValidity({ validity: 2 }, id);
+        if (response === true) {
+            this.setState({ isvalid: 2, error: null });
+            return;
+        }
+        this.setState({ error: 'Something went Wrong' });
+    }
+    handleValid= async (e) => {
+        e.preventDefault();
+        const { id } = this.props.match.params;
+        const response = await updateBidValidity({ validity: 1 }, id);
+        if (response === true) {
+            this.setState({ isvalid: 1, error: null });
+            return;
+        }
+        this.setState({ error: 'Something went Wrong' });
+    }
+    
 
     render() {
-        console.log(this.props);
-        if (this.props.bid.id) {
-            console.log(this.props.bid);
+        if (this.props.bid.id !== undefined) {
+            const { bid } = this.props;
             return (
                 <div>
-                    <BidDetail key={this.props.bid.id} data={this.props.bid} />
+                    {this.state.error}
+                    <BidDetail key={bid.id} data={bid} />
+                    {!bid.flag && bid.item.item_status === 2 && <div className="form-field clearfix"><button className="form-field-button " onClick={this.handleDelete}>Delete</button> </div>
+                    }
+                    {bid.flag && bid.item.item_status === 3 && this.state.isvalid === 1 && <div className="form-field clearfix"><button className="form-field-button button-red" onClick={this.handleInvalid}>Mark Invalid</button> </div>
+                    }
+                    {bid.flag && bid.item.item_status === 3 && this.state.isvalid === 2 && <div className="form-field clearfix"><button className="form-field-button button-green" onClick={this.handleValid}>Mark Valid</button> </div>
+                    }
                 </div>
             );
-        }
-        return <div>Please wait.....</div>;
+        } else if (this.props.error === 'forbidden') {
+            return <Forbidden />;
+        }     
+        return <div className="loader-main"><Loader type="Grid" color="#somecolor" height={80} width={80} /></div>;
     }
 }
 
@@ -30,8 +86,13 @@ BidDetails.propType = {
     bid: PropTypes.object,
 };
 
+BidDetails.defaultProps = {
+    bid: {},
+};
+
 const mapStateToProps = state => ({
     bid: state.bid.data,
+    error: state.bid.errors,
 });
 
 export default connect(mapStateToProps, { bidDetails })(BidDetails);

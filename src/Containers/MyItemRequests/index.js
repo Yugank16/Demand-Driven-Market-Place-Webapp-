@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import PropTypes from 'prop-types';
 import Loader from 'react-loader-spinner';
 import queryString from 'query-string';
-import { fetchMyRequestsAction, loadingTrueAction } from '../../Actions/RequestItemActions';
+import { fetchMyRequestsAction } from '../../Actions/RequestItemActions';
 import RequestItem from '../../Components/RequestItem';
 import '../../App.css';
 
@@ -19,7 +19,6 @@ class MyItemRequestList extends Component {
     }
 
     componentDidMount() {
-        loadingTrueAction();
         const values = queryString.parse(this.props.location.search); 
         this.props.fetchMyRequestsAction(values.name);
     }

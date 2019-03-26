@@ -25,6 +25,7 @@ class Bid extends Component {
         photos.push(e.target.files[0]);
         e.target.value = '';
         this.setState({ photos });
+        this.setState({ errors: { ...this.state.errors, photos: null } });
     }
 
     handleValidation = () => {
@@ -43,7 +44,7 @@ class Bid extends Component {
         for (let i = 0; i < 6; i++) {
             if (!photos[i]) {
                 formIsValid = false;
-                error.photos = 'Upload 6 photos of the item';
+                error.photos = 'Upload Atleast 6 photos of the item';
                 break;
             }
         }
