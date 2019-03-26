@@ -111,52 +111,52 @@ class RequestItem extends Component {
             <div>
                 <div className="content">
                     <h1>Request Item</h1>
-                    <div className="FormCenter">
-                        <form onSubmit={this.handleSubmit} className="FormFields">
-                            <div className="FormField">
-                                <label className="FormField__Label" htmlFor="name">Name</label>
-                                <input type="text" id="name" className="FormField__Input" placeholder="Enter name of item" name="name" onChange={this.handleChange} />
-                                <div className="FormField__Label error-block">{this.state.errors.name}</div>
+                    <div className="form-center">
+                        <form onSubmit={this.handleSubmit} className="form-fields">
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="name">Name</label>
+                                <input type="text" id="name" className="form-field-input" placeholder="Enter name of item" name="name" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.name}</div>
                             </div>
-                            <div className="FormField">
-                                <label className="FormField__Label" htmlFor="description">Description</label>
-                                <input type="text" id="description" className="FormField__Input" placeholder="Enter description of required item" name="description" onChange={this.handleChange} />
-                                <div className="FormField__Label error-block">{this.state.errors.description}</div>
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="description">Description</label>
+                                <input type="text" id="description" className="form-field-input" placeholder="Enter description of required item" name="description" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.description}</div>
                             </div>
-                            <div className="FormField">
-                                <label className="FormField__Label" htmlFor="datetime">Date and Time</label>
-                                <input type="datetime-local" id="datetime" className="FormField__Input" placeholder="Enter date and time" name="datetime" onChange={this.handleChange} />
-                                <div className="FormField__Label error-block">{this.state.errors.datetime}</div>
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="datetime">Date and Time</label>
+                                <input type="datetime-local" id="datetime" className="form-field-input" placeholder="Enter date and time" name="datetime" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.datetime}</div>
                             </div>
-                            <div className="FormField">
-                                <label className="FormField__Label" htmlFor="itemState">Item State</label>
-                                <select className="FormField__Input" name="itemState" onChange={this.handleChange}>
-                                    <option className="drop_down_text" selected value={3}>Old</option>
-                                    <option className="drop_down_text" value={2} >Second Hand</option>
-                                    <option className="drop_down_text" value={1} >New</option>
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="itemState">Item State</label>
+                                <select className="form-field-input" name="itemState" onChange={this.handleChange}>
+                                    <option className="drop-down-text" selected value={3}>Old</option>
+                                    <option className="drop-down-text" value={2} >Second Hand</option>
+                                    <option className="drop-down-text" value={1} >New</option>
                                 </select>
                             </div>
-                            <div className="FormField">
-                                <label className="FormField__Label" htmlFor="monthsOld">Months Old</label>
-                                <input type="number" id="monthsOld" className="FormField__Input" placeholder="Enter quantity required" name="monthsOld" onChange={this.handleChange} />
-                                <div className="FormField__Label error-block">{this.state.errors.monthsOld}</div>
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="monthsOld">Months Old</label>
+                                <input type="number" id="monthsOld" className="form-field-input" placeholder="Enter quantity required" name="monthsOld" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.monthsOld}</div>
                             </div>
-                            <div className="FormField">
-                                <label className="FormField__Label" htmlFor="quantityRequired">Quantity Required</label>
-                                <input type="number" id="quantityRequired" className="FormField__Input" placeholder="Enter quantity required" name="quantityRequired" onChange={this.handleChange} />
-                                <div className="FormField__Label error-block">{this.state.errors.quantityRequired}</div>
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="quantityRequired">Quantity Required</label>
+                                <input type="number" id="quantityRequired" className="form-field-input" placeholder="Enter quantity required" name="quantityRequired" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.quantityRequired}</div>
                             </div>
-                            <div className="FormField">
-                                <label className="FormField__Label" htmlFor="maxPrice">Max Price</label>
-                                <input type="number" id="maxPrice" className="FormField__Input" placeholder="Enter max price" name="maxPrice" onChange={this.handleChange} />
-                                <div className="FormField__Label error-block">{this.state.errors.maxPrice}</div>
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="maxPrice">Max Price</label>
+                                <input type="number" id="maxPrice" className="form-field-input" placeholder="Enter max price" name="maxPrice" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.maxPrice}</div>
                             </div>
-                            <div className="FormField">
-                                <label className="FormField__Label" htmlFor="moreInfo">More Information</label>
-                                <input type="text" id="moreInfo" className="FormField__Input" placeholder="Enter more specification for the item" name="moreInfo" onChange={this.handleChange} />
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="moreInfo">More Information</label>
+                                <input type="text" id="moreInfo" className="form-field-input" placeholder="Enter more specification for the item" name="moreInfo" onChange={this.handleChange} />
                             </div>
-                            <div className="FormField">
-                                <button className="FormField__Button mr-20" disabled={this.state.isButtonDisabled}>Post</button>
+                            <div className="form-field">
+                                <button className="form-field-button mr-20" disabled={this.state.isButtonDisabled}>Post</button>
                             </div>
                         </form>
                     </div>

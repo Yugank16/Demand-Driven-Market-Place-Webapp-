@@ -18,7 +18,7 @@ class UserProfile extends Component {
                 </div>         
             );  
         }    
-        return <div className="float_right" >Please wait.....</div>;  
+        return <div className="float-right" >Please wait.....</div>;  
     }
 }
 

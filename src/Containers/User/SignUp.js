@@ -133,77 +133,77 @@ class SignUp extends Component {
     render() {   
         const { password, confirmPassword } = this.state;
         return (
-            <div className="Screen_Signup">
-                <div className="SignupDiv">
+            <div className="screen-signup">
+                <div className="signup-div">
                     <AuthPage />
-                    <div className="FormCenter clearfix">
-                        <form onSubmit={this.handleSubmit} className="FormFields_Signup">
+                    <div className="form-center clearfix">
+                        <form onSubmit={this.handleSubmit} className="form-fields-signup">
                             <div className="clearfix">
-                                <div className="FormField_Signup">
-                                    <label className="FormField__Label" htmlFor="first_name">First Name</label>
-                                    <input type="text" id="first_name" className="FormField__Input" placeholder="Enter your First name" name="firstName" onChange={this.handleChange} />
-                                    <div className="FormField__Label error-block">{this.state.errors.firstName}</div>
+                                <div className="form-field-signup">
+                                    <label className="form-field-label" htmlFor="first_name">First Name</label>
+                                    <input type="text" id="first_name" className="form-field-input" placeholder="Enter your First name" name="firstName" onChange={this.handleChange} />
+                                    <div className="form-field-label error-block">{this.state.errors.firstName}</div>
                                 </div>
-                                <div className="FormField_Signup">
-                                    <label className="FormField__Label" htmlFor="last_name">Last Name</label>
-                                    <input type="text" id="last_name" className="FormField__Input" placeholder="Enter your Last name" name="lastName" onChange={this.handleChange} />
-                                    <div className="FormField__Label error-block">{this.state.errors.lastName}</div>
+                                <div className="form-field-signup">
+                                    <label className="form-field-label" htmlFor="last_name">Last Name</label>
+                                    <input type="text" id="last_name" className="form-field-input" placeholder="Enter your Last name" name="lastName" onChange={this.handleChange} />
+                                    <div className="form-field-label error-block">{this.state.errors.lastName}</div>
                                 </div>
                             </div>
                             <div className="clearfix">
-                                <div className="FormField_Signup">
-                                    <label className="FormField__Label" htmlFor="email">E-Mail ID</label>
-                                    <input type="text" id="email" className="FormField__Input" placeholder="Enter your email" name="email" onChange={this.handleChange} />
-                                    <div className="FormField__Label error-block">{this.state.errors.email}</div>
+                                <div className="form-field-signup">
+                                    <label className="form-field-label" htmlFor="email">E-Mail ID</label>
+                                    <input type="text" id="email" className="form-field-input" placeholder="Enter your email" name="email" onChange={this.handleChange} />
+                                    <div className="form-field-label error-block">{this.state.errors.email}</div>
                                 </div>
-                                <div className="FormField_Signup">
-                                    <label className="FormField__Label" htmlFor="Phone_number">Phone Number</label>
-                                    <input type="text" id="Phone_number" className="FormField__Input" placeholder="Enter your mobile number" name="phoneNumber" onChange={this.handleChange} />
-                                    <div className="FormField__Label error-block">{this.state.errors.phoneNumber}</div>
+                                <div className="form-field-signup">
+                                    <label className="form-field-label" htmlFor="Phone_number">Phone Number</label>
+                                    <input type="text" id="Phone_number" className="form-field-input" placeholder="Enter your mobile number" name="phoneNumber" onChange={this.handleChange} />
+                                    <div className="form-field-label error-block">{this.state.errors.phoneNumber}</div>
                                 </div>
                             </div>
                             <div className="clearfix">
-                                <div className="FormField_Signup">
-                                    <label className="FormField__Label" htmlFor="datetime">Birth Date</label>
-                                    <input type="date" id="datetime" className="FormField__Input" name="birthDate" onChange={this.handleChange} />
-                                    <div className="FormField__Label error-block">{this.state.errors.birthDate}</div>
+                                <div className="form-field-signup">
+                                    <label className="form-field-label" htmlFor="datetime">Birth Date</label>
+                                    <input type="date" id="datetime" className="form-field-input" name="birthDate" onChange={this.handleChange} />
+                                    <div className="form-field-label error-block">{this.state.errors.birthDate}</div>
                                 </div>
-                                <div className="FormField_Signup">
-                                    <label className="FormField__Label" htmlFor="gender">Gender</label>
-                                    <select className="FormField__Input" name="gender" onChange={this.handleChange}>
-                                        <option className="drop_down_text" selected value="MALE">Male</option>
-                                        <option className="drop_down_text" value="FEMALE" >Female</option>
-                                        <option className="drop_down_text" value="OTHERS" >Special</option>
+                                <div className="form-field-signup">
+                                    <label className="form-field-label" htmlFor="gender">Gender</label>
+                                    <select className="form-field-input" name="gender" onChange={this.handleChange}>
+                                        <option className="drop-down-text" selected value="MALE">Male</option>
+                                        <option className="drop-down-text" value="FEMALE" >Female</option>
+                                        <option className="drop-down-text" value="OTHERS" >Special</option>
                                     </select>
                                 </div>
                             </div>
                             <div className="clearfix">
-                                <div className="FormField_Signup">
-                                    <label className="FormField__Label" htmlFor="password">Password</label>
-                                    <input type="password" id="password" className="FormField__Input" placeholder="Enter your password" name="password" onChange={this.handleChange} />
-                                    <div className="FormField__Label error-block">{this.state.errors.password}</div>
+                                <div className="form-field-signup">
+                                    <label className="form-field-label" htmlFor="password">Password</label>
+                                    <input type="password" id="password" className="form-field-input" placeholder="Enter your password" name="password" onChange={this.handleChange} />
+                                    <div className="form-field-label error-block">{this.state.errors.password}</div>
                                 </div>
 
-                                <div className="FormField_Signup">
-                                    <label className="FormField__Label" htmlFor="password_confirmation">Confirm Password</label>
-                                    <input type="password" id="confirm_password" className="FormField__Input" placeholder="Enter your password" name="confirmPassword" onChange={this.handleChange} />
+                                <div className="form-field-signup">
+                                    <label className="form-field-label" htmlFor="password_confirmation">Confirm Password</label>
+                                    <input type="password" id="confirm_password" className="form-field-input" placeholder="Enter your password" name="confirmPassword" onChange={this.handleChange} />
                                     {password && confirmPassword !== password &&
-                                        <div className="FormField__Label error-block">Password does not match</div>
+                                        <div className="form-field-label error-block">Password does not match</div>
                                     }
                                 </div>
                             </div>
-                            <div className="FormField_Signup">
-                                <label className="FormField__Label" htmlFor="user_type">User Type</label>
-                                <select className="FormField__Input" name="userType" onChange={this.handleChange}>
-                                    <option className="drop_down_text" selected value={3}>Both Buyer and Seller</option>
-                                    <option className="drop_down_text" value={2} > Only Seller</option>
-                                    <option className="drop_down_text" value={1} >Only Buyer</option>
+                            <div className="form-field-signup">
+                                <label className="form-field-label" htmlFor="user_type">User Type</label>
+                                <select className="form-field-input" name="userType" onChange={this.handleChange}>
+                                    <option className="drop-down-text" selected value={3}>Both Buyer and Seller</option>
+                                    <option className="drop-down-text" value={2} > Only Seller</option>
+                                    <option className="drop-down-text" value={1} >Only Buyer</option>
 
                                 </select>
                             </div>                          
-                            <div className="FormField clearfix">
-                                <button className="FormField__Button margin_signup_button" disabled={this.state.isButtonDisabled}>Sign Up</button>
-                                <Link to="/" className="FormField__Link signup_link float_left">I&#39;m already member</Link>
+                            <div className="form-field clearfix">
+                                <button className="form-field-button margin-signup-button" disabled={this.state.isButtonDisabled}>Sign Up</button>
+                                <Link to="/" className="form-field-link signup-link float-left">I&#39;m already member</Link>
                             </div>
                         </form>
                     </div>

@@ -1,4 +1,4 @@
-.Screen {
+.screen {
   height: 100vh;
   color: white;
 }
@@ -15,7 +15,7 @@
 
 /* Login */
 
-.LoginDiv{
+.login-div{
   position:fixed;
     top: 5%;
     left: 32%;
@@ -24,24 +24,24 @@
     padding: 1% 5%;
 }
 
-.Screen__Form {
+.screen-form {
   height: 100%;
   background-color:white;
   padding: 25px 20px;
 } 
 
-.FormCenter{
+.form-center{
   display: flex;
 }
 
-.FormTitle {
+.form-title {
   color: #707C8B;
   font-weight: 300;
   margin-bottom: 20px;
   text-align: center;
 }
 
-.FormTitle__Link {
+.form-title-link {
   color: #707C8B;
   text-decoration: none;
   display: inline-block;
@@ -49,26 +49,21 @@
   margin: 0 10px;
 }
 
-.FormTitle__Link--Active {
-  color: black;
-  border-bottom: 1px solid #199087;
-}
-
-.FormFields{
+.form-fields{
   width: 100%;
 }
 
-.FormField {
+.form-field {
   margin-bottom: 30px;
 }
 
-.FormField__Label {
+.form-field-label {
   display: block;
   text-transform: uppercase;
   font-size: 0.8em;
   color: black;
 }
-.FormField__Input {
+.form-field-input {
   width: 100%;
   background-color: transparent;
   border: none;
@@ -81,11 +76,15 @@
   margin-top: 10px;
 }
 
-.FormField__Input::placeholder {
+.form-fiel-input::placeholder {
   color: #616E7F;
 }
 
-.FormField__Button {
+.item-button {
+  margin-right : 250px;
+}
+
+.form-field-button {
   background-color: blue;
   color: white;
   border: none;
@@ -96,18 +95,24 @@
   font-weight: 500;
   float: right;
 }
+.button-red {
+  background-color: red;
+}
+.button-green {
+  background-color: green;
+}
 
-.FormField__Link {
+.form-field-link {
   color: #66707D;
   text-decoration: none;
   display: inline-block;
   font-size: .8em;
 }
 
-.float_right{
+.float-right{
   float: right;
 }
-.float_left{
+.float-left{
   float: left;
 }
 
@@ -123,13 +128,13 @@
 
 /* Sinup */
 
-.Screen_Signup {
+.screen-signup {
   height: 596px;
   width: 1286px;
   color: white;
 }
 
-.SignupDiv{
+.signup-div{
     position:fixed;
     top: 4%;
     left: 10%;
@@ -139,26 +144,26 @@
     padding: 1% 5%;
 }
 
-.FormFields_Signup{
+.form-fields-signup{
   width: 100%;
 }
 
-.FormField_Signup {
+.form-field-signup {
   margin-bottom: 20px;
   margin-left: 20px;
   float: left;
   width: 47%;
 }
 
-.drop_down_text{
+.drop-down-text{
   color: black;
 }
 
-.margin_signup_button{
+.margin-signup-button{
   margin: 20px 20px;
 }
 
-.signup_link{
+.signup-link{
   position:absolute;
   bottom: 5%;
   right: 10%;

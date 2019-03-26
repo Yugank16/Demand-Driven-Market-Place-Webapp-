@@ -35,7 +35,7 @@ class App extends Component {
                         <ProtectedRoute exact path="/home/my-requests" component={MyItemRequests} />
                         <ProtectedRoute exact path="/home/user-profile" component={UserProfile} />
                         <ProtectedRoute exact path="/home/user-profile/update" component={UpdateProfile} />
-                        <ProtectedRoute exact path="/home/mybid/:id" component={BidDetails} />
+                        <ProtectedRoute exact path="/home/bid/:id" component={BidDetails} />
                         <ProtectedRoute exact path="/home/request/:id/bid" component={BidForm} />
                         <ProtectedRoute exact path="/home/request/:id/bids" component={AllBids} />
                         <ProtectedRoute exact path="/home/mybids" component={MyBids} />

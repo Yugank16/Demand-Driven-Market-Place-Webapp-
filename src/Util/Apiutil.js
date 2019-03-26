@@ -6,7 +6,7 @@ export const setUser = (response) => {
     Cookies.set(UserConstants.USER, JSON.stringify(response));
 };
 
-export const fetchUrl = (URL, METHOD, dispatch, data, CONTENTTYPE = 'application/json') => {
+export const fetchUrl = (URL, METHOD, data, CONTENTTYPE = 'application/json') => {
     let userdata;
     if (Cookies.get(UserConstants.USER)) {
         userdata = JSON.parse(Cookies.get(UserConstants.USER));
@@ -34,23 +34,11 @@ export const fetchUrl = (URL, METHOD, dispatch, data, CONTENTTYPE = 'application
     }
     return fetch(URL, fetchData)
         .then((response) => {
-            if (!response.ok && response.status !== 400) {
+            if (!response.ok && response.status !== 400 && response.status !== 403 && response.status !== 404) {
                 console.log(response.status);
                 if (response.status === 401) {
-                    logoutinvalid(dispatch);
-                    console.log('inside', response.status);
-                    return false;
-                } else if (response.status === 403) {
-                    dispatch({
-                        type: FlashMessageConstants.FAILURE,
-                        message: 'You Don\'t have permission to perform this action',
-                    });
-                    return false;
-                } 
-                dispatch({
-                    type: FlashMessageConstants.FAILURE,
-                    message: 'Something Went Wrong!',
-                });
+                    logoutinvalid();
+                }
                 return false;
             }
             return response;

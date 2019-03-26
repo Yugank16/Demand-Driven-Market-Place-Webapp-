@@ -25,6 +25,7 @@ class Bid extends Component {
         photos.push(e.target.files[0]);
         e.target.value = '';
         this.setState({ photos });
+        this.setState({ errors: { ...this.state.errors, photos: null } });
     }
 
     handleValidation = () => {
@@ -43,7 +44,7 @@ class Bid extends Component {
         for (let i = 0; i < 6; i++) {
             if (!photos[i]) {
                 formIsValid = false;
-                error.photos = 'Upload 6 photos of the item';
+                error.photos = 'Upload Atleast 6 photos of the item';
                 break;
             }
         }
@@ -83,26 +84,26 @@ class Bid extends Component {
             <div>
                 <div className="content">
                     <h2>Bid</h2>
-                    <form className="FormFields">
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="description">Price</label>
-                            <input type="int" id="price" className="FormField__Input" placeholder="Enter your price" name="price" onChange={this.handleChange} />
-                            <div className="FormField__Label error-block">{this.state.errors.price}</div>
+                    <form className="form-fields">
+                        <div className="form-field">
+                            <label className="form-field-label" htmlFor="description">Price</label>
+                            <input type="int" id="price" className="form-field-input" placeholder="Enter your price" name="price" onChange={this.handleChange} />
+                            <div className="form-field-label error-block">{this.state.errors.price}</div>
                         </div>
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="description">Description</label>
-                            <input type="text" id="description" className="FormField__Input" placeholder="Enter description of required item" name="description" onChange={this.handleChange} />
-                            <div className="FormField__Label error-block">{this.state.errors.description}</div>
+                        <div className="form-field">
+                            <label className="form-field-label" htmlFor="description">Description</label>
+                            <input type="text" id="description" className="form-field-input" placeholder="Enter description of required item" name="description" onChange={this.handleChange} />
+                            <div className="form-field-label error-block">{this.state.errors.description}</div>
                         </div>
-                        <div className="FormField__Label error-block">{this.state.errors.photos}</div>
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="photo">Photo</label>
+                        <div className="form-field error-block">{this.state.errors.photos}</div>
+                        <div className="form-field">
+                            <label className="form-field-label" htmlFor="photo">Photo</label>
                             <input type="file" id="0" name="photo" onChange={this.handleFileChange} />
                         </div>
                         {this.state.photos.map((image, index) => 
                             <p>{image.name}<button onClick={this.deletePhoto} name={index}>remove</button></p>)}
-                        <div className="FormField">
-                            <button type="submit" className="FormField__Button mr-20" disabled={this.state.isButtonDisabled} onClick={this.handleSubmit}>Bid</button>
+                        <div className="form-field">
+                            <button type="submit" className="form-field-button mr-20" disabled={this.state.isButtonDisabled} onClick={this.handleSubmit}>Bid</button>
                         </div>
                     </form>
                 </div>

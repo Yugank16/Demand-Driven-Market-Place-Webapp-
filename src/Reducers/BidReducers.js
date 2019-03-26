@@ -37,7 +37,7 @@ export default function (state = initialState, action) {
         };
     case BidConstants.ERRORS:
         return {
-            errors: action.payload,
+            errors: action.error,
         };
     default:
         return state;

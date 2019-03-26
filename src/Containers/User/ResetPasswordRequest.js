@@ -67,20 +67,20 @@ class ResetPasswordRequest extends Component {
 
     render() {
         return (
-            <div className="Screen">
-                <div className="LoginDiv">
+            <div className="screen">
+                <div className="login-div">
                     <AuthPage />
-                    <div className="FormCenter">
-                        <form onSubmit={this.handleSubmit} className="FormFields" >
-                            <div className="FormField">
-                                <label className="FormField__Label" htmlFor="email">Registered Email</label>
-                                <input type="text" id="email" className="FormField__Input" placeholder="Enter your registered email" name="email" onChange={this.handleChange} />
-                                <div className="FormField__Label error-block">{this.state.errors.email}</div>
+                    <div className="form-center">
+                        <form onSubmit={this.handleSubmit} className="form-fields" >
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="email">Registered Email</label>
+                                <input type="text" id="email" className="form-field-input" placeholder="Enter your registered email" name="email" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.email}</div>
                             </div>
 
-                            <div className="FormField clearfix">
-                                <button className="FormField__Button " disabled={this.state.isButtonDisabled}>Send Password Reset Link</button>
-                                <Link to="/" className="FormField__Link">Login</Link>
+                            <div className="form-field clearfix">
+                                <button className="form-field-button " disabled={this.state.isButtonDisabled}>Send Password Reset Link</button>
+                                <Link to="/" className="form-field-link">Login</Link>
                             </div>
 
                         </form>

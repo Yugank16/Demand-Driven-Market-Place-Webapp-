@@ -22,7 +22,7 @@ class MyBids extends Component {
             if (this.props.bids.length !== 0) {
                 console.log(this.props.bids);
                 data = this.props.bids.map((data) => (
-                    <LinkContainer key={data.id} to={'/home/mybid/' + data.id}>
+                    <LinkContainer key={data.id} to={'/home/bid/' + data.id}>
                         <div className="item-card clearfix" >
                             <div className="item-name" >{data.item.name}</div>
                             <div className="item-requester">&#8377; {data.bid_price}</div>
