@@ -11,5 +11,6 @@ export const API = {
     MY_REQUEST: `${API_BASE_URL}/my-requests/`,
     REQUEST_DETAILS: `${API_BASE_URL}/request-details/`,
     BID_DEATILS: `${API_BASE_URL}/bid/`,
-    MY_BIDS: `${API_BASE_URL}/my-bids/`,   
+    MY_BIDS: `${API_BASE_URL}/my-bids/`,
+    PAYMENT: `http://127.0.0.1:8000/payments/charge`,  
 };

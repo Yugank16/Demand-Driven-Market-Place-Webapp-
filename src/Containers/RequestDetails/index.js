@@ -27,7 +27,7 @@ class RequestDetails extends Component {
             
         this.props.bidClose(data, id);
         const { history } = this.props;
-        history.push('/home');
+        history.push('/make-stripe-payment');
     }
 
     handleDelete = (e) => {

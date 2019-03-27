@@ -58,7 +58,7 @@ export const fetchRequestsAction = (nameParam, itemStatus, orderBy) => dispatch 
     });
 };
 
-export const fetchMyRequestsAction = (nameParam) => dispatch => {
+export const fetchMyRequestsAction = (nameParam, itemStatus, orderBy) => dispatch => {
     const userdata = JSON.parse(Cookies.get(UserConstants.USER));
     axios.get(`${API.MY_REQUEST}`, {
         headers: {
@@ -66,6 +66,8 @@ export const fetchMyRequestsAction = (nameParam) => dispatch => {
         },
         params: {
             name: nameParam,
+            item_status: itemStatus,
+            ordering: orderBy,
         },
     }).then(res => {
         dispatch({
