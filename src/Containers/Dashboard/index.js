@@ -21,7 +21,8 @@ class Dashboard extends Component {
                 <h3 className="demand">DEMAND DRIVEN MARKETPLACE</h3>
                 <h3 className="user">Welcome User</h3>
                 <NavLink activeClassName="sideanchor log-active" className="sideanchor log" exact to="/home" >Item Requests</NavLink>
-                <NavLink activeClassName="sideanchor log-active" className="sideanchor log" exact to="/home/my-requests" >My Request</NavLink>
+                <NavLink activeClassName="sideanchor log-active" className="sideanchor log" exact to="/home/my-requests" >My Requests</NavLink>
+                <NavLink activeClassName="sideanchor log-active" className="sideanchor log" exact to="/home/my-bids" >My Bids</NavLink>
                 <NavLink activeClassName="sideanchor log-active" className="sideanchor log" exact to="/home/request" >Post Request</NavLink>
                 <NavLink activeClassName="sideanchor log-active" className="sideanchor log" exact to="/home/user-profile" >Profile</NavLink>
                 <button className="sideanchor log" onClick={() => this.logoutuser()} >Logout</button>

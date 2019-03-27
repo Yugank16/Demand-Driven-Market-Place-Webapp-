@@ -26,8 +26,6 @@ class AllBids extends Component {
                     <LinkContainer key={data.id} to={'/home/bid/' + data.id}>
                         <div className="item-card clearfix" >
                             <div className="item-name" >{data.seller.first_name}</div>
-                            <div className="item-requester">&#8377; {data.bid_price}</div>
-                            <div className="item-required-time"> {data.date_time}</div>
                         </div>
                     </LinkContainer>
                 ));

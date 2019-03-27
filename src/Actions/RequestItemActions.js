@@ -27,7 +27,7 @@ export const postRequestAction = (data) => async (dispatch) => {
     return false;
 };
 
-export const loadingTrueAction = () => dispatch => {
+export const loadingTrueAction = () => (dispatch) => {
     dispatch({
         type: RequestItemConstants.LOADING_TRUE,
     });
@@ -39,7 +39,10 @@ export const loadingFalseAction = () => dispatch => {
     });
 };
 
-export const fetchRequestsAction = (nameParam, itemStatus, orderBy) => dispatch => {
+export const fetchRequestsAction = (nameParam, itemStatus, orderBy) => (dispatch) => {
+    dispatch({
+        type: RequestItemConstants.LOADING_TRUE,
+    });
     const userdata = JSON.parse(Cookies.get(UserConstants.USER));
     axios.get(`${API.ITEM_REQUEST}`, {
         headers: {
@@ -59,6 +62,9 @@ export const fetchRequestsAction = (nameParam, itemStatus, orderBy) => dispatch 
 };
 
 export const fetchMyRequestsAction = (nameParam) => dispatch => {
+    dispatch({
+        type: RequestItemConstants.LOADING_TRUE,
+    });
     const userdata = JSON.parse(Cookies.get(UserConstants.USER));
     axios.get(`${API.MY_REQUEST}`, {
         headers: {
@@ -76,6 +82,9 @@ export const fetchMyRequestsAction = (nameParam) => dispatch => {
 };
 
 export const fetchDetailsAction = (id) => async (dispatch) => {
+    dispatch({
+        type: RequestItemConstants.LOADING_TRUE,
+    });
     let response = await fetchUrl(`${API.REQUEST_DETAILS}${id}`, 'GET');
     if (response.ok) {
         response = await response.json();
@@ -99,4 +108,41 @@ export const fetchDetailsAction = (id) => async (dispatch) => {
         return false;
     } 
     return false;  
+};
+
+export const canBidAction = (id) => async (dispatch) => {
+    let flag = true;
+    const response = await fetchUrl(`${API.REQUEST_DETAILS}${id}`, 'GET');
+    if (response.ok) {
+        const data = await response.json();
+        let user = await fetchUrl(`${API.USER}`, 'GET');
+        user = await user.json();
+        if (user.id === data.requester.id || data.item_status !== 2) {
+            flag = false;
+        } else {
+            flag = true;
+        }
+    } 
+    if (response.status === 403 || response.status === 404 || !flag) {
+        flag = false;
+    } else {
+        flag = true;
+    } 
+    dispatch({
+        type: RequestItemConstants.FLAG,  
+        flag,
+    });   
+    return true;
+};
+
+export const deleteItemAction = (id) => async (dispatch) => { 
+    const response = await fetchUrl(`${API.ITEM_DELETE}${id}/`, 'DELETE');
+    if (response.ok) {
+        dispatch({
+            type: FlashMessageConstants.SUCCESS,
+            message: 'Item Deleted Successfully',
+        });
+        return true;
+    }
+    return false;
 };

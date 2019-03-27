@@ -12,4 +12,5 @@ export const API = {
     REQUEST_DETAILS: `${API_BASE_URL}/request-details/`,
     BID_DEATILS: `${API_BASE_URL}/bid/`,
     MY_BIDS: `${API_BASE_URL}/my-bids/`,   
+    ITEM_DELETE: `${API_BASE_URL}/request/delete/`,
 };

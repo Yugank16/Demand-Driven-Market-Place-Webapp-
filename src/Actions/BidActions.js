@@ -120,7 +120,6 @@ export const myBids = () => async (dispatch) => {
 };
 
 export const updateBidValidity = async (data, id) => {
-    console.log(data, id);
     const response = await fetchUrl(`${API.BID_DEATILS}${id}/`, 'PATCH', data);
     if (response.ok) {
         return true;
@@ -128,7 +127,10 @@ export const updateBidValidity = async (data, id) => {
     return false;
 };
 
-export const deleteBid = (id) => async (dispatch) => { 
-    console.log(id);
+export const deleteBid = async (id) => { 
+    const response = await fetchUrl(`${API.BID_DEATILS}${id}/`, 'DELETE');
+    if (response.ok) {
+        return true;
+    }
     return false;
 };

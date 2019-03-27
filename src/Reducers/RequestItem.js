@@ -5,6 +5,7 @@ const initialState = {
     items: [],
     errors: {},
     isLoading: true,
+    flag: '',
 };
 
 export default function (state = initialState, action) {
@@ -38,6 +39,12 @@ export default function (state = initialState, action) {
         return {
             errors: action.error,
         };
+    case RequestItemConstants.FLAG:
+        console.log('inreducer', action.flag);
+        return {
+            flag: action.flag,
+        };
+
     default:
         return state;
     }

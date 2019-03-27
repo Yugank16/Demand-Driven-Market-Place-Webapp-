@@ -19,6 +19,7 @@ import MyItemRequests from './Containers/MyItemRequests';
 import BidDetails from './Containers/Bid/BidDetails';
 import AllBids from './Containers/Bid/AllBids';
 import MyBids from './Containers/Bid/MyBids';
+import Socket from './Containers/socket';
 
 class App extends Component {
     render() {
@@ -38,10 +39,11 @@ class App extends Component {
                         <ProtectedRoute exact path="/home/bid/:id" component={BidDetails} />
                         <ProtectedRoute exact path="/home/request/:id/bid" component={BidForm} />
                         <ProtectedRoute exact path="/home/request/:id/bids" component={AllBids} />
-                        <ProtectedRoute exact path="/home/mybids" component={MyBids} />
+                        <ProtectedRoute exact path="/home/my-bids" component={MyBids} />
                         <ProtectedRoute exact path="/home/user-profile/change-password" component={ChangePassword} />
                         <ProtectedRoute exact path="/home/request" component={RequestItem} />
                         <ProtectedRoute exact path="/home/request/:id" component={RequestDetails} />
+                        <Route exact path="/socket/:id" component={Socket} />
                         <Route path="*" component={NotFound} />
                     </Switch>
                 </div>

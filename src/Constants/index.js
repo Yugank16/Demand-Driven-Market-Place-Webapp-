@@ -14,6 +14,7 @@ export const RequestItemConstants = {
     ERRORS: 'ERRORS',
     LOADING_TRUE: 'LOADING_TRUE',
     LOADING_FALSE: 'LOADING_FALSE',
+    FLAG: 'FLAG',
 };
 
 export const BidConstants = {
