@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import Loader from 'react-loader-spinner';
-import { allBids, loadingTrueAction } from '../../Actions/BidActions';
+import { allBids } from '../../Actions/BidActions';
 import RequestItem from '../../Components/RequestItem';
 import '../../App.css';
 import Forbidden from '../../Components/Forbidden';
 
 class AllBids extends Component {
     componentDidMount() {
-        loadingTrueAction();
         const { id } = this.props.match.params;
         const { allBids } = this.props;
         allBids(id);

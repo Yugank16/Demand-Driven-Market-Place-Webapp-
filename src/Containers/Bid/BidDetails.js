@@ -28,13 +28,19 @@ class BidDetails extends Component {
     handleDelete = async (e) => {
         e.preventDefault();
         const { id } = this.props.match.params;
-        const { history } = this.props;
+        const { history, deleteBid } = this.props;
         const response = await deleteBid(id);
         if (response === true) {
             history.push('/home/my-bids');
             return;
         }
         this.setState({ error: 'Something went Wrong' });
+    }
+    handleUpdate = async (e) => {
+        e.preventDefault();
+        const { id } = this.props.match.params;
+        const { history } = this.props;
+        history.push(`/home/bid/${id}/update-price`);        
     }
     handleInvalid = async (e) => {
         e.preventDefault();
@@ -61,11 +67,14 @@ class BidDetails extends Component {
 
     render() {
         if (this.props.bid.id !== undefined) {
+            console.log(this.props.bid);
             const { bid } = this.props;
             return (
                 <div>
                     {this.state.error}
                     <BidDetail key={bid.id} data={bid} />
+                    {!bid.flag && bid.item.item_status === 2 && <div className="form-field clearfix"><button className="form-field-button " onClick={this.handleUpdate}>Update Price</button> </div>
+                    }
                     {!bid.flag && bid.item.item_status === 2 && <div className="form-field clearfix"><button className="form-field-button " onClick={this.handleDelete}>Delete</button> </div>
                     }
                     {bid.flag && bid.item.item_status === 3 && this.state.isvalid === 1 && <div className="form-field clearfix"><button className="form-field-button button-red" onClick={this.handleInvalid}>Mark Invalid</button> </div>
@@ -94,5 +103,5 @@ const mapStateToProps = state => ({
     error: state.bid.errors,
 });
 
-export default connect(mapStateToProps, { bidDetails })(BidDetails);
+export default connect(mapStateToProps, { bidDetails, deleteBid })(BidDetails);
 

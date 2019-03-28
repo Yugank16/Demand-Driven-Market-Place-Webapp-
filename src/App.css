@@ -155,6 +155,11 @@
   width: 47%;
 }
 
+.form-field-price {
+  margin-bottom: 20px;
+  float: left;
+  width: 47%;
+}
 .drop-down-text{
   color: black;
 }
@@ -266,6 +271,12 @@
   position: relative;
   left: 22%;
   margin-top: 70px;
+  width: 70%;
+}
+
+.bid-list{
+  position: relative;
+  left: 22%;
   width: 70%;
 }
 

@@ -36,7 +36,10 @@ export const postBid = (data, id) => async (dispatch) => {
 };
 
 export const bidDetails = (id) => async (dispatch) => {
-    let response = await fetchUrl(`${API.BID_DEATILS}${id}/`, 'GET', dispatch);
+    dispatch({
+        type: BidConstants.LOADING_TRUE,
+    });
+    let response = await fetchUrl(`${API.BID_DEATILS}${id}/`, 'GET');
     if (response.ok) {
         response = await response.json();
         let user = await fetchUrl(`${API.USER}`, 'GET');
@@ -65,19 +68,10 @@ export const bidDetails = (id) => async (dispatch) => {
     return false;
 };
 
-export const loadingTrueAction = () => dispatch => {
+export const allBids = (id) => async (dispatch) => {
     dispatch({
         type: BidConstants.LOADING_TRUE,
     });
-};
-
-export const loadingFalseAction = () => dispatch => {
-    dispatch({
-        type: BidConstants.LOADING_FALSE,
-    });
-};
-
-export const allBids = (id) => async (dispatch) => {
     let response = await fetchUrl(`${API.ITEM_REQUEST}${id}/bid`, 'GET');
     if (response.ok) {
         response = await response.json(); 
@@ -102,6 +96,9 @@ export const allBids = (id) => async (dispatch) => {
 };
 
 export const myBids = () => async (dispatch) => {
+    dispatch({
+        type: BidConstants.LOADING_TRUE,
+    });
     let response = await fetchUrl(`${API.MY_BIDS}`, 'GET');
     if (response.ok) {
         response = await response.json(); 
@@ -127,10 +124,26 @@ export const updateBidValidity = async (data, id) => {
     return false;
 };
 
-export const deleteBid = async (id) => { 
+export const deleteBid = async (id) => async (dispatch) => { 
     const response = await fetchUrl(`${API.BID_DEATILS}${id}/`, 'DELETE');
     if (response.ok) {
+        dispatch({
+            type: FlashMessageConstants.FAILURE,
+            message: 'Bid Was Deleted Successfully',
+        });
         return true;
+    }
+
+    return false;
+};
+
+export const updateBidPrice = async (data, id) => {
+    let response = await fetchUrl(`${API.UPDATE_BID_PRICE}${id}/`, 'PATCH', data);
+    if (response.ok) {
+        return true;
+    } else if (!response.ok && response.status === 400) {
+        response = await response.json();
+        return response;
     }
     return false;
 };

@@ -13,4 +13,5 @@ export const API = {
     BID_DEATILS: `${API_BASE_URL}/bid/`,
     MY_BIDS: `${API_BASE_URL}/my-bids/`,   
     ITEM_DELETE: `${API_BASE_URL}/request/delete/`,
+    UPDATE_BID_PRICE: `${API_BASE_URL}/update-bid/`,
 };

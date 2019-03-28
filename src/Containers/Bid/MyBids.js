@@ -3,13 +3,12 @@ import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import PropTypes from 'prop-types';
 import Loader from 'react-loader-spinner';
-import { myBids, loadingTrueAction } from '../../Actions/BidActions';
-import RequestItem from '../../Components/RequestItem';
+import { myBids } from '../../Actions/BidActions';
+import MyBid from '../../Components/Bid/MyBids';
 import '../../App.css';
 
 class MyBids extends Component {
     componentDidMount() {
-        loadingTrueAction();
         const { myBids } = this.props;
         myBids();
     }
@@ -34,7 +33,7 @@ class MyBids extends Component {
             return (
                 <div className="right">
                     <p>My Bids</p>
-                    <RequestItem data={data} />
+                    <MyBid data={data} />
                 </div>
             ); 
         }
