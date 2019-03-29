@@ -4,11 +4,13 @@ import auth from './UserReducers';
 import bid from './BidReducers';
 import requestItem from './RequestItem';
 import flashmessage from './FlashMessageReducer';
+import stripePay from './StripeReducers';
 
 export default combineReducers({
     auth,
     bid,
     requestItem,
     flashmessage,
+    stripePay,
 });
 

@@ -116,7 +116,8 @@ export const fetchProfileAction = () => async (dispatch) => {
     return true;
 };
 export const passwordResetAction = (data, id, token) => async (dispatch) => {
-    let response = await fetch(`$${API.PASSWORD_RESET}${id}/${token}/`, {
+    console.log("hello");
+    let response = await fetch(`${API.PASSWORD_RESET}${id}/${token}/`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -124,6 +125,7 @@ export const passwordResetAction = (data, id, token) => async (dispatch) => {
         },
         body: JSON.stringify(data),
     });
+    console.log("balle");
     if (response.status === 400) {
         dispatch({
             type: FlashMessageConstants.FAILURE,
@@ -140,7 +142,7 @@ export const passwordResetAction = (data, id, token) => async (dispatch) => {
 };
 
 export const tokenvalidation = (id, token) => async (dispatch) => {
-    let response = await fetch(`${API.TOKEN_VALIDATION}${id}/${token}/`, {
+    const response = await fetch(`${API.TOKEN_VALIDATION}${id}/${token}/`, {
         method: 'GET',
     });
     if (response.status === 404) {
@@ -150,7 +152,6 @@ export const tokenvalidation = (id, token) => async (dispatch) => {
         });
         return false;
     }
-    response = response.json();
     if (response.status === 200) {
         dispatch({
             type: UserActionConstants.RESPONSE,

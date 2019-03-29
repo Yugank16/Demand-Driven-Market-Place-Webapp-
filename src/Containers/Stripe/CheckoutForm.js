@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 import { CardElement, injectStripe } from 'react-stripe-elements';
-import { API } from '../../Constants/Urls';
+
 
 class CheckoutForm extends Component {
-    constructor(props) {
-        super(props);
-        this.submit = this.submit.bind(this);
-    }
-
-    async submit(ev) {
-        const { token } = await this.props.stripe.createToken({ name: "Name" });
-        const response = await fetch(API.PAYMENT, {
-            method: "POST",
-            headers: { "Content-Type": "text/plain" },
-            body: token.id });
-
-        if (response.ok) console.log("Purchase Complete!");
+    submit= async (ev) => {
+        const { token } = await this.props.stripe.createToken({ name: 'Name' }); 
+        const { updateToken } = this.props;
+        updateToken(token.id);
     }
 
     render() {
@@ -23,10 +16,13 @@ class CheckoutForm extends Component {
             <div className="checkout">
                 <p>Please complete the purchase?</p>
                 <CardElement />
-                <button className="form-field-button mr-20" onClick={this.submit}>Send</button>
+                <Button variant="primary" onClick={this.submit}>
+                    Pay
+                </Button>
             </div>
         );
     }
 }
 
-export default injectStripe(CheckoutForm);
+export default withRouter(injectStripe(CheckoutForm));
+

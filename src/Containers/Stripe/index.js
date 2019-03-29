@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import CheckoutForm from './CheckoutForm';
+import { StripeApi } from '../../Constants';
 
 class StripePayment extends Component {
     render() {
         return (
-            <StripeProvider apiKey="pk_test_NmwdjliywuXxJ9DNfqP3ODBg00BKV9HJwo">
-                <div className="login-div">
-                    <h1>Make your payment</h1>
+            <StripeProvider apiKey={StripeApi.PUBLISH_KEY}>
+                <div>
                     <Elements>
-                        <CheckoutForm />
+                        <CheckoutForm updateToken={this.props.updateToken} />
                     </Elements>
                 </div>
             </StripeProvider>

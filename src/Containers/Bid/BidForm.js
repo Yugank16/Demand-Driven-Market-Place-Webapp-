@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Button } from 'react-bootstrap';
+import Modal from 'react-bootstrap/Modal';
 import { postBid } from '../../Actions/BidActions';
+import StripePayment from '../Stripe';
 
 class Bid extends Component {
     constructor() {
@@ -9,9 +12,24 @@ class Bid extends Component {
             price: '',
             description: '',
             photos: [],
-            isButtonDisabled: false,
+            isButtonDisabled: true,
             errors: {},
+            token: '',
+            show: false,
         };
+    }
+
+    handleClose = () => {
+        this.setState({ show: false });
+    }
+
+    handleShow = () => {
+        this.setState({ show: true });
+    }
+
+    updateToken = (tokenId) => {
+        this.setState({ token: tokenId, isButtonDisabled: false });
+        this.handleClose();
     }
 
     handleChange = e => {
@@ -61,7 +79,6 @@ class Bid extends Component {
             const { postBid, history } = this.props;
             const { id } = this.props.match.params;
             const response = await postBid(data, id);
-            console.log(response);
             if (response === true) {
                 console.log(response);
             } else {
@@ -103,11 +120,29 @@ class Bid extends Component {
                         </div>
                         {this.state.photos.map((image, index) => 
                             <p>{image.name}<button onClick={this.deletePhoto} name={index}>remove</button></p>)}
+                        <Button variant="primary" onClick={this.handleShow}>
+                                Make Payment
+                        </Button>
                         <div className="form-field">
-                            <button type="submit" className="form-field-button mr-20" disabled={this.state.isButtonDisabled} onClick={this.handleSubmit}>Bid</button>
+                            <Button className="form-field-button mr-20" variant="primary" disabled={this.state.isButtonDisabled} onClick={this.handleSubmit}>
+                                Bid
+                            </Button>
                         </div>
                     </form>
                 </div>
+                <Modal show={this.state.show} onHide={this.handleClose} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Make Your Payment</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <StripePayment updateToken={this.updateToken} />
+                    </Modal.Body>    
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.handleClose}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         );
     }
