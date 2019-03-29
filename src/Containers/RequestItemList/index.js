@@ -4,9 +4,10 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Loader from 'react-loader-spinner';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
-import { fetchRequestsAction, loadingTrueAction, loadingFalseAction } from '../../Actions/RequestItemActions';
+import { fetchRequestsAction } from '../../Actions/RequestItemActions';
 import RequestItem from '../../Components/RequestItem';
 import '../../App.css';
+import Forbidden from '../../Components/Forbidden';
 
 class RequestItemList extends Component {
     constructor(props) {
@@ -19,11 +20,9 @@ class RequestItemList extends Component {
             itemStatus: params.item_status,
             orderBy: params.ordering,
         };
-        this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
-        loadingTrueAction();
         const { nameParam, itemStatus, orderBy: ordering } = this.state; 
         this.props.fetchRequestsAction(nameParam, itemStatus || 2, ordering);
     }
@@ -36,11 +35,11 @@ class RequestItemList extends Component {
         });
     }
 
-    handleChange(e) {
+    handleChange = (e) => {
         e.preventDefault();
         this.setState({ [e.target.name]: e.target.value });
     }
-    handleDropChange= (e) => {
+    handleDropChange = (e) => {
         e.preventDefault();
         this.setState({ [e.target.name]: e.target.value }, this.makeRequest);
     }
@@ -56,7 +55,7 @@ class RequestItemList extends Component {
 
     render() {
         const NO_RESULT_MESSAGE = 'Sorry ! No results were found.';
-        if (!this.props.isLoading) {
+        if (!this.props.isLoading && !this.props.error) {
             let data = <div className="no-results">{NO_RESULT_MESSAGE}</div>;
             if (this.props.items.length !== 0) {
                 data = this.props.items.map((data) => (
@@ -92,6 +91,8 @@ class RequestItemList extends Component {
                     
                 </div>
             ); 
+        } else if (this.props.error === 'forbidden') {
+            return <Forbidden />;
         }
         return <div className="loader-main"><Loader type="Grid" color="#somecolor" height={80} width={80} /></div>;
     }
@@ -108,6 +109,7 @@ RequestItemList.propTypes = {
 
 const mapStateToProps = state => ({
     items: state.requestItem.items,
+    error: state.requestItem.errors,
     isLoading: state.requestItem.isLoading,
 });
 

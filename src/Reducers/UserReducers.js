@@ -4,6 +4,7 @@ const initialState = {
     user: {},
     token: {},
     message: {},
+    isLoading: true,
 };
 
 export default function (state = initialState, action) {
@@ -22,6 +23,7 @@ export default function (state = initialState, action) {
         return {
             ...state,
             user: action.payload,
+            isLoading: false,
         };
     case UserActionConstants.AUTH_LOGOUT:
         return {

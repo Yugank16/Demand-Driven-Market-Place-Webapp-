@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { UserConstants, RequestItemConstants, FlashMessageConstants } from '../Constants';
 import { API } from '../Constants/Urls';
-import { fetchUrl, setUser } from '../Util/Apiutil';
+import { fetchUrl } from '../Util/Apiutil';
 
 export const postRequestAction = (data) => async (dispatch) => {
     let response = await fetchUrl(`${API.ITEM_REQUEST}`, 'POST', data);
@@ -15,20 +15,8 @@ export const postRequestAction = (data) => async (dispatch) => {
             message: 'Item Posted Successfully',
         });
         return true;
-    }  
+    }
     return false;
-};
-
-export const loadingTrueAction = () => (dispatch) => {
-    dispatch({
-        type: RequestItemConstants.LOADING_TRUE,
-    });
-};
-
-export const loadingFalseAction = () => dispatch => {
-    dispatch({
-        type: RequestItemConstants.LOADING_FALSE,
-    });
 };
 
 export const fetchRequestsAction = (nameParam, itemStatus, orderBy) => (dispatch) => {
@@ -50,6 +38,17 @@ export const fetchRequestsAction = (nameParam, itemStatus, orderBy) => (dispatch
             type: RequestItemConstants.FETCH_ALL_REQUEST,
             payload: res.data,
         });
+    }).catch(err => {
+        if (err.response.status === 403 || err.response.status === 404) {
+            dispatch({
+                type: RequestItemConstants.ERRORS,
+                error: 'forbidden',
+            });
+        }
+        dispatch({
+            type: RequestItemConstants.FETCH_ALL_REQUEST,
+            payload: 'Something Went Wrong!',
+        });
     });
 };
 
@@ -69,6 +68,17 @@ export const fetchMyRequestsAction = (nameParam) => dispatch => {
         dispatch({
             type: RequestItemConstants.FETCH_ALL_REQUEST,
             payload: res.data,
+        });
+    }).catch(err => {
+        if (err.response.status === 403 || err.response.status === 404) {
+            dispatch({
+                type: RequestItemConstants.ERRORS,
+                error: 'forbidden',
+            });
+        }
+        dispatch({
+            type: RequestItemConstants.FETCH_ALL_REQUEST,
+            payload: 'Something Went Wrong!',
         });
     });
 };
@@ -98,8 +108,8 @@ export const fetchDetailsAction = (id) => async (dispatch) => {
             error: 'forbidden',
         });
         return false;
-    } 
-    return false;  
+    }
+    return false;
 };
 
 export const canBidAction = (id) => async (dispatch) => {
@@ -114,20 +124,20 @@ export const canBidAction = (id) => async (dispatch) => {
         } else {
             flag = true;
         }
-    } 
+    }
     if (response.status === 403 || response.status === 404 || !flag) {
         flag = false;
     } else {
         flag = true;
-    } 
+    }
     dispatch({
-        type: RequestItemConstants.FLAG,  
+        type: RequestItemConstants.FLAG,
         flag,
-    });   
+    });
     return true;
 };
 
-export const deleteItemAction = (id) => async (dispatch) => { 
+export const deleteItemAction = (id) => async (dispatch) => {
     const response = await fetchUrl(`${API.ITEM_DELETE}${id}/`, 'DELETE');
     if (response.ok) {
         dispatch({

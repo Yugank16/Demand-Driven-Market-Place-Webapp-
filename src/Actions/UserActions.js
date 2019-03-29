@@ -28,7 +28,8 @@ export const loginAction = data => async (dispatch) => {
     } else if (response.ok) {
         response = await response.json();
         setUser(response);
-        const userType = usertype();
+        const userType = await usertype();
+        localStorage.setItem("userType", userType);
         dispatch({
             type: FlashMessageConstants.SUCCESS,
             message: 'Logged In Successfully',
@@ -54,6 +55,7 @@ export const signupAction = data => async (dispatch) => {
     user = {};
     user.token = response.token;
     Cookies.set(UserConstants.USER, JSON.stringify(user));
+    localStorage.setItem("userType", response.user_type);
     dispatch({
         type: FlashMessageConstants.SUCCESS,
         message: 'You have successfully signed up',
@@ -110,6 +112,9 @@ export const changePasswordAction = data => async (dispatch) => {
 };
 
 export const fetchProfileAction = () => async (dispatch) => {
+    dispatch({
+        type: UserActionConstants.LOADING_TRUE,
+    });
     let response = await fetchUrl(`${API.USER}`, 'GET');
     if (!response.ok && response.status !== 400) {
         return false;
@@ -191,6 +196,7 @@ export const passwordResetRequestAction = (data) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
     Cookies.remove(UserConstants.USER);
+    localStorage.removeItem("userType");
     dispatch({
         type: FlashMessageConstants.SUCCESS,
         message: 'Logged Out Successfully',

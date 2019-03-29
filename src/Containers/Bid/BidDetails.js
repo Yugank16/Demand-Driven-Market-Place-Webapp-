@@ -100,6 +100,7 @@ BidDetails.defaultProps = {
 
 const mapStateToProps = state => ({
     bid: state.bid.data,
+    isLoading: state.bid.isLoading,
     error: state.bid.errors,
 });
 

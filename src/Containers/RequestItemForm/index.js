@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Loader from 'react-loader-spinner';
 import PropTypes from 'prop-types';
 import { postRequestAction } from '../../Actions/RequestItemActions';
+import { fetchProfileAction } from '../../Actions/UserActions';
 import '../../App.css';
+import Forbidden from '../../Components/Forbidden';
 
 class RequestItem extends Component {
     constructor() {
@@ -20,18 +23,19 @@ class RequestItem extends Component {
             isButtonDisabled: false,
             errors: {},
         };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleValidation = this.handleValidation.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(e) {
+    componentDidMount() {
+        const { fetchProfileAction } = this.props;
+        fetchProfileAction();
+    }
+
+    handleChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
         this.setState({ errors: { ...this.state.errors, [e.target.name]: null } });
     }
 
-    handleValidation() {
+    handleValidation = () => {
         const { name, description, datetime, monthsOld, quantityRequired, maxPrice } = this.state;
         const error = {};
         let formIsValid = true;
@@ -75,9 +79,9 @@ class RequestItem extends Component {
         this.setState({ errors: error });
         return formIsValid;
     }
-    async handleSubmit(e) {
+    handleSubmit = async (e) => {
         e.preventDefault();
-        this.setState({ isButtonDisabled: true }); 
+        this.setState({ isButtonDisabled: true });
 
         if (this.handleValidation()) {
             this.setState({ isButtonDisabled: true });
@@ -100,69 +104,74 @@ class RequestItem extends Component {
                 const { date_time: datetime, name, short_description: description, item_state: itemState, months_old: monthsOld, quantity_required: quantityRequired, max_price: maxPrice } = response;
                 const error = { datetime, name, description, itemState, monthsOld, quantityRequired, maxPrice };
                 this.setState({ isButtonDisabled: false, errors: error });
-            }       
+            }
         }
-        this.setState({ isButtonDisabled: false }); 
+        this.setState({ isButtonDisabled: false });
     }
-    
+
 
     render() {
-        return (
-            <div>
-                <div className="content">
-                    <h1>Request Item</h1>
-                    <div className="form-center">
-                        <form onSubmit={this.handleSubmit} className="form-fields">
-                            <div className="form-field">
-                                <label className="form-field-label" htmlFor="name">Name</label>
-                                <input type="text" id="name" className="form-field-input" placeholder="Enter name of item" name="name" onChange={this.handleChange} />
-                                <div className="form-field-label error-block">{this.state.errors.name}</div>
-                            </div>
-                            <div className="form-field">
-                                <label className="form-field-label" htmlFor="description">Description</label>
-                                <input type="text" id="description" className="form-field-input" placeholder="Enter description of required item" name="description" onChange={this.handleChange} />
-                                <div className="form-field-label error-block">{this.state.errors.description}</div>
-                            </div>
-                            <div className="form-field">
-                                <label className="form-field-label" htmlFor="datetime">Date and Time</label>
-                                <input type="datetime-local" id="datetime" className="form-field-input" placeholder="Enter date and time" name="datetime" onChange={this.handleChange} />
-                                <div className="form-field-label error-block">{this.state.errors.datetime}</div>
-                            </div>
-                            <div className="form-field">
-                                <label className="form-field-label" htmlFor="itemState">Item State</label>
-                                <select className="form-field-input" name="itemState" onChange={this.handleChange}>
-                                    <option className="drop-down-text" selected value={3}>Old</option>
-                                    <option className="drop-down-text" value={2} >Second Hand</option>
-                                    <option className="drop-down-text" value={1} >New</option>
-                                </select>
-                            </div>
-                            <div className="form-field">
-                                <label className="form-field-label" htmlFor="monthsOld">Months Old</label>
-                                <input type="number" id="monthsOld" className="form-field-input" placeholder="Enter quantity required" name="monthsOld" onChange={this.handleChange} />
-                                <div className="form-field-label error-block">{this.state.errors.monthsOld}</div>
-                            </div>
-                            <div className="form-field">
-                                <label className="form-field-label" htmlFor="quantityRequired">Quantity Required</label>
-                                <input type="number" id="quantityRequired" className="form-field-input" placeholder="Enter quantity required" name="quantityRequired" onChange={this.handleChange} />
-                                <div className="form-field-label error-block">{this.state.errors.quantityRequired}</div>
-                            </div>
-                            <div className="form-field">
-                                <label className="form-field-label" htmlFor="maxPrice">Max Price</label>
-                                <input type="number" id="maxPrice" className="form-field-input" placeholder="Enter max price" name="maxPrice" onChange={this.handleChange} />
-                                <div className="form-field-label error-block">{this.state.errors.maxPrice}</div>
-                            </div>
-                            <div className="form-field">
-                                <label className="form-field-label" htmlFor="moreInfo">More Information</label>
-                                <input type="text" id="moreInfo" className="form-field-input" placeholder="Enter more specification for the item" name="moreInfo" onChange={this.handleChange} />
-                            </div>
-                            <div className="form-field">
-                                <button className="form-field-button mr-20" disabled={this.state.isButtonDisabled}>Post</button>
-                            </div>
-                        </form>
+        if (this.props.data.user_type !== 2 && !this.props.isLoading) {
+            return (
+                <div>
+                    <div className="content">
+                        <h1>Request Item</h1>
+                        <div className="form-center">
+                            <form onSubmit={this.handleSubmit} className="form-fields">
+                                <div className="form-field">
+                                    <label className="form-field-label" htmlFor="name">Name</label>
+                                    <input type="text" id="name" className="form-field-input" placeholder="Enter name of item" name="name" onChange={this.handleChange} />
+                                    <div className="form-field-label error-block">{this.state.errors.name}</div>
+                                </div>
+                                <div className="form-field">
+                                    <label className="form-field-label" htmlFor="description">Description</label>
+                                    <input type="text" id="description" className="form-field-input" placeholder="Enter description of required item" name="description" onChange={this.handleChange} />
+                                    <div className="form-field-label error-block">{this.state.errors.description}</div>
+                                </div>
+                                <div className="form-field">
+                                    <label className="form-field-label" htmlFor="datetime">Date and Time</label>
+                                    <input type="datetime-local" id="datetime" className="form-field-input" placeholder="Enter date and time" name="datetime" onChange={this.handleChange} />
+                                    <div className="form-field-label error-block">{this.state.errors.datetime}</div>
+                                </div>
+                                <div className="form-field">
+                                    <label className="form-field-label" htmlFor="itemState">Item State</label>
+                                    <select className="form-field-input" name="itemState" onChange={this.handleChange}>
+                                        <option className="drop-down-text" selected value={3}>Old</option>
+                                        <option className="drop-down-text" value={2} >Second Hand</option>
+                                        <option className="drop-down-text" value={1} >New</option>
+                                    </select>
+                                </div>
+                                <div className="form-field">
+                                    <label className="form-field-label" htmlFor="monthsOld">Months Old</label>
+                                    <input type="number" id="monthsOld" className="form-field-input" placeholder="Enter quantity required" name="monthsOld" onChange={this.handleChange} />
+                                    <div className="form-field-label error-block">{this.state.errors.monthsOld}</div>
+                                </div>
+                                <div className="form-field">
+                                    <label className="form-field-label" htmlFor="quantityRequired">Quantity Required</label>
+                                    <input type="number" id="quantityRequired" className="form-field-input" placeholder="Enter quantity required" name="quantityRequired" onChange={this.handleChange} />
+                                    <div className="form-field-label error-block">{this.state.errors.quantityRequired}</div>
+                                </div>
+                                <div className="form-field">
+                                    <label className="form-field-label" htmlFor="maxPrice">Max Price</label>
+                                    <input type="number" id="maxPrice" className="form-field-input" placeholder="Enter max price" name="maxPrice" onChange={this.handleChange} />
+                                    <div className="form-field-label error-block">{this.state.errors.maxPrice}</div>
+                                </div>
+                                <div className="form-field">
+                                    <label className="form-field-label" htmlFor="moreInfo">More Information</label>
+                                    <input type="text" id="moreInfo" className="form-field-input" placeholder="Enter more specification for the item" name="moreInfo" onChange={this.handleChange} />
+                                </div>
+                                <div className="form-field">
+                                    <button className="form-field-button mr-20" disabled={this.state.isButtonDisabled}>Post</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        } else if (this.props.data.user_type) {
+            return <Forbidden />;
+        } 
+        return <div className="loader-main"><Loader type="Grid" color="#somecolor" height={80} width={80} /></div>;
     }
 }
 
@@ -171,7 +180,9 @@ RequestItem.protoType = {
 };
 
 const mapStateToProps = state => ({
-    errors: state.requestItem.errors,
+    data: state.auth.user,
+    errors: state.requestItem.errors, 
+    isLoading: state.auth.isLoading,
 });
 
-export default connect(mapStateToProps, { postRequestAction })(RequestItem);
+export default connect(mapStateToProps, { postRequestAction, fetchProfileAction })(RequestItem);
