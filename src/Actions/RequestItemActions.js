@@ -5,15 +5,7 @@ import { API } from '../Constants/Urls';
 import { fetchUrl, setUser } from '../Util/Apiutil';
 
 export const postRequestAction = (data) => async (dispatch) => {
-    const userdata = JSON.parse(Cookies.get(UserConstants.USER));
-    let response = await fetch(`${API.ITEM_REQUEST}`, {
-        method: 'POST',
-        headers: {
-            Authorization: `Token ${userdata.token}`,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
+    let response = await fetchUrl(`${API.ITEM_REQUEST}`, 'POST', data);
     if (!response.ok && response.status === 400) {
         response = response.json();
         return response;

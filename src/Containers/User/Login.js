@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Cookies from 'js-cookie';
 import '../../App.css';
 import AuthPage from '../../Components/User/AuthPage';
 import { loginAction } from '../../Actions/UserActions';
@@ -65,7 +64,9 @@ class Login extends Component {
                 password: this.state.password };
             const { loginAction, history } = this.props;
             const response = await loginAction(data);
-            if (response === true) {
+            if (response === 1) {
+                history.push('/home/my-requests');
+            } else if (response === 2 || response === 3) {
                 history.push('/home');
             } else {
                 const { email, password } = response;

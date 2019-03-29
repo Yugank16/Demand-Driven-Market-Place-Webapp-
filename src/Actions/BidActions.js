@@ -102,7 +102,7 @@ export const myBids = () => async (dispatch) => {
     let response = await fetchUrl(`${API.MY_BIDS}`, 'GET');
     if (response.ok) {
         response = await response.json(); 
-        console.log(response);
+        console.log(response.min_price);
         dispatch({
             type: BidConstants.FETCH_MY_BIDS,
             payload: response,
@@ -124,7 +124,7 @@ export const updateBidValidity = async (data, id) => {
     return false;
 };
 
-export const deleteBid = async (id) => async (dispatch) => { 
+export const deleteBid = (id) => async (dispatch) => { 
     const response = await fetchUrl(`${API.BID_DEATILS}${id}/`, 'DELETE');
     if (response.ok) {
         dispatch({

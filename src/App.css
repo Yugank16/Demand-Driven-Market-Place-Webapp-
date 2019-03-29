@@ -267,6 +267,10 @@
   z-index: 10;
 }
 
+.live-bid{
+  margin-left: 282px;
+  color: green
+}
 .request-list{
   position: relative;
   left: 22%;

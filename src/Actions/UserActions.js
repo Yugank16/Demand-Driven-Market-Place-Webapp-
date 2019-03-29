@@ -7,9 +7,18 @@ import { fetchUrl, setUser } from '../Util/Apiutil';
 
 let user;
 
+export const usertype = async () => {
+    let response = await fetchUrl(`${API.USER}`, 'GET');
+    if (response.ok) {
+        response = await response.json();
+        console.log(response);
+        return response.user_type;
+    }
+    return false;
+};
+
 export const loginAction = data => async (dispatch) => {
     let response = await fetchUrl(`${API.LOGIN}`, 'POST', data);
-
     if (!response.ok && response.status === 400) {
         dispatch({
             type: FlashMessageConstants.FAILURE,
@@ -19,11 +28,12 @@ export const loginAction = data => async (dispatch) => {
     } else if (response.ok) {
         response = await response.json();
         setUser(response);
+        const userType = usertype();
         dispatch({
             type: FlashMessageConstants.SUCCESS,
             message: 'Logged In Successfully',
         });
-        return true;
+        return userType;
     }
     dispatch({
         type: FlashMessageConstants.FAILURE,
@@ -33,14 +43,9 @@ export const loginAction = data => async (dispatch) => {
 };
 
 export const signupAction = data => async (dispatch) => {
-    let response = await fetch(`${API.USER}`, {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
+    console.log('here');
+    let response = await fetchUrl(`${API.USER}`, 'POST', data);
+    console.log(response);
     if (!response.ok && response.status === 400) {
         response = await response.json();
         return response;
@@ -53,7 +58,9 @@ export const signupAction = data => async (dispatch) => {
         type: FlashMessageConstants.SUCCESS,
         message: 'You have successfully signed up',
     });
-    return true;
+
+    const userType = usertype();
+    return userType;
 };
 
 export const updateProfileAction = data => async (dispatch) => {
@@ -107,8 +114,8 @@ export const fetchProfileAction = () => async (dispatch) => {
     if (!response.ok && response.status !== 400) {
         return false;
     }
-    console.log(response);
     response = await response.json();
+    console.log(response);
     dispatch({
         type: UserActionConstants.FETCH_PROFILE,
         payload: response,
@@ -116,7 +123,7 @@ export const fetchProfileAction = () => async (dispatch) => {
     return true;
 };
 export const passwordResetAction = (data, id, token) => async (dispatch) => {
-    let response = await fetch(`$${API.PASSWORD_RESET}${id}/${token}/`, {
+    let response = await fetch(`${API.PASSWORD_RESET}${id}/${token}/`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -194,4 +201,3 @@ export const logoutinvalid = () => {
     Cookies.remove(UserConstants.USER);
     BrowserRouter.push('/');
 };
-
