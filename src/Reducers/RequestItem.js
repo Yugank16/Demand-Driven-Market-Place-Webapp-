@@ -2,9 +2,11 @@ import { RequestItemConstants } from '../Constants/index';
 
 const initialState = {
     data: {},
+    close_bid_data: {},
     items: [],
     errors: {},
     isLoading: true,
+    flag: '',
 };
 
 export default function (state = initialState, action) {
@@ -38,6 +40,16 @@ export default function (state = initialState, action) {
         return {
             errors: action.error,
         };
+    case RequestItemConstants.FLAG:
+        return {
+            flag: action.flag,
+        };
+    case RequestItemConstants.BID_CLOSE:
+        return {
+            ...state,
+            close_bid_data: action.payload,
+        };
+
     default:
         return state;
     }

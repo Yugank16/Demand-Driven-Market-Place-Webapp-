@@ -22,18 +22,21 @@ export default function (state = initialState, action) {
             ...state,
             isLoading: false,
             bids: action.payload,
+            error: '',
         };
     case BidConstants.FETCH_MY_BIDS:
         return {
             ...state,
             isLoading: false,
             bids: action.payload,
+            error: '',
         };
     case BidConstants.FETCH_PARTICULAR_BID:
         return {
             ...state,
             isLoading: false,
             data: action.payload,
+            error: '',
         };
     case BidConstants.ERRORS:
         return {

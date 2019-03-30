@@ -8,6 +8,7 @@ import { fetchMyRequestsAction } from '../../Actions/RequestItemActions';
 import RequestItem from '../../Components/RequestItem';
 import '../../App.css';
 import { RequestItemConstants } from '../../Constants';
+import Forbidden from '../../Components/Forbidden';
 
 class MyItemRequestList extends Component {
     constructor(props) {
@@ -57,7 +58,7 @@ class MyItemRequestList extends Component {
     render() {
         const NO_RESULT_MESSAGE = 'Sorry ! No Request Found.';
     
-        if (!this.props.isLoading) {
+        if (!this.props.isLoading && !this.props.error) {
             let data = <div className="no-results">{NO_RESULT_MESSAGE}</div>;
             if (this.props.items.length !== 0) {
                 data = this.props.items.map((data) => (
@@ -94,6 +95,8 @@ class MyItemRequestList extends Component {
                     
                 </div>
             ); 
+        } else if (this.props.error === 'forbidden') {
+            return <Forbidden />;
         }
         return <div className="loader-main"><Loader type="Grid" color="#somecolor" height={80} width={80} /></div>;
     }
@@ -111,6 +114,7 @@ MyItemRequestList.propTypes = {
 
 const mapStateToProps = state => ({
     items: state.requestItem.items,
+    error: state.requestItem.errors,
     isLoading: state.requestItem.isLoading,
 });
 

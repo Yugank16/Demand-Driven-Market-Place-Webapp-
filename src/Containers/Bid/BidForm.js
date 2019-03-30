@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
+import Loader from 'react-loader-spinner';
 import Modal from 'react-bootstrap/Modal';
 import { postBid } from '../../Actions/BidActions';
 import StripePayment from '../Stripe';
+import { canBidAction } from '../../Actions/RequestItemActions';
+import Forbidden from '../../Components/Forbidden';
 
 class Bid extends Component {
     constructor() {
@@ -18,7 +21,11 @@ class Bid extends Component {
             show: false,
         };
     }
-
+    componentDidMount() {
+        const { id } = this.props.match.params;
+        const { canBidAction } = this.props;
+        canBidAction(id);
+    }
     handleClose = () => {
         this.setState({ show: false });
     }
@@ -32,9 +39,9 @@ class Bid extends Component {
         this.handleClose();
     }
 
+    
     handleChange = e => {
         this.setState({ [e.target.name]: e.target.value });
-        this.setState({ errors: { ...this.state.errors, [e.target.name]: null } });
     }
 
     handleFileChange = e => {
@@ -80,10 +87,10 @@ class Bid extends Component {
             const { id } = this.props.match.params;
             const response = await postBid(data, id);
             if (response === true) {
-                console.log(response);
+                history.push(`/home/request/${id}/`);
             } else {
-                const { bid_price: price, description, images: photos } = response;
-                const error = { price, description, photos };
+                const { bid_price: price, description, images: photos, time, valid } = response;
+                const error = { price, description, photos, time, valid };
                 this.setState({ isButtonDisabled: false, errors: error });
             }
         }
@@ -98,54 +105,64 @@ class Bid extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <div className="content">
-                    <h2>Bid</h2>
-                    <form className="form-fields">
-                        <div className="form-field">
-                            <label className="form-field-label" htmlFor="description">Price</label>
-                            <input type="int" id="price" className="form-field-input" placeholder="Enter your price" name="price" onChange={this.handleChange} />
-                            <div className="form-field-label error-block">{this.state.errors.price}</div>
-                        </div>
-                        <div className="form-field">
-                            <label className="form-field-label" htmlFor="description">Description</label>
-                            <input type="text" id="description" className="form-field-input" placeholder="Enter description of required item" name="description" onChange={this.handleChange} />
-                            <div className="form-field-label error-block">{this.state.errors.description}</div>
-                        </div>
-                        <div className="form-field error-block">{this.state.errors.photos}</div>
-                        <div className="form-field">
-                            <label className="form-field-label" htmlFor="photo">Photo</label>
-                            <input type="file" id="0" name="photo" onChange={this.handleFileChange} />
-                        </div>
-                        {this.state.photos.map((image, index) => 
-                            <p>{image.name}<button onClick={this.deletePhoto} name={index}>remove</button></p>)}
-                        <Button variant="primary" onClick={this.handleShow}>
+        if (this.props.flag === true) {
+            return (
+                <div>
+                    <div className="content">
+                        <h2>Bid</h2>
+                        <form className="form-fields">
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="description">Price</label>
+                                <input type="int" id="price" className="form-field-input" placeholder="Enter your price" name="price" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.price}</div>
+                            </div>
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="description">Description</label>
+                                <input type="text" id="description" className="form-field-input" placeholder="Enter description of required item" name="description" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.description}</div>
+                            </div>
+                            <div className="form-field error-block">{this.state.errors.photos}</div>
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="photo">Photo</label>
+                                <input type="file" id="0" name="photo" onChange={this.handleFileChange} />
+                            </div>
+                            {this.state.photos.map((image, index) =>
+                                <p>{image.name}<button onClick={this.deletePhoto} name={index}>remove</button></p>)}
+                            <Button variant="primary" onClick={this.handleShow}>
                                 Make Payment
-                        </Button>
-                        <div className="form-field">
-                            <Button className="form-field-button mr-20" variant="primary" disabled={this.state.isButtonDisabled} onClick={this.handleSubmit}>
-                                Bid
                             </Button>
-                        </div>
-                    </form>
+                            <div className="form-field">
+                                <Button className="form-field-button mr-20" variant="primary" disabled={this.state.isButtonDisabled} onClick={this.handleSubmit}>
+                                    Bid
+                                </Button>
+                            </div>
+                        </form>
+                    </div>
+                    <Modal show={this.state.show} onHide={this.handleClose} centered>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Make Your Payment</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <StripePayment updateToken={this.updateToken} />
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={this.handleClose}>
+                                Close
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
-                <Modal show={this.state.show} onHide={this.handleClose} centered>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Make Your Payment</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <StripePayment updateToken={this.updateToken} />
-                    </Modal.Body>    
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={this.handleClose}>
-                            Close
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            </div>
-        );
+            );
+        } else if (this.props.flag === false) {
+            return <Forbidden />;
+        }
+        return <div className="loader-main"><Loader type="Grid" color="#somecolor" height={80} width={80} /></div>;
     }
 }
-export default connect(null, { postBid })(Bid);
+
+const mapStateToProps = state => ({
+    flag: state.requestItem.flag,
+});
+
+export default connect(mapStateToProps, { postBid, canBidAction })(Bid);
 

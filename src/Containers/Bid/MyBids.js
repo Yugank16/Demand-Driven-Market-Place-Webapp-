@@ -4,8 +4,9 @@ import { LinkContainer } from 'react-router-bootstrap';
 import PropTypes from 'prop-types';
 import Loader from 'react-loader-spinner';
 import { myBids } from '../../Actions/BidActions';
-import RequestItem from '../../Components/RequestItem';
+import MyBid from '../../Components/Bid/MyBids';
 import '../../App.css';
+import Forbidden from '../../Components/Forbidden';
 
 class MyBids extends Component {
     componentDidMount() {
@@ -16,7 +17,7 @@ class MyBids extends Component {
     render() {
         const NO_RESULT_MESSAGE = 'No Bids Made By You.';
     
-        if (!this.props.isLoading) {
+        if (!this.props.isLoading && !this.props.error) {
             let data = <div className="no-results">{NO_RESULT_MESSAGE}</div>;
             if (this.props.bids.length !== 0) {
                 data = this.props.bids.map((data) => (
@@ -32,9 +33,11 @@ class MyBids extends Component {
             return (
                 <div className="right">
                     <p>My Bids</p>
-                    <RequestItem data={data} />
+                    <MyBid data={data} />
                 </div>
             ); 
+        } else if (this.props.error === 'forbidden') {
+            return <Forbidden />;
         }
         return <div className="loader-main"><Loader type="Grid" color="#somecolor" height={80} width={80} /></div>;
     }
@@ -52,6 +55,7 @@ MyBids.propTypes = {
 
 const mapStateToProps = state => ({
     bids: state.bid.bids,
+    error: state.bid.errors,
     isLoading: state.bid.isLoading,
 });
 
