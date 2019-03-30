@@ -69,6 +69,7 @@ class BidDetails extends Component {
         if (this.props.bid.id !== undefined) {
             console.log(this.props.bid);
             const { bid } = this.props;
+            console.log(this.props.bid.flag);
             return (
                 <div>
                     {this.state.error}

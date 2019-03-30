@@ -88,14 +88,19 @@ export const fetchDetailsAction = (id) => async (dispatch) => {
         type: RequestItemConstants.LOADING_TRUE,
     });
     let response = await fetchUrl(`${API.REQUEST_DETAILS}${id}`, 'GET');
+    let bid = await fetchUrl(`${API.ITEM_REQUEST}${id}/check-bid/`, 'GET');
     if (response.ok) {
         response = await response.json();
         let user = await fetchUrl(`${API.USER}`, 'GET');
+        bid = await bid.json();
         user = await user.json();
         if (user.id === response.requester.id) {
             response.flag = true;
         } else {
             response.flag = false;
+        }
+        if (bid.length > 0) {
+            response.bidId = bid[0].id;
         }
         dispatch({
             type: RequestItemConstants.FETCH_PARTICULAR_REQUEST,
@@ -119,7 +124,7 @@ export const canBidAction = (id) => async (dispatch) => {
         const data = await response.json();
         let user = await fetchUrl(`${API.USER}`, 'GET');
         user = await user.json();
-        if (user.id === data.requester.id || data.item_status !== 2) {
+        if (user.id === data.requester.id || data.item_status !== 2 || user.user_type === 1) {
             flag = false;
         } else {
             flag = true;

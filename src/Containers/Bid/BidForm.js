@@ -29,7 +29,10 @@ class Bid extends Component {
     handleFileChange = e => {
         const statecopy = Object.assign({}, this.state);
         const { photos } = statecopy;
-        photos.push(e.target.files[0]);
+        console.log(e.target.files);
+        for (let i = 0; i < e.target.files.length; i++) {
+            photos.push(e.target.files[i]);
+        }
         e.target.value = '';
         this.setState({ photos });
         this.setState({ errors: { ...this.state.errors, photos: null } });
@@ -109,7 +112,7 @@ class Bid extends Component {
                             <div className="form-field error-block">{this.state.errors.photos}</div>
                             <div className="form-field">
                                 <label className="form-field-label" htmlFor="photo">Photo</label>
-                                <input type="file" id="0" name="photo" onChange={this.handleFileChange} />
+                                <input type="file" multiple="true" id="0" name="photo" onChange={this.handleFileChange} />
                             </div>
                             {this.state.photos.map((image, index) =>
                                 <p>{image.name}<button onClick={this.deletePhoto} name={index}>remove</button></p>)}

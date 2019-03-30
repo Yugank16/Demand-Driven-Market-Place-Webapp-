@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Loader from 'react-loader-spinner';
 import { fetchDetailsAction, deleteItemAction } from '../../Actions/RequestItemActions';
@@ -46,11 +47,22 @@ class RequestDetails extends Component {
         const { id } = this.props.match.params;
         history.push(`/home/request/${id}/bids`);
     }
+    handleDetail = (e) => {
+        e.preventDefault();
+        const { history } = this.props;
+        const { id } = this.props.match.params;
+        history.push(`/home/request/${id}/bids`);
+    }
+    handleUpdate = (e) => {
+        e.preventDefault();
+        const { history } = this.props;
+        const { id } = this.props.match.params;
+        history.push(`/home/request/${id}/bids`);
+    }
 
 
     render() {
         if (this.props.item.id !== undefined && !this.props.isLoading) {
-            console.log(this.props.item);
             const datetime = new Date(this.props.item.date_time);
             const time = datetime.toISOString().slice(12, 16);
             const date = datetime.toISOString().slice(0, 10);
@@ -61,7 +73,11 @@ class RequestDetails extends Component {
                     <div className="live-bid">
                         <h3>Currently Lowest bid:{this.state.minPrice ? this.state.minPrice : minBidPrice}</h3>
                     </div>
-                    {!this.props.item.flag && this.props.item.item_status === 2 && <div className="form-field clearfix"><button className="form-field-button" onClick={this.handleBid} >Bid Now</button> </div>
+                    {!this.props.item.flag && !this.props.item.bidId && this.props.item.item_status === 2 && <div className="form-field clearfix"><button className="form-field-button" onClick={this.handleBid} >Bid Now</button> </div>
+                    }
+                    {!this.props.item.flag && this.props.item.bidId && this.props.item.item_status === 2 && <div className="form-field clearfix"><Link className="form-field-button" to={`/home/bid/` + this.props.item.bidId}>View Bid</Link> </div>
+                    }
+                    {!this.props.item.flag && this.props.item.bidId && this.props.item.item_status === 2 && <div className="form-field clearfix"><Link className="form-field-button" to={`/home/bid/` + this.props.item.bidId + '/update-price'} >Update Bid</Link> </div>
                     }
                     {this.props.item.flag && this.props.item.item_status === 1 && <div className="form-field clearfix"><button className="form-field-button " onClick={this.handleDelete}>Delete</button> </div>
                     }
