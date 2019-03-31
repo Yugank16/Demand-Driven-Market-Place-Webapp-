@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import Loader from 'react-loader-spinner';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import queryString from 'query-string';
 import { fetchRequestsAction } from '../../Actions/RequestItemActions';
 import RequestItem from '../../Components/RequestItem';
@@ -59,12 +60,12 @@ class RequestItemList extends Component {
             let data = <div className="no-results">{NO_RESULT_MESSAGE}</div>;
             if (this.props.items.length !== 0) {
                 data = this.props.items.map((data) => (
-                    <LinkContainer key={data.id} to={'/home/request/' + data.id}>
+                    <LinkContainer key={data.id} to={'/home/request/' + data.id} onMouse>
                         <div className="item-card clearfix" >
                             <div className="item-name" >{data.name}</div>
                             <div className="item-price">&#8377; {data.max_price}</div>
-                            <div className="item-requester">{data.requester.first_name}</div>
-                            <div className="item-required-time"> {data.date_time}</div>
+                            <div className="item-requester">By: {data.requester.first_name}</div>
+                            <div className="item-required-time"> {moment(data.date_time).format('llll')}</div>
                         </div>
                     </LinkContainer>
                 ));

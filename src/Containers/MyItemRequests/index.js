@@ -33,7 +33,7 @@ class MyItemRequestList extends Component {
         const { nameParam, itemStatus, orderBy: ordering } = this.state;
         this.props.fetchMyRequestsAction(nameParam, itemStatus, ordering);
         this.props.history.push({            
-            search: (nameParam ? `?name=${nameParam}&` : '') + (itemStatus ? `item_status=${itemStatus}&` : `item_status=${RequestItemConstants.LIVE}&`) + (ordering ? `ordering=${ordering}` : ''),
+            search: (nameParam ? `?name=${nameParam}&` : '') + (itemStatus ? `item_status=${itemStatus}&` : `item_status=${RequestItemConstants.ALL}&`) + (ordering ? `ordering=${ordering}` : ''),
         });
     }
 
@@ -75,8 +75,9 @@ class MyItemRequestList extends Component {
                         <input type="text" id="name" className="search-item-input" placeholder="Search by name" name="nameParam" value={this.state.nameParam} onChange={this.handleChange} />
                         <button type="button" className="item-search-button" onClick={this.handleSearch} >Search</button>
                         <button type="button" className="item-search-button" onClick={this.handleClear} >Clear</button>
-                        <select className="item-status-drop" name="itemStatus" value={this.state.itemStatus || 2} onChange={this.handleDropChange}>
-                            <option className="drop-down-text" value="2">Live</option>
+                        <select className="item-status-drop" name="itemStatus" value={this.state.itemStatus || ''} onChange={this.handleDropChange}>
+                            <option className="drop-down-text" value="" > All</option>
+                            <option className="drop-down-text" value="2" > Live</option>
                             <option className="drop-down-text" value="1" > Pending</option>
                             <option className="drop-down-text" value="3" > On hold</option>
                             <option className="drop-down-text" value="4" > Sold</option>

@@ -17,6 +17,7 @@ export const RequestItemConstants = {
     LOADING_TRUE: 'LOADING_TRUE',
     LOADING_FALSE: 'LOADING_FALSE',
     LIVE: 2,
+    ALL: '',
     SOLD: 4,
     UNSOLD: 5,
     FLAG: 'FLAG',
