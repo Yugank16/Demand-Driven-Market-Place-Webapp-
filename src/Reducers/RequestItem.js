@@ -42,6 +42,8 @@ export default function (state = initialState, action) {
         };
     case RequestItemConstants.FLAG:
         return {
+            ...state,
+            isLoading: false,
             flag: action.flag,
         };
     case RequestItemConstants.BID_CLOSE:

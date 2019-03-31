@@ -104,6 +104,11 @@ export const fetchDetailsAction = (id) => async (dispatch) => {
         if (bid.length > 0) {
             response.bidId = bid[0].id;
         }
+        if (response.item_status === RequestItemConstants.SOLD) {
+            let soldbid = await fetchUrl(`${API.ITEM_REQUEST}${id}/sold/`, 'GET');
+            soldbid = await soldbid;
+            response.soldbid = soldbid;
+        }
         dispatch({
             type: RequestItemConstants.FETCH_PARTICULAR_REQUEST,
             payload: response,

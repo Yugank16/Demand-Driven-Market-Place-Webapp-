@@ -16,7 +16,9 @@ export const RequestItemConstants = {
     ERRORS: 'ERRORS',
     LOADING_TRUE: 'LOADING_TRUE',
     LOADING_FALSE: 'LOADING_FALSE',
+    PENDING: 1,
     LIVE: 2,
+    ONHOLD: 3,
     SOLD: 4,
     UNSOLD: 5,
     FLAG: 'FLAG',
@@ -40,7 +42,9 @@ export const FlashMessageConstants = {
 export const UserConstants = {
     USER: 'user',
     INVALID_TOKEN_MESSAGE: 'The link you are trying to access has been expired or is invalid',
-
+    BUYER: 1,
+    SELLER: 2,
+    BOTH: 3,
 };
 
 export const REGEX = {

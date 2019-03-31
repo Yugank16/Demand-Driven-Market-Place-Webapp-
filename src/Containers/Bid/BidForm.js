@@ -108,7 +108,7 @@ class Bid extends Component {
     }
 
     render() {
-        if (this.props.flag.value === true && !this.props.flag.id) {
+        if (!this.props.isLoading && this.props.flag.value === true && !this.props.flag.id) {
             return (
                 <div>
                     <div className="content">
@@ -156,10 +156,10 @@ class Bid extends Component {
                     </Modal>
                 </div>
             );
-        } else if (this.props.flag.value === false && !this.props.flag.id) {
+        } else if (!this.props.isLoading && this.props.flag.value === false && !this.props.flag.id) {
             return <Forbidden />;
-        } else if (this.props.flag.id) {
-            return (<Redirect to={`/home/bid/` + this.props.flag.id} />);
+        } else if (!this.props.isLoading && this.props.flag.id) {
+            return (<Redirect to={'/home/bid/' + this.props.flag.id} />);
         }
         return <div className="loader-main"><Loader type="Grid" color="#somecolor" height={80} width={80} /></div>;
     }
@@ -167,6 +167,7 @@ class Bid extends Component {
 
 const mapStateToProps = state => ({
     flag: state.requestItem.flag,
+    isLoading: state.requestItem.isLoading,
 });
 
 export default connect(mapStateToProps, { postBid, canBidAction })(Bid);

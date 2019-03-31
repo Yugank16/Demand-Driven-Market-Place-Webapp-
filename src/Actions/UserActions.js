@@ -28,7 +28,7 @@ export const loginAction = data => async (dispatch) => {
         response = await response.json();
         setUser(response);
         const userType = await usertype();
-        localStorage.setItem("userType", userType);
+        localStorage.setItem('userType', userType);
         dispatch({
             type: FlashMessageConstants.SUCCESS,
             message: 'Logged In Successfully',
@@ -52,7 +52,7 @@ export const signupAction = data => async (dispatch) => {
     user = {};
     user.token = response.token;
     Cookies.set(UserConstants.USER, JSON.stringify(user));
-    localStorage.setItem("userType", response.user_type);
+    localStorage.setItem('userType', response.user_type);
     dispatch({
         type: FlashMessageConstants.SUCCESS,
         message: 'You have successfully signed up',
@@ -191,7 +191,7 @@ export const passwordResetRequestAction = (data) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
     Cookies.remove(UserConstants.USER);
-    localStorage.removeItem("userType");
+    localStorage.removeItem('userType');
     dispatch({
         type: FlashMessageConstants.SUCCESS,
         message: 'Logged Out Successfully',
