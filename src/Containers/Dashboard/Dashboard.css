@@ -21,6 +21,7 @@
 	color: white;
 	padding: 2px 14px 12px 12px;
 	letter-spacing: 3px;
+	font-size: 1em;
 }
 .sideanchor{
 	padding: 5px 37px;
@@ -47,6 +48,6 @@
 
 .user{
 	color: white;
-	padding: 50px 29px 0px 29px;
+	padding: 50px 0px 0px 29px;
 	font-family: sans-serif;
 }

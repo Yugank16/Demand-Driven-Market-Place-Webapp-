@@ -38,7 +38,6 @@ class ChangeBidPrice extends Component {
     }
 
     handleSubmit = async (e) => {
-        console.log('hi');
         e.preventDefault();
         this.setState({ isButtonDisabled: true }); 
 

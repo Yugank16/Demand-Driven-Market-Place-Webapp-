@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Button } from 'react-bootstrap';
+import Modal from 'react-bootstrap/Modal';
 import Loader from 'react-loader-spinner';
 import PropTypes from 'prop-types';
 import { postRequestAction } from '../../Actions/RequestItemActions';
 import { fetchProfileAction } from '../../Actions/UserActions';
 import '../../App.css';
+import StripePayment from '../Stripe';
 import Forbidden from '../../Components/Forbidden';
 
 class RequestItem extends Component {
@@ -20,16 +23,30 @@ class RequestItem extends Component {
             quantityRequired: 0,
             maxPrice: 0,
             moreInfo: '',
-            isButtonDisabled: false,
+            isButtonDisabled: true,
             errors: {},
+            show: false,
+            token: '',
         };
     }
-
     componentDidMount() {
         const { fetchProfileAction } = this.props;
         fetchProfileAction();
     }
 
+    handleClose = () => {
+        this.setState({ show: false });
+    }
+
+    handleShow = () => {
+        this.setState({ show: true });
+    }
+
+    updateToken = (tokenId) => {
+        this.setState({ token: tokenId, isButtonDisabled: false });
+        this.handleClose();
+    }
+    
     handleChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
         this.setState({ errors: { ...this.state.errors, [e.target.name]: null } });
@@ -79,6 +96,7 @@ class RequestItem extends Component {
         this.setState({ errors: error });
         return formIsValid;
     }
+
     handleSubmit = async (e) => {
         e.preventDefault();
         this.setState({ isButtonDisabled: true });
@@ -94,8 +112,7 @@ class RequestItem extends Component {
                 quantity_required: this.state.quantityRequired,
                 max_price: this.state.maxPrice,
                 more_info: this.state.moreInfo,
-                item_status: 1,
-            };
+                payment_token: this.state.token };
             const { postRequestAction, history } = this.props;
             const response = await postRequestAction(data);
             if (response === true) {
@@ -160,17 +177,37 @@ class RequestItem extends Component {
                                     <label className="form-field-label" htmlFor="moreInfo">More Information</label>
                                     <input type="text" id="moreInfo" className="form-field-input" placeholder="Enter more specification for the item" name="moreInfo" onChange={this.handleChange} />
                                 </div>
+                                <Button variant="primary" onClick={this.handleShow}>
+                                    Make Payment
+                                </Button>
+
+
                                 <div className="form-field">
-                                    <button className="form-field-button mr-20" disabled={this.state.isButtonDisabled}>Post</button>
+                                    <Button className="form-field-button mr-20" variant="primary" disabled={this.state.isButtonDisabled} onClick={this.handleSubmit}>
+                                        Post
+                                    </Button>
                                 </div>
                             </form>
                         </div>
                     </div>
+                    <Modal show={this.state.show} onHide={this.handleClose} centered>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Make Your Payment</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <StripePayment updateToken={this.updateToken} />
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={this.handleClose}>
+                                Close
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
             );
         } else if (this.props.data.user_type) {
             return <Forbidden />;
-        } 
+        }
         return <div className="loader-main"><Loader type="Grid" color="#somecolor" height={80} width={80} /></div>;
     }
 }

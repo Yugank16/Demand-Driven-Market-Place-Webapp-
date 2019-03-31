@@ -2,10 +2,11 @@ import { RequestItemConstants } from '../Constants/index';
 
 const initialState = {
     data: {},
+    close_bid_data: {},
     items: [],
     errors: {},
     isLoading: true,
-    flag: '',
+    flag: {},
 };
 
 export default function (state = initialState, action) {
@@ -40,9 +41,13 @@ export default function (state = initialState, action) {
             errors: action.error,
         };
     case RequestItemConstants.FLAG:
-        console.log('inreducer', action.flag);
         return {
             flag: action.flag,
+        };
+    case RequestItemConstants.BID_CLOSE:
+        return {
+            ...state,
+            close_bid_data: action.payload,
         };
 
     default:

@@ -33,6 +33,7 @@ export default function (state = initialState, action) {
         return {
             message: action.message,
         };
+        
     default:
         return state;
     }

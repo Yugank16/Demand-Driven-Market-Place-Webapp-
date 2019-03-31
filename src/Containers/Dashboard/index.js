@@ -13,7 +13,6 @@ class Dashboard extends Component {
     }
     render() {
         const userType = JSON.parse(localStorage.getItem("userType"));
-        console.log(userType);
         return (
             <div className="sidebar clearfix">
                 <h3 className="demand">DEMAND DRIVEN MARKETPLACE</h3>

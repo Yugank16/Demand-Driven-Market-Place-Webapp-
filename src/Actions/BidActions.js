@@ -70,8 +70,7 @@ export const allBids = (id) => async (dispatch) => {
     });
     let response = await fetchUrl(`${API.ITEM_REQUEST}${id}/bid`, 'GET');
     if (response.ok) {
-        response = await response.json();
-        console.log(response);
+        response = await response.json(); 
         dispatch({
             type: BidConstants.FETCH_ALL_BIDS,
             payload: response,
@@ -97,12 +96,11 @@ export const myBids = () => async (dispatch) => {
     });
     let response = await fetchUrl(`${API.MY_BIDS}`, 'GET');
     if (response.ok) {
-        response = await response.json();
+        response = await response.json(); 
         dispatch({
             type: BidConstants.FETCH_MY_BIDS,
             payload: response,
         });
-        console.log(response);
         return true;
     } else if (response.status === 403 || response.status === 404) {
         dispatch({

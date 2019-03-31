@@ -7,35 +7,51 @@ import queryString from 'query-string';
 import { fetchMyRequestsAction } from '../../Actions/RequestItemActions';
 import RequestItem from '../../Components/RequestItem';
 import '../../App.css';
+import { RequestItemConstants } from '../../Constants';
 import Forbidden from '../../Components/Forbidden';
 
 class MyItemRequestList extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
+        const url = this.props.location.search;
+        const params = queryString.parse(url);
         this.state = {
-            nameParam: '',
+            nameParam: params.name,
+            itemStatus: params.item_status,
+            orderBy: params.ordering,
         };
         this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
-        const values = queryString.parse(this.props.location.search); 
-        this.props.fetchMyRequestsAction(values.name);
+        const { nameParam, itemStatus, orderBy: ordering } = this.state; 
+        this.props.fetchMyRequestsAction(nameParam, itemStatus || 2, ordering);
+    }
+
+    makeRequest = () => {
+        const { nameParam, itemStatus, orderBy: ordering } = this.state;
+        this.props.fetchMyRequestsAction(nameParam, itemStatus, ordering);
+        this.props.history.push({            
+            search: (nameParam ? `?name=${nameParam}&` : '') + (itemStatus ? `item_status=${itemStatus}&` : `item_status=${RequestItemConstants.LIVE}&`) + (ordering ? `ordering=${ordering}` : ''),
+        });
     }
 
     handleChange(e) {
+        e.preventDefault();
         this.setState({ [e.target.name]: e.target.value });
+    }
+    handleDropChange= (e) => {
+        e.preventDefault();
+        this.setState({ [e.target.name]: e.target.value }, this.makeRequest);
     }
 
     handleSearch = (e) => {
-        const { nameParam } = this.state;
-        this.props.fetchMyRequestsAction(nameParam);
-        this.props.history.push({            
-            search: nameParam ? `?name=${nameParam}` : '',
-        });
+        e.preventDefault();
+        this.makeRequest();
     }
     handleClear = (e) => {
+        e.preventDefault();
         this.setState({ nameParam: '' });        
     }
 
@@ -59,6 +75,21 @@ class MyItemRequestList extends Component {
                         <input type="text" id="name" className="search-item-input" placeholder="Search by name" name="nameParam" value={this.state.nameParam} onChange={this.handleChange} />
                         <button type="button" className="item-search-button" onClick={this.handleSearch} >Search</button>
                         <button type="button" className="item-search-button" onClick={this.handleClear} >Clear</button>
+                        <select className="item-status-drop" name="itemStatus" value={this.state.itemStatus || 2} onChange={this.handleDropChange}>
+                            <option className="drop-down-text" value="2">Live</option>
+                            <option className="drop-down-text" value="1" > Pending</option>
+                            <option className="drop-down-text" value="3" > On hold</option>
+                            <option className="drop-down-text" value="4" > Sold</option>
+                            <option className="drop-down-text" value="5" > Unsold</option>
+                            
+                        </select>
+                        <select className="order-price-drop" name="orderBy" value={this.state.orderBy} onChange={this.handleDropChange}>
+                            <option className="drop-down-text" value="" >No Filter</option>
+                            <option className="drop-down-text" value="max_price">Price Increasing</option>
+                            <option className="drop-down-text" value="-max_price" >Price Decreasing</option>
+                            <option className="drop-down-text" value="date_time">Increasing Date Time</option>
+                            <option className="drop-down-text" value="-date_time" >Decreasing Date Time</option>
+                        </select>
                     </div>
                     <RequestItem data={data} />
                     

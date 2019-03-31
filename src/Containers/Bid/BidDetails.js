@@ -60,16 +60,13 @@ class BidDetails extends Component {
             this.setState({ isvalid: 1, error: null });
             return;
         }
-
         this.setState({ error: 'Something went Wrong' });
     }
 
 
     render() {
         if (this.props.bid.id !== undefined) {
-            console.log(this.props.bid);
             const { bid } = this.props;
-            console.log(this.props.bid.flag);
             return (
                 <div>
                     {this.state.error}
@@ -78,9 +75,9 @@ class BidDetails extends Component {
                     }
                     {!bid.flag && bid.item.item_status === 2 && <div className="form-field clearfix"><button className="form-field-button " onClick={this.handleDelete}>Delete</button> </div>
                     }
-                    {bid.flag && bid.item.item_status === 3 && this.state.isvalid === 1 && <div className="form-field clearfix"><button className="form-field-button button-red" onClick={this.handleInvalid}>Mark Invalid</button> </div>
+                    {bid.flag && (bid.item.item_status === 3 || bid.item.item_status === 2) && this.state.isvalid === 1 && <div className="form-field clearfix"><button className="form-field-button button-red" onClick={this.handleInvalid}>Mark Invalid</button> </div>
                     }
-                    {bid.flag && bid.item.item_status === 3 && this.state.isvalid === 2 && <div className="form-field clearfix"><button className="form-field-button button-green" onClick={this.handleValid}>Mark Valid</button> </div>
+                    {bid.flag && (bid.item.item_status === 3 || bid.item.item_status === 2) && this.state.isvalid === 2 && <div className="form-field clearfix"><button className="form-field-button button-green" onClick={this.handleValid}>Mark Valid</button> </div>
                     }
                 </div>
             );

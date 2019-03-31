@@ -11,7 +11,6 @@ export const usertype = async () => {
     let response = await fetchUrl(`${API.USER}`, 'GET');
     if (response.ok) {
         response = await response.json();
-        console.log(response);
         return response.user_type;
     }
     return false;
@@ -44,9 +43,7 @@ export const loginAction = data => async (dispatch) => {
 };
 
 export const signupAction = data => async (dispatch) => {
-    console.log('here');
     let response = await fetchUrl(`${API.USER}`, 'POST', data);
-    console.log(response);
     if (!response.ok && response.status === 400) {
         response = await response.json();
         return response;
@@ -120,7 +117,6 @@ export const fetchProfileAction = () => async (dispatch) => {
         return false;
     }
     response = await response.json();
-    console.log(response);
     dispatch({
         type: UserActionConstants.FETCH_PROFILE,
         payload: response,
@@ -152,7 +148,7 @@ export const passwordResetAction = (data, id, token) => async (dispatch) => {
 };
 
 export const tokenvalidation = (id, token) => async (dispatch) => {
-    let response = await fetch(`${API.TOKEN_VALIDATION}${id}/${token}/`, {
+    const response = await fetch(`${API.TOKEN_VALIDATION}${id}/${token}/`, {
         method: 'GET',
     });
     if (response.status === 404) {
@@ -162,7 +158,6 @@ export const tokenvalidation = (id, token) => async (dispatch) => {
         });
         return false;
     }
-    response = response.json();
     if (response.status === 200) {
         dispatch({
             type: UserActionConstants.RESPONSE,
