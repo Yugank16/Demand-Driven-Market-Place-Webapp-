@@ -98,6 +98,8 @@ class RequestDetails extends Component {
                     }
                     {this.props.item.flag && this.props.item.item_status === 1 && <div className="form-field clearfix"><button className="form-field-button " onClick={this.handleDelete}>Delete</button> </div>
                     }
+                    {this.props.item.flag && this.props.item.item_status === 1 && <div className="form-field clearfix"><button className="form-field-button " onClick={this.handleDelete}>Update</button> </div>
+                    }
                     {this.props.item.flag && (this.props.item.item_status === 2 || this.props.item.item_status === 3) && <div className="form-field clearfix"><button className="form-field-button item-button" onClick={this.handleView}>View All Bids</button> </div>
                     }
                     {this.props.item.flag && this.props.item.item_status === 3 && <div className="form-field clearfix"><button className="form-field-button item-button" onClick={this.handleCloseBid}>Close Bid</button> </div>

@@ -48,7 +48,7 @@ export const REGEX = {
 };
 
 export const StripeApi = {
-    PUBLISH_KEY: 'pk_test_NmwdjliywuXxJ9DNfqP3ODBg00BKV9HJwo',
+    PUBLISH_KEY: 'pk_test_bxHHvaNFRHGDQ6GKLMsixkuI002oVXvQTp',
     ITEM_STRIPE_TOKEN: 'ITEM_STRIPE_TOKEN',
 };
 

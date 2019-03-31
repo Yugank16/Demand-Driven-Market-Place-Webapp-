@@ -78,17 +78,11 @@ class RequestItem extends Component {
             formIsValid = false;
             error.monthsOld = 'Please enter valid input';
         }
-        if (!quantityRequired) {
-            formIsValid = false;
-            error.quantityRequired = 'Please enter the required quantity';
-        } else if (quantityRequired <= 0 && quantityRequired > 1000) {
+        if (!quantityRequired || quantityRequired <= 0 || quantityRequired > 1000) {
             formIsValid = false;
             error.quantityRequired = 'Please enter valid quantity between 0-1000';
         }
-        if (!maxPrice) {
-            formIsValid = false;
-            error.maxPrice = 'Price can not be empty';
-        } else if (maxPrice <= 0) {
+        if (!maxPrice || maxPrice <= 0) {
             formIsValid = false;
             error.maxPrice = 'Please enter valid price';
         }
