@@ -48,6 +48,7 @@ export const UserConstants = {
 };
 
 export const REGEX = {
+    // eslint-disable-next-line
     EMAIL: new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i),
 };
 
@@ -56,3 +57,10 @@ export const StripeApi = {
     ITEM_STRIPE_TOKEN: 'ITEM_STRIPE_TOKEN',
 };
 
+export const ItemStatus = [];
+ItemStatus[1] = 'LIVE SOON';
+ItemStatus[2] = 'LIVE';
+ItemStatus[3] = 'ONHOLD';
+ItemStatus[4] = 'SOLD';
+ItemStatus[5] = 'UNSOLD';
+ItemStatus[6] = 'PAYMENT PENDING';

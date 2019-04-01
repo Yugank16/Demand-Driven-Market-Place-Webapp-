@@ -61,6 +61,7 @@ class ResetPasswordRequest extends Component {
                 const error = { email };
                 this.setState({ isButtonDisabled: false, errors: error });
             }   
+            return;
         }
         this.setState({ isButtonDisabled: false });
     }

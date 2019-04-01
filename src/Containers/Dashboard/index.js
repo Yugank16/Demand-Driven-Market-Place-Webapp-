@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NavLink, withRouter } from 'react-router-dom';
+import { NavLink, withRouter, Link } from 'react-router-dom';
 import './Dashboard.css';
 import { logout, usertype } from '../../Actions/UserActions';
 
@@ -15,8 +15,7 @@ class Dashboard extends Component {
         const userType = JSON.parse(localStorage.getItem('userType'));
         return (
             <div className="sidebar clearfix">
-                <h3 className="demand">DEMAND DRIVEN MARKETPLACE</h3>
-                <h3 className="user">Welcome User</h3>
+                <Link to="/" ><h3 className="demand">DEMAND DRIVEN MARKETPLACE</h3></Link>
                 {(userType === 2 || userType === 3 || !userType) && <NavLink activeClassName="sideanchor log-active" className="sideanchor log" exact to="/home" >Item Requests</NavLink>}
                 {(userType === 1 || userType === 3 || !userType) && <NavLink activeClassName="sideanchor log-active" className="sideanchor log" exact to="/home/my-requests" >My Requests</NavLink>}
                 {(userType === 2 || userType === 3 || !userType) && <NavLink activeClassName="sideanchor log-active" className="sideanchor log" exact to="/home/my-bids" >My Bids</NavLink>}

@@ -41,12 +41,8 @@ class RequestDetails extends Component {
             item_status: RequestItemConstants.SOLD };
             
         await this.props.bidClose(data, id);
-        const { history } = this.props;
-        if (this.props.close_bid_data.item_status === RequestItemConstants.SOLD) {
-            history.push('/home/item/sold');
-        }
-        if (this.props.close_bid_data.item_status === RequestItemConstants.UNSOLD) {
-            history.push('/home/item/unsold');
+        if (this.props.close_bid_data.item_status === RequestItemConstants.SOLD || this.props.close_bid_data.item_status === RequestItemConstants.UNSOLD) {
+            this.props.fetchDetailsAction(id);
         }
     }
 
@@ -92,29 +88,32 @@ class RequestDetails extends Component {
                     {this.props.item.item_status === RequestItemConstants.LIVE &&
                     <div className="live-bid"><h3>Currently Lowest bid:{this.state.minPrice ? this.state.minPrice : minBidPrice}</h3>
                     </div>}
-                    {!this.props.item.flag && !this.props.item.bidId && this.props.item.item_status === RequestItemConstants.LIVE && 
+                    {this.props.item.item_status === RequestItemConstants.LIVE && !this.props.item.flag && !this.props.item.bidId && 
                     <div className="form-field clearfix"><button className="form-field-button" onClick={this.handleBid} >Bid Now</button> 
                     </div>}
-                    {!this.props.item.flag && this.props.item.bidId && this.props.item.item_status === RequestItemConstants.LIVE &&
+                    {this.props.item.item_status === RequestItemConstants.LIVE && !this.props.item.flag && this.props.item.bidId && 
                     <div className="form-field clearfix">
                         <Link className="form-field-button" to={'/home/bid/' + this.props.item.bidId}>View your Bid</Link> 
                     </div>}
-                    {!this.props.item.flag && this.props.item.bidId && this.props.item.item_status === RequestItemConstants.LIVE && 
+                    {this.props.item.item_status === RequestItemConstants.LIVE && !this.props.item.flag && this.props.item.bidId && 
                     <div className="form-field clearfix"><Link className="form-field-button" to={'/home/bid/' + this.props.item.bidId + '/update-price'} >Update your Bid</Link> </div>}
-                    {this.props.item.flag && this.props.item.item_status === RequestItemConstants.PENDING && <div className="form-field clearfix"><button className="form-field-button " onClick={this.handleDelete}>Delete</button> </div>
-                    }
-                    {this.props.item.flag && this.props.item.item_status === RequestItemConstants.PENDING && <div className="form-field clearfix"><button className="form-field-button " onClick={this.handleDelete}>Update</button> </div>
-                    }
-                    {this.props.item.flag && (this.props.item.item_status === RequestItemConstants.LIVE || this.props.item.item_status === RequestItemConstants.ONHOLD) &&
+                    {this.props.item.item_status === RequestItemConstants.PENDING && this.props.item.flag && 
+                    <div className="form-field clearfix"><button className="form-field-button " onClick={this.handleDelete}>Delete</button> 
+                    </div>}
+                    {this.props.item.item_status === RequestItemConstants.PENDING && this.props.item.flag && 
+                    <div className="form-field clearfix"><button className="form-field-button " onClick={this.handleDelete}>Update</button>
+                    </div>}
+                    {(this.props.item.item_status === RequestItemConstants.LIVE || this.props.item.item_status === RequestItemConstants.ONHOLD) && this.props.item.flag && 
                     <div className="form-field clearfix"><button className="form-field-button item-button" onClick={this.handleView}>View All Bids</button> 
                     </div>}
-                    {this.props.item.flag && this.props.item.item_status === RequestItemConstants.ONHOLD && 
+                    {this.props.item.item_status === RequestItemConstants.ONHOLD && this.props.item.flag && 
                     <div className="form-field clearfix"><button className="form-field-button item-button" onClick={this.handleCloseBid}>Close Bid</button> 
                     </div>}
-                    {this.props.item.item_status === RequestItemConstants.UNSOLD && <div><p>Your Item Request did not receive any valid bids</p></div>}
+                    {this.props.item.item_status === RequestItemConstants.UNSOLD && <div className="content"><h3 className="unsold">Your Item Request did not receive any valid bids</h3></div>} 
                     {this.props.item.item_status === RequestItemConstants.SOLD && 
-                    <div>
-                        <h4>Lowest Valid Bid Price: {this.props.item.soldbid.bid_price}</h4>
+                    <div className="content">
+                        <h3 className="congrats">Congratulations you got a bid for your item request</h3>
+                        <h4>Bid Price: {this.props.item.soldbid.bid_price}</h4>
                         <h4>Seller: {this.props.item.soldbid.seller.first_name}</h4>
                         <h4>Phone Number: {this.props.item.soldbid.seller.phone_number}</h4>
                         <h4>Email: {this.props.item.soldbid.seller.email}</h4>

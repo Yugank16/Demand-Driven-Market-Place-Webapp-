@@ -127,10 +127,10 @@ class Bid extends Component {
                             <div className="form-field error-block">{this.state.errors.photos}</div>
                             <div className="form-field">
                                 <label className="form-field-label" htmlFor="photo">Photo</label>
-                                <input type="file" multiple="true" id="0" name="photo" onChange={this.handleFileChange} />
+                                <input type="file" multiple id="0" name="photo" onChange={this.handleFileChange} />
                             </div>
                             {this.state.photos.map((image, index) =>
-                                <p>{image.name}<button onClick={this.deletePhoto} name={index}>remove</button></p>)}
+                                <p key={index}>{image.name}<button onClick={this.deletePhoto} name={index}>remove</button></p>)}
                             <Button variant="primary" onClick={this.handleShow}>
                                 Make Payment
                             </Button>
@@ -164,6 +164,11 @@ class Bid extends Component {
         return <div className="loader-main"><Loader type="Grid" color="#somecolor" height={80} width={80} /></div>;
     }
 }
+
+Bid.defaultProps = {
+    isLoading: true,
+    flag: {},
+};
 
 const mapStateToProps = state => ({
     flag: state.requestItem.flag,

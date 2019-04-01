@@ -6,6 +6,7 @@ import { allBids } from '../../Actions/BidActions';
 import RequestItem from '../../Components/RequestItem';
 import '../../App.css';
 import Forbidden from '../../Components/Forbidden';
+import Allbids from '../../Components/Bid/AllBids';
 
 class AllBids extends Component {
     componentDidMount() {
@@ -30,7 +31,7 @@ class AllBids extends Component {
             }
             return (
                 <div>
-                    <RequestItem data={data} />
+                    <Allbids data={data} />
                 </div>
             ); 
         } else if (this.props.error === 'forbidden') {

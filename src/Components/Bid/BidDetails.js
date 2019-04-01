@@ -1,22 +1,22 @@
 import React from 'react';
 import './BidDetails.css';
+import { RequestItemConstants } from '../../Constants';
 
 const BidDetails = (props) => (
-    <div >
+    <div>
         <div className="content">
+            <h2 className="item-request">Bid Details</h2>
             {props.data.flag === false && 
             <div>
-                <h2>Item Details </h2>
-                <h4>{props.data.item.name}</h4>
-                <h4>Ask Price:{props.data.item.max_price}</h4>
-                <h4>Requested by:{props.data.item.requester.first_name}</h4>
+                <h3>{props.data.item.name}</h3>
+                <p>requested by - {props.data.item.requester.first_name}</p>
+                <h5>Ask Price : {props.data.item.max_price}</h5>          
             </div>}
-            <h2>Bid Details</h2>
-            {props.data.flag === false && <h3>Bid Price:{props.data.bid_price}</h3>}
-            <h4>Description:{props.data.description}</h4>
-            <h4>Photos:</h4>
-            {props.data.images.map((image) => 
-                <img className="images" src={image.image} alt="item" />)}          
+            {(props.data.flag === false || props.data.item.item_status > RequestItemConstants.ONHOLD) && <h5>Bid Price:{props.data.bid_price}</h5>}
+            <h5>Description:{props.data.description}</h5>
+            <h5>Photos:</h5>
+            {props.data.images.map((image, index) => 
+                <img key={index} className="images" src={image.image} alt="item" />)}          
         </div>
     </div>
 

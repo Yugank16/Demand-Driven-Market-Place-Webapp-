@@ -73,6 +73,7 @@ class Login extends Component {
                 const error = { email, password };
                 this.setState({ isButtonDisabled: false, errors: error });
             }
+            return;
         }
         this.setState({ isButtonDisabled: false });
     }

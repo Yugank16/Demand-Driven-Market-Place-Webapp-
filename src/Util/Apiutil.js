@@ -42,5 +42,6 @@ export const fetchUrl = (URL, METHOD, data, CONTENTTYPE = 'application/json') =>
             }
             return response;
         })
-        .then(response => response);
+        .then(response => response)
+        .catch(err => false);
 };

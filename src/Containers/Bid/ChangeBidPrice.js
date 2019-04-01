@@ -49,19 +49,20 @@ class ChangeBidPrice extends Component {
             const { history } = this.props;
             const response = await updateBidPrice(data, id);
         
-            if (response === true) {
+            if (response === true || response === false) {
                 history.push(`/home/bid/${id}`);
             } else {
                 const { bid_price: price } = response;
                 const error = { price };
                 this.setState({ isButtonDisabled: false, errors: error });
-            }       
+            }   
+            return;    
         }
         this.setState({ isButtonDisabled: false }); 
     }
 
     render() {
-        if (this.props.bid.id !== undefined && !this.props.bid.flag && this.props.bid.item.item_status === 2) {
+        if (this.props.bid.id !== undefined && !this.props.bid.flag && (this.props.bid.item !== undefined && this.props.bid.item.item_status === 2)) {
             const { bid } = this.props;
             return (
                 <div className="content">
@@ -78,7 +79,7 @@ class ChangeBidPrice extends Component {
                     </div>
                 </div>
             );
-        } else if (this.props.error === 'forbidden' || this.props.bid.flag) {
+        } else if (this.props.error === 'forbidden' || this.props.bid.flag || (this.props.bid.item !== undefined && this.props.bid.item.item_status !== 2)) {
             return <Forbidden />;
         }
         return <div className="loader-main"><Loader type="Grid" color="#somecolor" height={80} width={80} /></div>;

@@ -110,7 +110,7 @@ class RequestItem extends Component {
             const { postRequestAction, history } = this.props;
             const response = await postRequestAction(data);
             if (response === true) {
-                history.push('/home');
+                history.push('/home/my-requests');
             } else {
                 const { date_time: datetime, name, short_description: description, item_state: itemState, months_old: monthsOld, quantity_required: quantityRequired, max_price: maxPrice } = response;
                 const error = { datetime, name, description, itemState, monthsOld, quantityRequired, maxPrice };
@@ -146,8 +146,8 @@ class RequestItem extends Component {
                                 </div>
                                 <div className="form-field">
                                     <label className="form-field-label" htmlFor="itemState">Item State</label>
-                                    <select className="form-field-input" name="itemState" onChange={this.handleChange}>
-                                        <option className="drop-down-text" selected value={3}>Old</option>
+                                    <select className="form-field-input" value={3} name="itemState" onChange={this.handleChange}>
+                                        <option className="drop-down-text" value={3}>Old</option>
                                         <option className="drop-down-text" value={2} >Second Hand</option>
                                         <option className="drop-down-text" value={1} >New</option>
                                     </select>
@@ -208,6 +208,11 @@ class RequestItem extends Component {
 
 RequestItem.protoType = {
     error: PropTypes.object,
+};
+
+RequestItem.defaultProps = {
+    data: {},
+    isLoading: true,
 };
 
 const mapStateToProps = state => ({

@@ -13,11 +13,13 @@ export default function (state = initialState, action) {
         return {
             ...state,
             user: action.payload,
+            isLoading: false,
         };
     case UserActionConstants.FETCH_SIGNUP:
         return {
             ...state,
             user: action.payload,
+            isLoading: false,
         };
     case UserActionConstants.FETCH_PROFILE:
         return {
