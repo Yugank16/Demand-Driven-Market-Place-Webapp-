@@ -9,14 +9,11 @@ export const postBid = (data, id) => async (dispatch) => {
     for (let i = 0; i < data.images.length; i++) {
         formD.append('images[' + i + ']', data.images[i]);
     }
+    formD.append('payment_token', data.payment_token);
     data = formD;
     let response = await fetchUrl(`${API.ITEM_REQUEST}${id}/bid/`, 'POST', data, '');
     if (!response.ok && response.status === 400) {
         response = await response.json();
-        dispatch({
-            type: FlashMessageConstants.FAILURE,
-            message: 'Check the input Fields',
-        });
         return response;
     } else if (response.ok) {
         dispatch({
@@ -39,6 +36,7 @@ export const bidDetails = (id) => async (dispatch) => {
         type: BidConstants.LOADING_TRUE,
     });
     let response = await fetchUrl(`${API.BID_DEATILS}${id}/`, 'GET');
+
     if (response.ok) {
         response = await response.json();
         let user = await fetchUrl(`${API.USER}`, 'GET');
@@ -104,7 +102,6 @@ export const myBids = () => async (dispatch) => {
             type: BidConstants.FETCH_MY_BIDS,
             payload: response,
         });
-        console.log(response);
         return true;
     } else if (response.status === 403 || response.status === 404) {
         dispatch({

@@ -16,11 +16,18 @@ export const RequestItemConstants = {
     ERRORS: 'ERRORS',
     LOADING_TRUE: 'LOADING_TRUE',
     LOADING_FALSE: 'LOADING_FALSE',
-    LIVE: 2,
+
+    OLD: 3,
+    SECOND_HAND: 2,
+    NEW: 1,
+
     ALL: '',
+    LIVE: 2,
+    FLAG: 'FLAG',
+
     SOLD: 4,
     UNSOLD: 5,
-    FLAG: 'FLAG',
+    
 
 };
 
@@ -42,6 +49,9 @@ export const UserConstants = {
     USER: 'user',
     INVALID_TOKEN_MESSAGE: 'The link you are trying to access has been expired or is invalid',
 
+    SELLER: 2,
+    BUYER: 1,
+    BOTH_SELLER_BUYER: 3,
 };
 
 export const REGEX = {

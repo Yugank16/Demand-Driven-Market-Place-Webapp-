@@ -26,14 +26,14 @@ class MyItemRequestList extends Component {
 
     componentDidMount() {
         const { nameParam, itemStatus, orderBy: ordering } = this.state; 
-        this.props.fetchMyRequestsAction(nameParam, itemStatus || 2, ordering);
+        this.props.fetchMyRequestsAction(nameParam, itemStatus || RequestItemConstants.ALL, ordering);
     }
 
     makeRequest = () => {
         const { nameParam, itemStatus, orderBy: ordering } = this.state;
         this.props.fetchMyRequestsAction(nameParam, itemStatus, ordering);
         this.props.history.push({            
-            search: (nameParam ? `?name=${nameParam}&` : '') + (itemStatus ? `item_status=${itemStatus}&` : `item_status=${RequestItemConstants.ALL}&`) + (ordering ? `ordering=${ordering}` : ''),
+            search: (nameParam ? `?name=${nameParam}&` : '') + (itemStatus ? `item_status=${itemStatus}&` : '') + (ordering ? `ordering=${ordering}` : ''),
         });
     }
 
@@ -75,7 +75,7 @@ class MyItemRequestList extends Component {
                         <input type="text" id="name" className="search-item-input" placeholder="Search by name" name="nameParam" value={this.state.nameParam} onChange={this.handleChange} />
                         <button type="button" className="item-search-button" onClick={this.handleSearch} >Search</button>
                         <button type="button" className="item-search-button" onClick={this.handleClear} >Clear</button>
-                        <select className="item-status-drop" name="itemStatus" value={this.state.itemStatus || ''} onChange={this.handleDropChange}>
+                        <select className="item-status-drop" name="itemStatus" value={this.state.itemStatus || RequestItemConstants.ALL} onChange={this.handleDropChange}>
                             <option className="drop-down-text" value="" > All</option>
                             <option className="drop-down-text" value="2" > Live</option>
                             <option className="drop-down-text" value="1" > Pending</option>
@@ -99,7 +99,7 @@ class MyItemRequestList extends Component {
         } else if (this.props.error === 'forbidden') {
             return <Forbidden />;
         }
-        return <div className="loader-main"><Loader type="Grid" color="#somecolor" height={80} width={80} /></div>;
+        return <div className="loader-main"><Loader type="Grid" height={80} width={80} /></div>;
     }
 }
 

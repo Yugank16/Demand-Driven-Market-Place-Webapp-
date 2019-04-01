@@ -14,7 +14,6 @@ class CheckoutForm extends Component {
     render() {
         return (
             <div className="checkout">
-                <p>Please complete the purchase?</p>
                 <CardElement />
                 <Button variant="primary" onClick={this.submit}>
                     Pay

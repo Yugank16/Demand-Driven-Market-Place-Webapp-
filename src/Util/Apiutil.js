@@ -35,7 +35,6 @@ export const fetchUrl = (URL, METHOD, data, CONTENTTYPE = 'application/json') =>
     return fetch(URL, fetchData)
         .then((response) => {
             if (!response.ok && response.status !== 400 && response.status !== 403 && response.status !== 404) {
-                console.log(response.status);
                 if (response.status === 401) {
                     logoutinvalid();
                 }

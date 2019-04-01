@@ -17,10 +17,6 @@ class UpdateProfile extends Component {
             errors: {},
             isButtonDisabled: false,
         };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleValidation = this.handleValidation.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleFileChange = this.handleFileChange.bind(this);
     }
 
     componentDidMount() {
@@ -35,16 +31,16 @@ class UpdateProfile extends Component {
         this.setState({ gender: nextprops.userdata.gender });
     }
 
-    handleChange(e) {
+    handleChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
         this.setState({ errors: { ...this.state.errors, [e.target.name]: null } });
     }
 
-    handleFileChange(e) {
+    handleFileChange = (e) => {
         this.setState({ profilePhoto: e.target.files[0] });
     }
 
-    handleValidation() {
+    handleValidation = () => {
         const { firstName, lastName, phoneNumber, birthDate } = this.state;
         const error = {};
         let formIsValid = true;
@@ -91,7 +87,7 @@ class UpdateProfile extends Component {
     }
 
 
-    async handleSubmit(e) {
+    handleSubmit = async (e) => {
         e.preventDefault();
         this.setState({ isButtonDisabled: true });
         if (this.handleValidation()) {

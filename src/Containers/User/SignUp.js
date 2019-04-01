@@ -119,7 +119,6 @@ class SignUp extends Component {
                 gender: this.state.gender };
             const { signupAction, history } = this.props;
             const response = await signupAction(data);
-            console.log(response);
             if (response === 1) {
                 history.push('/home/my-requests');
             } else if (response === 2 || response === 3) {

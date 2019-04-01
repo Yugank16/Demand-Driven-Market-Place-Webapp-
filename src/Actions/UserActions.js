@@ -11,7 +11,6 @@ export const usertype = async () => {
     let response = await fetchUrl(`${API.USER}`, 'GET');
     if (response.ok) {
         response = await response.json();
-        console.log(response);
         return response.user_type;
     }
     return false;
@@ -29,7 +28,7 @@ export const loginAction = data => async (dispatch) => {
         response = await response.json();
         setUser(response);
         const userType = await usertype();
-        localStorage.setItem("userType", userType);
+        localStorage.setItem('userType', userType);
         dispatch({
             type: FlashMessageConstants.SUCCESS,
             message: 'Logged In Successfully',
@@ -44,9 +43,7 @@ export const loginAction = data => async (dispatch) => {
 };
 
 export const signupAction = data => async (dispatch) => {
-    console.log('here');
     let response = await fetchUrl(`${API.USER}`, 'POST', data);
-    console.log(response);
     if (!response.ok && response.status === 400) {
         response = await response.json();
         return response;
@@ -55,7 +52,7 @@ export const signupAction = data => async (dispatch) => {
     user = {};
     user.token = response.token;
     Cookies.set(UserConstants.USER, JSON.stringify(user));
-    localStorage.setItem("userType", response.user_type);
+    localStorage.setItem('userType', response.user_type);
     dispatch({
         type: FlashMessageConstants.SUCCESS,
         message: 'You have successfully signed up',
@@ -120,7 +117,6 @@ export const fetchProfileAction = () => async (dispatch) => {
         return false;
     }
     response = await response.json();
-    console.log(response);
     dispatch({
         type: UserActionConstants.FETCH_PROFILE,
         payload: response,
@@ -195,7 +191,7 @@ export const passwordResetRequestAction = (data) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
     Cookies.remove(UserConstants.USER);
-    localStorage.removeItem("userType");
+    localStorage.removeItem('userType');
     dispatch({
         type: FlashMessageConstants.SUCCESS,
         message: 'Logged Out Successfully',

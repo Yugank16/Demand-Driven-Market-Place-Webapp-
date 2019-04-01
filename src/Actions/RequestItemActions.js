@@ -19,6 +19,21 @@ export const postRequestAction = (data) => async (dispatch) => {
     return false;
 };
 
+export const updateRequestAction = (id, data) => async (dispatch) => {
+    let response = await fetchUrl(`${API.ITEM_UPDATE}${id}/`, 'PATCH', data);
+    if (!response.ok && response.status === 400) {
+        response = await response.json();
+        return response;
+    } else if (response.ok) {
+        dispatch({
+            type: FlashMessageConstants.SUCCESS,
+            message: 'Item Updated Successfully',
+        });
+        return true;
+    }
+    return false;
+};
+
 export const fetchRequestsAction = (nameParam, itemStatus, orderBy) => (dispatch) => {
     dispatch({
         type: RequestItemConstants.LOADING_TRUE,
@@ -90,14 +105,19 @@ export const fetchDetailsAction = (id) => async (dispatch) => {
         type: RequestItemConstants.LOADING_TRUE,
     });
     let response = await fetchUrl(`${API.REQUEST_DETAILS}${id}`, 'GET');
+    let bid = await fetchUrl(`${API.ITEM_REQUEST}${id}/check-bid/`, 'GET');
     if (response.ok) {
         response = await response.json();
         let user = await fetchUrl(`${API.USER}`, 'GET');
+        bid = await bid.json();
         user = await user.json();
         if (user.id === response.requester.id) {
             response.flag = true;
         } else {
             response.flag = false;
+        }
+        if (bid.length > 0) {
+            response.bidId = bid[0].id;
         }
         dispatch({
             type: RequestItemConstants.FETCH_PARTICULAR_REQUEST,
@@ -115,22 +135,28 @@ export const fetchDetailsAction = (id) => async (dispatch) => {
 };
 
 export const canBidAction = (id) => async (dispatch) => {
-    let flag = true;
+    const flag = {};
     const response = await fetchUrl(`${API.REQUEST_DETAILS}${id}`, 'GET');
+    let bid = await fetchUrl(`${API.ITEM_REQUEST}${id}/check-bid/`, 'GET');
     if (response.ok) {
         const data = await response.json();
         let user = await fetchUrl(`${API.USER}`, 'GET');
         user = await user.json();
-        if (user.id === data.requester.id || data.item_status !== 2) {
-            flag = false;
+        bid = await bid.json();
+        if (bid.length > 0) {
+            response.bidId = bid[0].id;
+            flag.id = bid[0].id;
+        }
+        if (user.id === data.requester.id || data.item_status !== 2 || user.user_type === 1) {
+            flag.value = false;
         } else {
-            flag = true;
+            flag.value = true;
         }
     }
     if (response.status === 403 || response.status === 404 || !flag) {
-        flag = false;
+        flag.value = false;
     } else {
-        flag = true;
+        flag.value = true;
     }
     dispatch({
         type: RequestItemConstants.FLAG,

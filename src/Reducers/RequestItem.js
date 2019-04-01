@@ -6,7 +6,7 @@ const initialState = {
     items: [],
     errors: {},
     isLoading: true,
-    flag: '',
+    flag: {},
 };
 
 export default function (state = initialState, action) {
