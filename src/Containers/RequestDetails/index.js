@@ -142,6 +142,7 @@ class RequestDetails extends Component {
                 const error = { datetime, maxPrice };
                 this.setState({ isButtonDisabled: false, errors: error });
             }
+            return;
         }
         this.setState({ isButtonDisabled: false });
     }

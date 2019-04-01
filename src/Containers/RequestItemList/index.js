@@ -60,7 +60,7 @@ class RequestItemList extends Component {
             let data = <div className="no-results">{NO_RESULT_MESSAGE}</div>;
             if (this.props.items.length !== 0) {
                 data = this.props.items.map((data) => (
-                    <LinkContainer key={data.id} to={'/home/request/' + data.id} onMouse>
+                    <LinkContainer key={data.id} to={'/home/request/' + data.id} >
                         <div className="item-card clearfix" >
                             <div className="item-name" >{data.name}</div>
                             <div className="item-price">&#8377; {data.max_price}</div>

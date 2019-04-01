@@ -138,7 +138,7 @@ class Bid extends Component {
                             <div className="form-field error-block">{this.state.errors.photos}</div>
                             <div className="form-field">
                                 <label className="form-field-label" htmlFor="photo">Photo* (Upload 6 to 8 photos)</label>
-                                <input type="file" multiple="true" id="0" name="photo" onChange={this.handleFileChange} />
+                                <input type="file" multiple id="0" name="photo" onChange={this.handleFileChange} />
                             </div>
                             {this.state.photos.map((image, index) =>
                                 <p key={index}>{image.name}<button onClick={this.deletePhoto} name={index}>remove</button></p>)}

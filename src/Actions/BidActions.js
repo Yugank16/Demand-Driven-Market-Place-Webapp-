@@ -13,6 +13,10 @@ export const postBid = (data, id) => async (dispatch) => {
     data = formD;
     let response = await fetchUrl(`${API.ITEM_REQUEST}${id}/bid/`, 'POST', data, '');
     if (!response.ok && response.status === 400) {
+        dispatch({
+            type: FlashMessageConstants.SUCCESS,
+            message: 'Check Input Fields',
+        });
         response = await response.json();
         return response;
     } else if (response.ok) {
@@ -141,13 +145,21 @@ export const deleteBid = (id) => async (dispatch) => {
     return true;
 };
 
-export const updateBidPrice = async (data, id) => {
+export const updateBidPrice = (data, id) => async (dispatch) => {
     let response = await fetchUrl(`${API.UPDATE_BID_PRICE}${id}/`, 'PATCH', data);
-    if (response.ok) {
+    if (response.ok) {  
+        dispatch({
+            type: FlashMessageConstants.FAILURE,
+            message: 'Price has been updated Successfully',
+        });
         return true;
     } else if (!response.ok && response.status === 400) {
         response = await response.json();
         return response;
     }
+    dispatch({
+        type: FlashMessageConstants.FAILURE,
+        message: 'Can not update at this time',
+    });
     return false;
 };

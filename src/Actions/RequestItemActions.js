@@ -54,6 +54,9 @@ export const fetchRequestsAction = (nameParam, itemStatus, orderBy) => (dispatch
             payload: res.data,
         });
     }).catch(err => {
+        if (!err.response) {
+            return;
+        }
         if (err.response.status === 403 || err.response.status === 404) {
             dispatch({
                 type: RequestItemConstants.ERRORS,
@@ -87,6 +90,9 @@ export const fetchMyRequestsAction = (nameParam, itemStatus, orderBy) => dispatc
             payload: res.data,
         });
     }).catch(err => {
+        if (!err.response) {
+            return;
+        }
         if (err.response.status === 403 || err.response.status === 404) {
             dispatch({
                 type: RequestItemConstants.ERRORS,

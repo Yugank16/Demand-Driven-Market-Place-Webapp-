@@ -47,7 +47,7 @@ class ChangeBidPrice extends Component {
                 bid_price: this.state.price,
             };
             const { id } = this.props.match.params;
-            const { history } = this.props;
+            const { history, updateBidPrice } = this.props;
             const response = await updateBidPrice(data, id);
         
             if (response === true || response === false) {
@@ -100,4 +100,4 @@ const mapStateToProps = state => ({
     error: state.bid.errors,
 });
 
-export default connect(mapStateToProps, { bidDetails })(ChangeBidPrice);
+export default connect(mapStateToProps, { bidDetails, updateBidPrice })(ChangeBidPrice);
