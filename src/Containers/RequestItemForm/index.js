@@ -194,13 +194,8 @@ class RequestItem extends Component {
                             <Modal.Title>UPDATE PAYMENT DETAILS</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <StripePayment updateToken={this.updateToken} />
+                            <StripePayment updateToken={this.updateToken} handleClose={this.handleClose} />
                         </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={this.handleClose}>
-                                Close
-                            </Button>
-                        </Modal.Footer>
                     </Modal>
                 </div>
             );

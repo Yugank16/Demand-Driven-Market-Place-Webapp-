@@ -13,11 +13,16 @@ class CheckoutForm extends Component {
 
     render() {
         return (
-            <div className="checkout">
+            <div className="checkout clearfix">
                 <CardElement />
-                <Button variant="primary" onClick={this.submit}>
-                    Pay
-                </Button>
+                <div className="float-right">
+                    <Button variant="secondary modal-button" onClick={this.handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary modal-button" onClick={this.submit}>
+                        Pay
+                    </Button>
+                </div>
             </div>
         );
     }

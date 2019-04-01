@@ -16,6 +16,8 @@ export const RequestItemConstants = {
     ERRORS: 'ERRORS',
     LOADING_TRUE: 'LOADING_TRUE',
     LOADING_FALSE: 'LOADING_FALSE',
+    PERCENT: 1,
+    DEFAULT_AMOUNT: 1,
 
     OLD: 3,
     SECOND_HAND: 2,
