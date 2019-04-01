@@ -4,6 +4,7 @@ const initialState = {
     user: {},
     token: {},
     message: {},
+    isLoading: true,
 };
 
 export default function (state = initialState, action) {
@@ -12,16 +13,19 @@ export default function (state = initialState, action) {
         return {
             ...state,
             user: action.payload,
+            isLoading: false,
         };
     case UserActionConstants.FETCH_SIGNUP:
         return {
             ...state,
             user: action.payload,
+            isLoading: false,
         };
     case UserActionConstants.FETCH_PROFILE:
         return {
             ...state,
             user: action.payload,
+            isLoading: false,
         };
     case UserActionConstants.AUTH_LOGOUT:
         return {
@@ -31,6 +35,7 @@ export default function (state = initialState, action) {
         return {
             message: action.message,
         };
+        
     default:
         return state;
     }

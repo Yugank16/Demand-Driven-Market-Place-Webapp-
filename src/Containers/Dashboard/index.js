@@ -1,28 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { NavLink, withRouter, Link } from 'react-router-dom';
 import './Dashboard.css';
-import { logout } from '../../Actions/UserActions';
+import { logout, usertype } from '../../Actions/UserActions';
 
 
 class Dashboard extends Component {
-    constructor() {
-        super();
-        this.logoutuser = this.logoutuser.bind(this);
-    }
-    logoutuser() {
+    logoutuser = () => {
         const { logout, history } = this.props;
         logout();
         history.push('/');
     }
     render() {
+        const userType = JSON.parse(localStorage.getItem('userType'));
         return (
-            <div className="sidebar">
-                <h3 className="demand">DEMAND DRIVEN MARKETPLACE</h3>
-                <h3 className="user">Hello user</h3>
-                <Link className="sideanchor log" to="/home" >All Requests</Link>
-                <Link className="sideanchor log" to="/home/request" >New Request</Link>
-                <Link className="sideanchor log" to="/home/user-profile" >Account</Link>
+            <div className="sidebar clearfix">
+                <Link to="/" ><h3 className="demand">DEMAND DRIVEN MARKETPLACE</h3></Link>
+                {(userType === 2 || userType === 3 || !userType) && <NavLink activeClassName="sideanchor log-active" className="sideanchor log" exact to="/home" >Item Requests</NavLink>}
+                {(userType === 1 || userType === 3 || !userType) && <NavLink activeClassName="sideanchor log-active" className="sideanchor log" exact to="/home/my-requests" >My Requests</NavLink>}
+                {(userType === 2 || userType === 3 || !userType) && <NavLink activeClassName="sideanchor log-active" className="sideanchor log" exact to="/home/my-bids" >My Bids</NavLink>}
+                {(userType === 1 || userType === 3 || !userType) && <NavLink activeClassName="sideanchor log-active" className="sideanchor log" exact to="/home/request" >Post Request</NavLink>}
+                <NavLink activeClassName="sideanchor log-active" className="sideanchor log" exact to="/home/user-profile" >Profile</NavLink>
                 <button className="sideanchor log" onClick={() => this.logoutuser()} >Logout</button>
             </div>
         );

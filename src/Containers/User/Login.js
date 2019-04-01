@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import '../../App.css';
 import AuthPage from '../../Components/User/AuthPage';
 import { loginAction } from '../../Actions/UserActions';
-
+import { UserConstants, REGEX } from '../../Constants/index';
 
 class Login extends Component {
     constructor() {
@@ -24,6 +25,7 @@ class Login extends Component {
 
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+        this.setState({ errors: { ...this.state.errors, [e.target.name]: null } });
     }
 
     handleValidation() {
@@ -31,7 +33,7 @@ class Login extends Component {
         const error = {};
         let formIsValid = true;
         // Email
-        const pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+        const pattern = REGEX.EMAIL;
         if (!email) {
             formIsValid = false;
             error.email = 'Email can not  be empty';
@@ -62,40 +64,44 @@ class Login extends Component {
                 password: this.state.password };
             const { loginAction, history } = this.props;
             const response = await loginAction(data);
-            if (response) {
+            if (response === 1) {
+                history.push('/home/my-requests');
+            } else if (response === 2 || response === 3) {
                 history.push('/home');
+            } else {
+                const { email, password } = response;
+                const error = { email, password };
+                this.setState({ isButtonDisabled: false, errors: error });
             }
+            return;
         }
         this.setState({ isButtonDisabled: false });
     }
 
     render() {
-        if (localStorage.getItem('user')) {
-            this.props.history.push('/home');
-        }
         return (
-            <div className="Screen">
-                <div className="LoginDiv">
+            <div className="screen">
+                <div className="login-div">
                     <AuthPage />
-                    <div className="FormCenter">
-                        <form onSubmit={this.handleSubmit} className="FormFields" >
-                            <div className="FormField">
-                                <label className="FormField__Label" htmlFor="email">E-Mail ID</label>
-                                <input type="text" id="email" className="FormField__Input" placeholder="Enter your email" name="email" onChange={this.handleChange} />
-                                <div className="FormField__Label error-block">{this.state.errors.email}</div>
+                    <div className="form-center">
+                        <form onSubmit={this.handleSubmit} className="form-fields" >
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="email">E-Mail ID</label>
+                                <input type="text" id="email" className="form-field-input" placeholder="Enter your email" name="email" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.email}</div>
                             </div>
-                            <div className="FormField">
-                                <label className="FormField__Label" htmlFor="password">Password</label>
-                                <input type="password" id="password" className="FormField__Input" placeholder="Enter your password" name="password" onChange={this.handleChange} />
-                                <div className="FormField__Label error-block">{this.state.errors.password}</div>
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="password">Password</label>
+                                <input type="password" id="password" className="form-field-input" placeholder="Enter your password" name="password" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.password}</div>
                             </div>
 
-                            <div className="FormField clearfix">
-                                <button className="FormField__Button mr-20" disabled={this.state.isButtonDisabled}>Log In</button>
+                            <div className="form-field clearfix">
+                                <button className="form-field-button mr-20" disabled={this.state.isButtonDisabled}>Log In</button>
                             </div>
-                            <div className="FormField">
-                                <Link to="/signup" className="FormField__Link">Create an account</Link>
-                                <Link to="/reset-password" className="FormField__Link float_right">Forgot Password ?</Link>
+                            <div className="form-field">
+                                <Link to="/signup" className="form-field-link">Create an account</Link>
+                                <Link to="/reset-password" className="form-field-link float-right">Forgot Password ?</Link>
                             </div>
                         </form>
                     </div>
@@ -105,6 +111,9 @@ class Login extends Component {
     }
 }
 
-const mapStateToProps = state => ({ userToken: state.auth.token });
+Login.protoType = {
+    error: PropTypes.object,
+};
+const mapStateToProps = state => ({ errors: state.auth.errors });
 
 export default connect(mapStateToProps, { loginAction })(Login);

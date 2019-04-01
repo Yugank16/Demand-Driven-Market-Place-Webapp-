@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import ResetPasswordConfirm from './ResetPasswordConfirm';
 import InvalidToken from '../../Components/User/InvalidToken';
 import { tokenvalidation } from '../../Actions/UserActions';
@@ -12,9 +13,6 @@ class ForgotPassword extends Component {
     }
 
     render() {
-        if (localStorage.getItem('user')) {
-            this.props.history.push('/home');
-        }
         if (this.props.response === 'success') {
             return (
                 <div>
@@ -31,6 +29,9 @@ class ForgotPassword extends Component {
         return <div>Please Wait.....</div>;
     }
 }
+ForgotPassword.protoType = {
+    response: PropTypes.string,
+};
 
 const mapStateToProps = state => ({ response: state.auth.message });
 

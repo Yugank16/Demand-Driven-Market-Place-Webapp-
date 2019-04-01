@@ -2,9 +2,9 @@ import React from 'react';
 import '../../App.css';
 
 const AuthPage = () => (
-    <div className="Screen__Form">
-        <div className="FormTitle ">
-            <div className="FormTitle__Link">Demand Driven Market Place</div>
+    <div className="screen-form">
+        <div className="form-title ">
+            <div className="form-title-link">Demand Driven Market Place</div>
         </div>
     </div>
 );

@@ -3,19 +3,15 @@
 	width: 100%
 }
 .sidebar{
-  	width: 240px;
+  	width: 18%;
+	height: 100%;
 	position: fixed;
 	top: 0;
 	left: 0;
 	padding-top: 20px;
 	background-color: #242F33;
-	height: 100%;
 }
-.content{
-	margin-left: 200px; 
-	font-size: 20px; 
-	padding: 0px 80px;
-}
+
 .clearfix::after {
 	content: "";
 	clear: both;
@@ -23,24 +19,35 @@
 }
 .demand{
 	color: white;
-	padding: 2px 14px 12px 12px;
+	padding: 2px 14px 82px 12px;
 	letter-spacing: 3px;
+	font-size: 1em;
 }
 .sideanchor{
 	padding: 5px 37px;
 	color: white;
-	float: left;
-	width: auto;
 	display: block;
 	text-decoration: none;
-	margin-top: 50px;
+	margin-top: 41px;
+	font-family: sans-serif;
 }
+
 .log{
 	background-color: #242F33; 
 	color: white;
 	border: none;
+	font-family: sans-serif;
 }
+
+.log-active{
+	background-color: #537683; 
+	color: white;
+	font-size: 20px;
+	font-family: sans-serif;
+}
+
 .user{
 	color: white;
-	padding: 122px 29px 0px 29px;
+	padding: 50px 0px 0px 29px;
+	font-family: sans-serif;
 }
