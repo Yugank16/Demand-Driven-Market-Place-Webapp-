@@ -5,6 +5,7 @@ import Loader from 'react-loader-spinner';
 import { bidDetails, updateBidPrice } from '../../Actions/BidActions';
 import '../../App.css';
 import Forbidden from '../../Components/Forbidden';
+import { REGEX } from '../../Constants';
 
 class ChangeBidPrice extends Component {
     constructor() {
@@ -28,7 +29,7 @@ class ChangeBidPrice extends Component {
         let formIsValid = true;
         const error = {};
         const { price } = this.state;
-        const patternPrice = new RegExp(/^\d+$/);
+        const patternPrice = REGEX.Price;
         if (price < 0 || !price || !patternPrice.test(price)) {
             formIsValid = false;
             error.price = 'Enter valid price';

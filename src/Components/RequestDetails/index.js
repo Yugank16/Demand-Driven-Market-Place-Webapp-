@@ -1,4 +1,6 @@
 import React from 'react';
+import moment from 'moment';
+
 
 const RequestItemDetails = (props) => (
     <div >
@@ -11,8 +13,7 @@ const RequestItemDetails = (props) => (
             <h4>Months Old : {props.data.months_old}</h4>
             <h4>Quantity Required : {props.data.quantity_required}</h4>
             <h4>More Information : {props.data.more_info}</h4>
-            <h4>Required By Date: {props.date}</h4>
-            <h4>Required By Time: {props.time}</h4>
+            <h3>Required On : {moment(props.data.date_time).format('llll')} </h3>
         </div>
     </div>
 

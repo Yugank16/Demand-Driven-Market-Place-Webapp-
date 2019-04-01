@@ -19,6 +19,21 @@ export const postRequestAction = (data) => async (dispatch) => {
     return false;
 };
 
+export const updateRequestAction = (id, data) => async (dispatch) => {
+    let response = await fetchUrl(`${API.ITEM_UPDATE}${id}/`, 'PATCH', data);
+    if (!response.ok && response.status === 400) {
+        response = await response.json();
+        return response;
+    } else if (response.ok) {
+        dispatch({
+            type: FlashMessageConstants.SUCCESS,
+            message: 'Item Updated Successfully',
+        });
+        return true;
+    }
+    return false;
+};
+
 export const fetchRequestsAction = (nameParam, itemStatus, orderBy) => (dispatch) => {
     dispatch({
         type: RequestItemConstants.LOADING_TRUE,

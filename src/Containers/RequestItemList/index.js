@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import Loader from 'react-loader-spinner';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import queryString from 'query-string';
 import { fetchRequestsAction } from '../../Actions/RequestItemActions';
 import RequestItem from '../../Components/RequestItem';
@@ -24,14 +25,14 @@ class RequestItemList extends Component {
 
     componentDidMount() {
         const { nameParam, itemStatus, orderBy: ordering } = this.state; 
-        this.props.fetchRequestsAction(nameParam, itemStatus || 2, ordering);
+        this.props.fetchRequestsAction(nameParam, itemStatus || '', ordering);
     }
 
     makeRequest = () => {
         const { nameParam, itemStatus, orderBy: ordering } = this.state;
         this.props.fetchRequestsAction(nameParam, itemStatus, ordering);
         this.props.history.push({            
-            search: (nameParam ? `?name=${nameParam}&` : '') + (itemStatus ? `item_status=${itemStatus}&` : `item_status=${2}&`) + (ordering ? `ordering=${ordering}` : ''),
+            search: (nameParam ? `?name=${nameParam}&` : '') + (itemStatus ? `item_status=${itemStatus}&` : '') + (ordering ? `ordering=${ordering}` : ''),
         });
     }
 
@@ -59,12 +60,12 @@ class RequestItemList extends Component {
             let data = <div className="no-results">{NO_RESULT_MESSAGE}</div>;
             if (this.props.items.length !== 0) {
                 data = this.props.items.map((data) => (
-                    <LinkContainer key={data.id} to={'/home/request/' + data.id}>
+                    <LinkContainer key={data.id} to={'/home/request/' + data.id} onMouse>
                         <div className="item-card clearfix" >
                             <div className="item-name" >{data.name}</div>
                             <div className="item-price">&#8377; {data.max_price}</div>
-                            <div className="item-requester">{data.requester.first_name}</div>
-                            <div className="item-required-time"> {data.date_time}</div>
+                            <div className="item-requester">By: {data.requester.first_name}</div>
+                            <div className="item-required-time"> {moment(data.date_time).format('llll')}</div>
                         </div>
                     </LinkContainer>
                 ));
@@ -75,7 +76,8 @@ class RequestItemList extends Component {
                         <input type="text" id="name" className="search-item-input" placeholder="Search by name" name="nameParam" value={this.state.nameParam} onChange={this.handleChange} />
                         <button type="button" className="item-search-button" onClick={this.handleSearch} >Search</button>
                         <button type="button" className="item-search-button" onClick={this.handleClear} >Clear</button>
-                        <select className="item-status-drop" name="itemStatus" value={this.state.itemStatus || 2} onChange={this.handleDropChange}>
+                        <select className="item-status-drop" name="itemStatus" value={this.state.itemStatus || ''} onChange={this.handleDropChange}>
+                            <option className="drop-down-text" value="">All</option>
                             <option className="drop-down-text" value="2">Live</option>
                             <option className="drop-down-text" value="1" > Pending</option>
                         </select>

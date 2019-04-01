@@ -9,6 +9,7 @@ export const postBid = (data, id) => async (dispatch) => {
     for (let i = 0; i < data.images.length; i++) {
         formD.append('images[' + i + ']', data.images[i]);
     }
+    formD.append('payment_token', data.payment_token);
     data = formD;
     let response = await fetchUrl(`${API.ITEM_REQUEST}${id}/bid/`, 'POST', data, '');
     if (!response.ok && response.status === 400) {
