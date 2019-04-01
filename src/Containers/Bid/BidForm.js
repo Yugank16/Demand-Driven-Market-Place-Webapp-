@@ -159,13 +159,9 @@ class Bid extends Component {
                             <Modal.Title>Update Payment Details</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <StripePayment updateToken={this.updateToken} />
+                            <StripePayment updateToken={this.updateToken} handleClose={this.handleClose} />
                         </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={this.handleClose}>
-                                Close
-                            </Button>
-                        </Modal.Footer>
+                        
                     </Modal>
                 </div>
             );

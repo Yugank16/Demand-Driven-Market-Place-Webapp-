@@ -56,7 +56,6 @@ class RequestItemList extends Component {
 
     render() {
         const NO_RESULT_MESSAGE = 'Sorry ! No results were found.';
-        console.log(this.props);
         if (!this.props.isLoading && !this.props.error) {
             let data = <div className="no-results">{NO_RESULT_MESSAGE}</div>;
             if (this.props.items.length !== 0) {
@@ -78,12 +77,12 @@ class RequestItemList extends Component {
                         <button type="button" className="item-search-button" onClick={this.handleSearch} >Search</button>
                         <button type="button" className="item-search-button" onClick={this.handleClear} >Clear</button>
                         <select className="item-status-drop" name="itemStatus" value={this.state.itemStatus || ''} onChange={this.handleDropChange}>
-                            <option className="drop-down-text" value="">All</option>
+                            <option className="drop-down-text" value="">All Items</option>
                             <option className="drop-down-text" value="2">Live</option>
                             <option className="drop-down-text" value="1" > Pending</option>
                         </select>
                         <select className="order-price-drop" name="orderBy" value={this.state.orderBy} onChange={this.handleDropChange}>
-                            <option className="drop-down-text" value="" >No Filter</option>
+                            <option className="drop-down-text" value="" >No Sorting</option>
                             <option className="drop-down-text" value="max_price">Price Increasing</option>
                             <option className="drop-down-text" value="-max_price" >Price Decreasing</option>
                             <option className="drop-down-text" value="date_time">Increasing Date Time</option>

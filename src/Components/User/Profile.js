@@ -16,11 +16,11 @@ const Profile = (props) => (
                         <img src={dummyimage} alt="hello" />}
                 </div>
                 <div className="user-info">        
-                    <h3>Name : {props.data.first_name}&nbsp;{props.data.last_name} </h3>
-                    <h3>Email : {props.data.email}</h3>
-                    <h3>Gender : {props.data.gender}</h3>
-                    <h3>Phone Number : {props.data.phone_number}</h3>
-                    <h3>DOB : {props.data.birth_date} </h3>
+                    <h3 className="user-detail">Name : {props.data.first_name}&nbsp;{props.data.last_name} </h3>
+                    <h3 className="user-detail">Email : {props.data.email}</h3>
+                    <h3 className="user-detail">Gender : {props.data.gender}</h3>
+                    <h3 className="user-detail">Phone Number : {props.data.phone_number}</h3>
+                    <h3 className="user-detail">DOB : {props.data.birth_date} </h3>
                 </div>
                 <Link className="profile-update-link" to="/home/user-profile/update">Update Profile</Link>
                 <Link className="change-password-link" to="/home/user-profile/change-password">Change Password</Link>

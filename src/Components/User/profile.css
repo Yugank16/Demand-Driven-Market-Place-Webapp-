@@ -17,7 +17,7 @@
     position:absolute;
     top: 10%;
     left: 22%;
-    width: 73%;
+    width: 75%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 1% 5%;
     display: flex;
@@ -31,7 +31,11 @@
 
 .user-info{
     float: left;
-    margin: 0px 50px;
+    margin: 0px 40px;
+}
+
+.user-detail{
+    font-size:20px;
 }
 
 .profile-update-link{
