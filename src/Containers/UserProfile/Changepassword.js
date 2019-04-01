@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ChangePasswordAction } from '../../Actions/UserActions';
+import { changePasswordAction } from '../../Actions/UserActions';
 
 class ChangePassword extends Component {
     constructor() {
@@ -67,8 +67,8 @@ class ChangePassword extends Component {
                 password: this.state.oldPassword,
                 new_password: this.state.newPassword,
             };
-            const { ChangePasswordAction, history } = this.props;
-            const response = await ChangePasswordAction(data);
+            const { changePasswordAction, history } = this.props;
+            const response = await changePasswordAction(data);
             if (response === true) {
                 history.push('/home/user-profile');
             } else {
@@ -84,24 +84,24 @@ class ChangePassword extends Component {
             <div>
                 <div className="content">
                     <h2>Change  Password</h2>
-                    <form onSubmit={this.handleSubmit} className="FormFields">
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="password">Old Password</label>
-                            <input type="password" value={this.state.firstName} id="password" className="FormField__Input" placeholder="Enter your Old Password" name="oldPassword" onChange={this.handleChange} />
-                            <div className="FormField__Label error-block">{this.state.errors.oldPassword}</div>
+                    <form onSubmit={this.handleSubmit} className="form-fields">
+                        <div className="form-field">
+                            <label className="form-field-label" htmlFor="password">Old Password</label>
+                            <input type="password" value={this.state.firstName} id="password" className="form-field-input" placeholder="Enter your Old Password" name="oldPassword" onChange={this.handleChange} />
+                            <div className="form-field-label error-block">{this.state.errors.oldPassword}</div>
                         </div>
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="newpassword">New Password</label>
-                            <input type="password" value={this.state.firstName} id="newpassword" className="FormField__Input" placeholder="Enter your New Password" name="newPassword" onChange={this.handleChange} />
-                            <div className="FormField__Label error-block">{this.state.errors.newPassword}</div>
+                        <div className="form-field">
+                            <label className="form-field-label" htmlFor="newpassword">New Password</label>
+                            <input type="password" value={this.state.firstName} id="newpassword" className="form-field-input" placeholder="Enter your New Password" name="newPassword" onChange={this.handleChange} />
+                            <div className="form-field-label error-block">{this.state.errors.newPassword}</div>
                         </div>
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="confirmpassword">Confirm Password</label>
-                            <input type="password" value={this.state.firstName} id="confirmpassword" className="FormField__Input" placeholder="Enter your Old Password" name="confirmPassword" onChange={this.handleChange} />
-                            <div className="FormField__Label error-block">{this.state.errors.confirmPassword}</div>
+                        <div className="form-field">
+                            <label className="form-field-label" htmlFor="confirmpassword">Confirm Password</label>
+                            <input type="password" value={this.state.firstName} id="confirmpassword" className="form-field-input" placeholder="Enter your Old Password" name="confirmPassword" onChange={this.handleChange} />
+                            <div className="form-field-label error-block">{this.state.errors.confirmPassword}</div>
                         </div>
-                        <div className="FormField">
-                            <button className="FormField__Button mr-20" disabled={this.state.isButtonDisabled}>Save</button>
+                        <div className="form-field">
+                            <button className="form-field-button mr-20" disabled={this.state.isButtonDisabled}>Save</button>
                         </div>
                     </form>
                 </div>
@@ -111,4 +111,4 @@ class ChangePassword extends Component {
 }
 
 
-export default connect(null, { ChangePasswordAction })(ChangePassword);
+export default connect(null, { changePasswordAction })(ChangePassword);

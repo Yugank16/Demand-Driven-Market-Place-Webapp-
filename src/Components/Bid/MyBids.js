@@ -1,8 +1,9 @@
 import React from 'react';
 
-const RequestItem = (props) => (
+const MyBids = (props) => (
     <div>
-        <div className="request-list">
+        <div className="bid-list">
+            <h1>Your Bids</h1>
             <div>
                 {props.data}
             </div>
@@ -11,5 +12,4 @@ const RequestItem = (props) => (
 
 );
 
-
-export default RequestItem;
+export default MyBids;

@@ -68,24 +68,24 @@ class ResetPasswordConfirm extends Component {
 
     render() {
         return (
-            <div className="Screen">
-                <div className="LoginDiv">
+            <div className="screen">
+                <div className="login-div">
                     <AuthPage />
-                    <div className="FormCenter">
-                        <form onSubmit={this.handleSubmit} className="FormFields" >
-                            <div className="FormField">
-                                <label className="FormField__Label" htmlFor="new_password"> New Password</label>
-                                <input type="password" id="password" className="FormField__Input" placeholder="Enter your new password" name="newPassword" onChange={this.handleChange} />
-                                <div className="FormField__Label error-block">{this.state.errors.password}</div>
+                    <div className="form-center">
+                        <form onSubmit={this.handleSubmit} className="form-fields" >
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="new_password"> New Password</label>
+                                <input type="password" id="password" className="form-field-input" placeholder="Enter your new password" name="newPassword" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.password}</div>
                             </div>
-                            <div className="FormField">
-                                <label className="FormField__Label" htmlFor="confirm_password">Confirm Password</label>
-                                <input type="password" id="password" className="FormField__Input" placeholder="Enter your new password again" name="confirmPassword" onChange={this.handleChange} />
-                                <div className="FormField__Label error-block">{this.state.errors.confirmPassword}</div>
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="confirm_password">Confirm Password</label>
+                                <input type="password" id="password" className="form-field-input" placeholder="Enter your new password again" name="confirmPassword" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.confirmPassword}</div>
                             </div>
 
-                            <div className="FormField">
-                                <button className="FormField__Button mr-20">Set Password</button> <Link to="/" className="FormField__Link">Login with another account</Link>
+                            <div className="form-field">
+                                <button className="form-field-button mr-20">Set Password</button> <Link to="/" className="form-field-link">Login with another account</Link>
                             </div>
 
                         </form>
