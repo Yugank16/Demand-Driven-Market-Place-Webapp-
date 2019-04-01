@@ -134,8 +134,11 @@ export const deleteBid = (id) => async (dispatch) => {
         });
         return true;
     }
-
-    return false;
+    dispatch({
+        type: FlashMessageConstants.FAILURE,
+        message: 'Can Not Delete Bid At This Time',
+    });
+    return true;
 };
 
 export const updateBidPrice = async (data, id) => {

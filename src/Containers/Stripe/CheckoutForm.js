@@ -5,7 +5,7 @@ import { CardElement, injectStripe } from 'react-stripe-elements';
 
 
 class CheckoutForm extends Component {
-    submit= async (ev) => {
+    submit= async () => {
         const { token } = await this.props.stripe.createToken({ name: 'Name' }); 
         const { updateToken } = this.props;
         updateToken(token.id);
@@ -16,7 +16,7 @@ class CheckoutForm extends Component {
             <div className="checkout clearfix">
                 <CardElement />
                 <div className="float-right">
-                    <Button variant="secondary modal-button" onClick={this.handleClose}>
+                    <Button variant="secondary modal-button" onClick={this.props.handleClose}>
                         Close
                     </Button>
                     <Button variant="primary modal-button" onClick={this.submit}>

@@ -105,10 +105,23 @@ export const fetchDetailsAction = (id) => async (dispatch) => {
         type: RequestItemConstants.LOADING_TRUE,
     });
     let response = await fetchUrl(`${API.REQUEST_DETAILS}${id}`, 'GET');
-    let bid = await fetchUrl(`${API.ITEM_REQUEST}${id}/check-bid/`, 'GET');
     if (response.ok) {
         response = await response.json();
+        if (response.item_status === RequestItemConstants.SOLD) {
+            let soldbid = await fetchUrl(`${API.ITEM_REQUEST}${id}/sold/`, 'GET');
+            soldbid = await soldbid.json();
+            const seller = soldbid[0];
+            response.soldbid = seller;
+        }
+        if (response.item_status === RequestItemConstants.SOLD || response.item_status === RequestItemConstants.UNSOLD) {
+            dispatch({
+                type: RequestItemConstants.FETCH_PARTICULAR_REQUEST,
+                payload: response,
+            });
+            return true;
+        }      
         let user = await fetchUrl(`${API.USER}`, 'GET');
+        let bid = await fetchUrl(`${API.ITEM_REQUEST}${id}/check-bid/`, 'GET');
         bid = await bid.json();
         user = await user.json();
         if (user.id === response.requester.id) {
@@ -180,17 +193,17 @@ export const deleteItemAction = (id) => async (dispatch) => {
 
 export const bidClose = (data, id) => async (dispatch) => {
     let response = await fetchUrl(`${API.REQUEST_DETAILS}${id}/`, 'PATCH', data);
-    if (!response.ok) {
+    if (response.ok) {
+        response = await response.json();
         dispatch({
-            type: FlashMessageConstants.SUCCESS,
-            message: 'Something went wrong',
-        });
-        return false;
-    }
-    response = await response.json();
+            type: RequestItemConstants.BID_CLOSE,
+            payload: response,
+        });  
+        return true; 
+    }   
     dispatch({
-        type: RequestItemConstants.BID_CLOSE,
-        payload: response,
-    });  
-    return true;  
+        type: FlashMessageConstants.SUCCESS,
+        message: 'Something went wrong',
+    });
+    return false;
 };

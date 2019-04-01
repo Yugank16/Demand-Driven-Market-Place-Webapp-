@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Loader from 'react-loader-spinner';
 import { bidDetails, updateBidValidity, deleteBid } from '../../Actions/BidActions';
 import BidDetail from '../../Components/Bid/BidDetails';
 import '../../App.css';
 import Forbidden from '../../Components/Forbidden';
+import { RequestItemConstants } from '../../Constants';
 
 class BidDetails extends Component {
     constructor() {
@@ -32,9 +34,7 @@ class BidDetails extends Component {
         const response = await deleteBid(id);
         if (response === true) {
             history.push('/home/my-bids');
-            return;
         }
-        this.setState({ error: 'Something went Wrong' });
     }
     handleUpdate = async (e) => {
         e.preventDefault();
@@ -65,23 +65,52 @@ class BidDetails extends Component {
 
 
     render() {
-        if (this.props.bid.id !== undefined) {
+        if (!this.props.isLoading && this.props.bid.id !== undefined) {
             const { bid } = this.props;
             return (
                 <div>
                     {this.state.error}
+                    {bid.flag &&
+                    <div className="content">
+                        <Link to={'/home/request/' + bid.item.id + '/bids'}>&larr; ALL BIDS </Link>
+                        <br />
+                        <Link to={'/home/request/' + bid.item.id}>&larr; REQUEST DETAILS</Link>
+                    </div>} 
                     <BidDetail key={bid.id} data={bid} />
-                    {!bid.flag && bid.item.item_status === 2 && <div className="form-field clearfix"><button className="form-field-button " onClick={this.handleUpdate}>Update Price</button> </div>
-                    }
-                    {!bid.flag && bid.item.item_status === 2 && <div className="form-field clearfix"><button className="form-field-button " onClick={this.handleDelete}>Delete</button> </div>
-                    }
-                    {bid.flag && (bid.item.item_status === 3 || bid.item.item_status === 2) && this.state.isvalid === 1 && <div className="form-field clearfix"><button className="form-field-button button-red" onClick={this.handleInvalid}>Mark Invalid</button> </div>
-                    }
-                    {bid.flag && (bid.item.item_status === 3 || bid.item.item_status === 2) && this.state.isvalid === 2 && <div className="form-field clearfix"><button className="form-field-button button-green" onClick={this.handleValid}>Mark Valid</button> </div>
-                    }
+                    {!bid.flag && bid.item.item_status === RequestItemConstants.LIVE &&
+                    <div className="content">
+                        <h3>STATUS : Item Request is Live.You can update or delete your bid.</h3>
+                    </div>}
+                    {!bid.flag && bid.item.item_status === RequestItemConstants.ONHOLD &&
+                    <div className="content">
+                        <h3>STATUS : Item Requester is reviewing the bids.Expected to receive result soon</h3>
+                    </div>}
+                    {!bid.flag && bid.item.item_status === RequestItemConstants.LIVE &&
+                    <div className="form-field clearfix"><button className="form-field-button " onClick={this.handleUpdate}>Update Price</button>
+                    </div>}
+                    {!bid.flag && bid.item.item_status === RequestItemConstants.LIVE &&
+                    <div className="form-field clearfix"><button className="form-field-button " onClick={this.handleDelete}>Delete</button>
+                    </div>}
+                    {bid.flag && (bid.item.item_status === RequestItemConstants.ONHOLD || bid.item.item_status === RequestItemConstants.LIVE) && this.state.isvalid === 1 &&
+                    <div className="form-field clearfix"><button className="form-field-button button-red" onClick={this.handleInvalid}>Mark Invalid</button> 
+                    </div>}
+                    {bid.flag && (bid.item.item_status === RequestItemConstants.ONHOLD || bid.item.item_status === RequestItemConstants.LIVE) && this.state.isvalid === 2 &&
+                    <div className="form-field clearfix"><button className="form-field-button button-green" onClick={this.handleValid}>Mark Valid</button>
+                    </div>}
+                    {!bid.flag && (bid.item.item_status === RequestItemConstants.SOLD || bid.item.item_status === RequestItemConstants.UNSOLD) && this.state.isvalid === 3 &&
+                    <div className="content">
+                        <h3 className="congrats">STATUS :You won the best bid </h3>
+                        <h3>Requester Phone Number : {bid.item.requester.phone_number}</h3>
+                        <h3>Requester Email : {bid.item.requester.email}</h3>
+                    </div>}
+                    {!bid.flag && (bid.item.item_status === RequestItemConstants.SOLD || bid.item.item_status === RequestItemConstants.UNSOLD) && this.state.isvalid !== 3 &&
+                    <div className="content">
+                        <h3 className="unsold">STATUS : Your bid was not selected</h3>
+                        <p>Note-Your bidding fees will be refunded after 2 hours from the bid closing time.</p>
+                    </div>}
                 </div>
             );
-        } else if (this.props.error === 'forbidden') {
+        } else if (!this.props.isLoading && this.props.error === 'forbidden') {
             return <Forbidden />;
         }
         return <div className="loader-main"><Loader type="Grid" color="#somecolor" height={80} width={80} /></div>;
@@ -93,6 +122,7 @@ BidDetails.propType = {
 };
 
 BidDetails.defaultProps = {
+    isLoading: true,
     bid: {},
 };
 

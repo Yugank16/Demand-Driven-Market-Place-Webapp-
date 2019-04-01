@@ -111,7 +111,7 @@ class RequestItem extends Component {
             const { postRequestAction, history } = this.props;
             const response = await postRequestAction(data);
             if (response === true) {
-                history.push('/home');
+                history.push('/home/my-requests');
             } else {
                 const { date_time: datetime, name, short_description: description, item_state: itemState, months_old: monthsOld, quantity_required: quantityRequired, max_price: maxPrice } = response;
                 const error = { datetime, name, description, itemState, monthsOld, quantityRequired, maxPrice };
@@ -208,6 +208,11 @@ class RequestItem extends Component {
 
 RequestItem.protoType = {
     error: PropTypes.object,
+};
+
+RequestItem.defaultProps = {
+    data: {},
+    isLoading: true,
 };
 
 const mapStateToProps = state => ({

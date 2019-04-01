@@ -180,6 +180,7 @@
 
 .item-card{
   position: relative;
+  cursor: pointer;
   width: 80%;
   margin: 2% 0%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
@@ -251,6 +252,19 @@
   position: fixed;
   left:50%;
   top:46%;
+}
+
+.congrats{
+  color: green;
+}
+
+.unsold {
+  color: red;
+}
+
+.item-request{
+  text-align: center;
+  padding-bottom: 20px;
 }
 
 .no-results{

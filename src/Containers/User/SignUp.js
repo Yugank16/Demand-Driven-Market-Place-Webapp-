@@ -128,6 +128,7 @@ class SignUp extends Component {
                 const error = { email, password, firstName, lastName, userType, birthDate, phoneNumber, gender };
                 this.setState({ isButtonDisabled: false, errors: error });
             }
+            return;
         }
         this.setState({ isButtonDisabled: false });
     }
@@ -175,7 +176,7 @@ class SignUp extends Component {
                                     <select className="form-field-input" name="gender" onChange={this.handleChange}>
                                         <option className="drop-down-text" selected value="MALE">Male</option>
                                         <option className="drop-down-text" value="FEMALE" >Female</option>
-                                        <option className="drop-down-text" value="OTHERS" >Special</option>
+                                        <option className="drop-down-text" value="OTHERS" >Others</option>
                                     </select>
                                 </div>
                             </div>

@@ -56,6 +56,7 @@ class RequestItemList extends Component {
 
     render() {
         const NO_RESULT_MESSAGE = 'Sorry ! No results were found.';
+        console.log(this.props);
         if (!this.props.isLoading && !this.props.error) {
             let data = <div className="no-results">{NO_RESULT_MESSAGE}</div>;
             if (this.props.items.length !== 0) {

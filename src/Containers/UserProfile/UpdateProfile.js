@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Loader from 'react-loader-spinner';
 import PropTypes from 'prop-types';
 
 import { fetchProfileAction, updateProfileAction } from '../../Actions/UserActions';
@@ -44,7 +45,7 @@ class UpdateProfile extends Component {
         const { firstName, lastName, phoneNumber, birthDate } = this.state;
         const error = {};
         let formIsValid = true;
-    
+
         // Firstname
         if (!firstName) {
             formIsValid = false;
@@ -66,12 +67,12 @@ class UpdateProfile extends Component {
         const phonepattern = new RegExp(/^[6-9]{1}\d{9}$/);
         if (!phoneNumber) {
             formIsValid = false;
-            error.phoneNumber = 'Phonenumber can not be empty'; 
+            error.phoneNumber = 'Phonenumber can not be empty';
         } else if (!phonepattern.test(phoneNumber)) {
             formIsValid = false;
             error.phoneNumber = 'Please enter a valid 10 digit Phonenumber';
         }
-        
+
         // Birthdate
         const patternDate = new RegExp(/^(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/);
         if (!birthDate) {
@@ -111,65 +112,75 @@ class UpdateProfile extends Component {
                 const error = { firstName, lastName, birthDate, phoneNumber, gender, profilePhoto };
                 this.setState({ isButtonDisabled: false, errors: error });
             }
+            return;
         }
         this.setState({ isButtonDisabled: false });
     }
 
     render() {
-        return (
-            <div>
-                <div className="content">
-                    <h2>Update Profile</h2>
-                    <form onSubmit={this.handleSubmit} className="form-fields">
-                        <div className="form-field">
-                            <label className="form-field-label" htmlFor="first_name">First Name</label>
-                            <input type="text" value={this.state.firstName} id="first_name" className="form-field-input" placeholder="Enter your First name" name="firstName" onChange={this.handleChange} />
-                            <div className="form-field-label error-block">{this.state.errors.firstName}</div>
-                        </div>
-                        <div className="form-field">
-                            <label className="form-field-label" htmlFor="last_name">Last Name</label>
-                            <input type="text" value={this.state.lastName} id="last_name" className="form-field-input" placeholder="Enter your Last name" name="lastName" onChange={this.handleChange} />
-                            <div className="form-field-label error-block">{this.state.errors.lastName}</div>
-                        </div>
-                        <div className="form-field">
-                            <label className="form-field-label" htmlFor="Phone_number">Phone Number</label>
-                            <input type="text" value={this.state.phoneNumber} id="Phone_number" className="form-field-input" name="phoneNumber" onChange={this.handleChange} />
-                            <div className="form-field-label error-block">{this.state.errors.phoneNumber}</div>
-                        </div>
-                        <div className="form-field">
-                            <label className="form-field-label" htmlFor="datetime">Birtth Date</label>
-                            <input type="date" value={this.state.birthDate} id="datetime" className="form-field-input" name="birthDate" onChange={this.handleChange} />
-                            <div className="form-field-label error-block">{this.state.errors.birthDate}</div>
-                        </div>
-                        <div className="form-field">
-                            <label className="form-field-label" htmlFor="user_type">Gender</label>
-                            <select value={this.state.gender} className="form-field-input" name="gender" onChange={this.handleChange}>
-                                <option className="drop-down-text" value="MALE">MALE</option>
-                                <option className="drop-down-text" value="FEMALE" >FEMALE</option>
-                                <option className="drop-down-text" value="OTHERS" >OTHERS</option>
-                            </select>
-                            <div className="form-field-label error-block">{this.state.errors.gender}</div>
-                        </div>
-                        <div className="form-field">
-                            <label className="form-field-label" htmlFor="photo">profile Photo</label>
-                            <input type="file" id="profilephoto" name="profilePhoto" onChange={this.handleFileChange} />
-                            <div className="form-field-label error-block">{this.state.errors.profilePhoto}</div>
-                        </div>
-                        <div className="form-field">
-                            <button className="form-field-button mr-20" disabled={this.state.isButtonDisabled}>Save</button>
-                        </div>
-                    </form>
+        if (!this.props.isLoading) {
+            return (
+                <div>
+                    <div className="content">
+                        <h2>Update Profile</h2>
+                        <form onSubmit={this.handleSubmit} className="form-fields">
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="first_name">First Name</label>
+                                <input type="text" value={this.state.firstName || ''} id="first_name" className="form-field-input" placeholder="Enter your First name" name="firstName" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.firstName}</div>
+                            </div>
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="last_name">Last Name</label>
+                                <input type="text" value={this.state.lastName || ''} id="last_name" className="form-field-input" placeholder="Enter your Last name" name="lastName" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.lastName}</div>
+                            </div>
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="Phone_number">Phone Number</label>
+                                <input type="text" value={this.state.phoneNumber || ''} id="Phone_number" className="form-field-input" name="phoneNumber" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.phoneNumber}</div>
+                            </div>
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="datetime">Birtth Date</label>
+                                <input type="date" value={this.state.birthDate || ''} id="datetime" className="form-field-input" name="birthDate" onChange={this.handleChange} />
+                                <div className="form-field-label error-block">{this.state.errors.birthDate}</div>
+                            </div>
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="user_type">Gender</label>
+                                <select value={this.state.gender || ''} className="form-field-input" name="gender" onChange={this.handleChange}>
+                                    <option className="drop-down-text" value="MALE">MALE</option>
+                                    <option className="drop-down-text" value="FEMALE" >FEMALE</option>
+                                    <option className="drop-down-text" value="OTHERS" >OTHERS</option>
+                                </select>
+                                <div className="form-field-label error-block">{this.state.errors.gender}</div>
+                            </div>
+                            <div className="form-field">
+                                <label className="form-field-label" htmlFor="photo">profile Photo</label>
+                                <input type="file" id="profilephoto" name="profilePhoto" onChange={this.handleFileChange} />
+                                <div className="form-field-label error-block">{this.state.errors.profilePhoto}</div>
+                            </div>
+                            <div className="form-field">
+                                <button className="form-field-button mr-20" disabled={this.state.isButtonDisabled}>Save</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        } 
+        return <div className="loader-main"><Loader type="Grid" color="#somecolor" height={80} width={80} /></div>; 
     }
 }
 UpdateProfile.protoType = {
     userdata: PropTypes.object,
 };
 
+UpdateProfile.defaultProps = {
+    userdata: {},
+    isLoading: true,
+};
+
 const mapStateToProps = state => ({
     userdata: state.auth.user,
+    isLoading: state.auth.isLoading,
 });
 
 export default connect(mapStateToProps, { fetchProfileAction, updateProfileAction })(UpdateProfile);

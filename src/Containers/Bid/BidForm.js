@@ -8,7 +8,8 @@ import { postBid } from '../../Actions/BidActions';
 import StripePayment from '../Stripe';
 import { canBidAction } from '../../Actions/RequestItemActions';
 import Forbidden from '../../Components/Forbidden';
-
+import { REGEX } from '../../Constants';
+ 
 class Bid extends Component {
     constructor() {
         super();
@@ -59,7 +60,7 @@ class Bid extends Component {
         let formIsValid = true;
         const error = {};
         const { price, description, photos } = this.state;
-        const patternPrice = new RegExp(/^\d+$/);
+        const patternPrice = REGEX.Price;
         if (price < 0 || !price || !patternPrice.test(price)) {
             formIsValid = false;
             error.price = 'Enter valid price';
@@ -74,6 +75,10 @@ class Bid extends Component {
                 error.photos = 'Upload Atleast 6 photos of the item';
                 break;
             }
+        }
+        if (photos.length > 8) {
+            formIsValid = false;
+            error.photos = 'Maximum 8 photos of the item are allowed';
         }
         this.setState({ errors: error });
         return formIsValid;
@@ -113,7 +118,7 @@ class Bid extends Component {
 
     render() {
         const PAYMENT_INFO = '*one dollar will be deducted from your account. Please forward with filling your payment details to make bid';
-        if (this.props.flag.value === true && !this.props.flag.id) {
+        if (!this.props.isLoading && this.props.flag.value === true && !this.props.flag.id) {
             return (
                 <div>
                     <div className="content">
@@ -136,7 +141,7 @@ class Bid extends Component {
                                 <input type="file" multiple="true" id="0" name="photo" onChange={this.handleFileChange} />
                             </div>
                             {this.state.photos.map((image, index) =>
-                                <p>{image.name}<button onClick={this.deletePhoto} name={index}>remove</button></p>)}
+                                <p key={index}>{image.name}<button onClick={this.deletePhoto} name={index}>remove</button></p>)}
                             
                             <h6> {PAYMENT_INFO} </h6>
                             <Button variant="primary" onClick={this.handleShow}>
@@ -164,9 +169,9 @@ class Bid extends Component {
                     </Modal>
                 </div>
             );
-        } else if (this.props.flag.value === false && !this.props.flag.id) {
+        } else if (!this.props.isLoading && this.props.flag.value === false && !this.props.flag.id) {
             return <Forbidden />;
-        } else if (this.props.flag.id) {
+        } else if (!this.props.isLoading && this.props.flag.id) {
             return (<Redirect to={'/home/bid/' + this.props.flag.id} />);
         }
         return <div className="loader-main"><Loader type="Grid" height={80} width={80} /></div>;
@@ -180,6 +185,7 @@ Bid.defaultProps = {
 
 const mapStateToProps = state => ({
     flag: state.requestItem.flag,
+    isLoading: state.requestItem.isLoading,
 });
 
 export default connect(mapStateToProps, { postBid, canBidAction })(Bid);

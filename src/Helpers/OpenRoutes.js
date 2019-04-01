@@ -16,6 +16,18 @@ export const OpenRoutes = ({ component: Component, ...rest }) => (
 
                 );
             }
+            const UserType = JSON.parse(localStorage.getItem('userType'));
+            if (UserType === UserConstants.BUYER) {
+                return (<Redirect to={
+                    {
+                        pathname: '/home/my-requests',
+                        state: {
+                            from: props.location,
+                        },
+                    }
+                }
+                />);
+            }
 
             return (<Redirect to={
                 {

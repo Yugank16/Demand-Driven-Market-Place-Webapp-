@@ -7,7 +7,7 @@ import queryString from 'query-string';
 import { fetchMyRequestsAction } from '../../Actions/RequestItemActions';
 import RequestItem from '../../Components/RequestItem';
 import '../../App.css';
-import { RequestItemConstants } from '../../Constants';
+import { RequestItemConstants, ItemStatus } from '../../Constants';
 import Forbidden from '../../Components/Forbidden';
 
 class MyItemRequestList extends Component {
@@ -64,7 +64,10 @@ class MyItemRequestList extends Component {
                 data = this.props.items.map((data) => (
                     <LinkContainer key={data.id} to={'/home/request/' + data.id}>
                         <div className="item-card clearfix" >
-                            <div className="item-name" >{data.name}</div>
+                            <div className="item-name" >{data.name}</div>  
+                            <div className="item-requester">{ItemStatus[data.item_status]}</div>
+                            <div className="item-price">&#8377; {data.max_price}</div>
+                            <div className="item-required-time"> {data.date_time}</div>
                         </div>
                     </LinkContainer>
                 ));
