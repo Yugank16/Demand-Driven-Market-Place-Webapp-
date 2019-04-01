@@ -16,6 +16,14 @@ export default function (state = initialState, action) {
             ...state,
             data: action.payload,
         };
+    case RequestItemConstants.LOADING_TRUE:
+        return {
+            isLoading: true,
+        };
+    case RequestItemConstants.LOADING_FALSE:
+        return {
+            isLoading: false,
+        };
     case RequestItemConstants.FETCH_ALL_REQUEST:
         return {
             ...state,
@@ -30,7 +38,6 @@ export default function (state = initialState, action) {
         };
     case RequestItemConstants.ERRORS:
         return {
-            ...state,
             errors: action.error,
         };
     case RequestItemConstants.FLAG:
