@@ -322,3 +322,11 @@
 /* Modal */
 
 .modal{ display:block; }
+
+.pay-modal-buttons{
+
+}
+
+.modal-button{
+  margin: 30px 10px;
+}

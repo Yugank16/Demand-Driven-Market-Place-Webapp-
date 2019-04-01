@@ -1,5 +1,5 @@
 import { RequestItemConstants } from '../Constants/index';
-
+ 
 const initialState = {
     data: {},
     close_bid_data: {},
@@ -8,7 +8,7 @@ const initialState = {
     isLoading: true,
     flag: {},
 };
-
+ 
 export default function (state = initialState, action) {
     switch (action.type) {
     case RequestItemConstants.POST_ITEM_REQUEST:
@@ -51,7 +51,7 @@ export default function (state = initialState, action) {
             ...state,
             close_bid_data: action.payload,
         };
-
+ 
     default:
         return state;
     }
